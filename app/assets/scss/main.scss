@@ -1,0 +1,223 @@
+// Design Tokens, Reset und globale Blöcke (BEM): .section, .button, .text-link, .skip-link, .visually-hidden
+
+:root {
+  --bg: #1a1d26;
+  --bg-alt: #232937;
+  --text: #fff;
+  --muted: #aab1c0;
+  --line: rgb(255 255 255 / 0.14);
+  --blue: #1d63f0;
+  --blue-dark: #1650c8;
+  --blue-light: #4f8cff;
+  --focus: #8db4ff;
+  --font: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Roboto Slab', Georgia, 'Times New Roman', serif; // Logo und Überschriften
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --header-height: 4.25rem;
+  --section-height: calc((100svh - var(--header-height)) * 0.9); // 90 Prozent: der nächste Abschnitt lugt unten hervor
+  color-scheme: dark;
+
+  @media (max-width: 760px) {
+    --header-height: 6.5rem; // zweizeiliger Header, nicht fixiert
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+
+  @media (min-width: 761px) {
+    scroll-padding-top: var(--header-height);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 1.0625rem/1.65 var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-family: var(--font); // Einträge bleiben in der Textschrift
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1em;
+  max-width: 65ch;
+}
+
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+// Container werden per Skript fokussiert, brauchen aber keinen sichtbaren Rahmen (Überschriften behalten ihren)
+section[tabindex='-1']:focus,
+main[tabindex='-1']:focus {
+  outline: none;
+}
+
+// ---- Block: skip-link
+.skip-link {
+  position: absolute;
+  top: -5rem;
+  left: var(--gutter);
+  z-index: 20;
+  padding: 0.75rem 1rem;
+  background: var(--blue);
+  color: #fff;
+
+  &:focus {
+    top: 0.75rem;
+  }
+}
+
+// ---- Block: visually-hidden
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ---- Block: section (Wrapper in BaseSection.vue); füllt mindestens das Browserfenster unter dem Header
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--section-height);
+  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter);
+  background: var(--bg);
+
+  &--alt {
+    background: var(--bg-alt);
+  }
+
+  &__title {
+    margin-bottom: 2.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  &__slash {
+    margin-right: 0.35em;
+    color: var(--blue);
+  }
+
+  &__intro {
+    margin-bottom: 2rem;
+    color: var(--muted);
+    font-size: 1.15rem;
+  }
+}
+
+// ---- Block: button
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--blue-dark);
+  }
+}
+
+// ---- Block: text-link
+// Der Unterstrich liegt am Label und läuft beim Hover von links nach rechts von Weiß zu Blau durch.
+// Modifier --hover-only: kein Unterstrich im Ruhezustand (Navigation).
+.text-link {
+  --underline: 2px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  &__label {
+    padding-bottom: 0.15em;
+    background-image: linear-gradient(var(--blue-light), var(--blue-light)), linear-gradient(currentcolor, currentcolor);
+    background-repeat: no-repeat;
+    background-position: 0 100%, 0 100%;
+    background-size: 0 var(--underline), 100% var(--underline);
+    transition: background-size 0.4s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &:hover &__label,
+  &:focus-visible &__label {
+    background-size: 100% var(--underline), 100% var(--underline);
+  }
+
+  &--hover-only &__label {
+    background-size: 0 var(--underline), 0 var(--underline);
+  }
+
+  &--hover-only:hover &__label,
+  &--hover-only:focus-visible &__label {
+    background-size: 100% var(--underline), 0 var(--underline);
+  }
+}

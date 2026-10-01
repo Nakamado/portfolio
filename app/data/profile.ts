@@ -1,0 +1,471 @@
+export type Lang = 'de' | 'en'
+
+export interface Job {
+  period: string
+  title: string
+  org: string
+  points: string[]
+  stack?: string[]
+}
+export interface Edu { period: string; title: string; org: string; note?: string }
+export interface Project { title: string; type: string; placeholder: boolean; text: string }
+export interface SkillGroup { title: string; items: string[] }
+
+export interface Content {
+  ui: Record<'skip' | 'nav' | 'langLabel' | 'scrollDown' | 'nextSection' | 'backToTop', string>
+  nav: { id: string; label: string }[]
+  meta: { title: string; description: string }
+  hero: {
+    title: string
+    role: string
+    statement: string
+    status: string
+    ctaContact: string
+    ctaCv: string
+    imageAlt: string
+    aside: { aboutLabel: string; aboutText: string; aboutLink: string; workLabel: string; workText: string; workLink: string; connectLabel: string; mail: string }
+  }
+  about: {
+    title: string
+    paragraphs: string[]
+    strengthsTitle: string
+    strengths: { title: string; text: string }[]
+    factsTitle: string
+    facts: { label: string; value: string }[]
+  }
+  experience: { title: string; workTitle: string; educationTitle: string; jobs: Job[]; education: Edu[] }
+  skills: { title: string; groups: SkillGroup[] }
+  work: { title: string; intro: string; placeholderLabel: string; projects: Project[] }
+  contact: { title: string; text: string; mail: string; linkedin: string; cvDe: string; cvEn: string }
+  footer: { built: string; imprint: string }
+  imprint: {
+    metaTitle: string
+    title: string
+    providerTitle: string
+    contactTitle: string
+    emailLabel: string
+    phoneLabel: string
+    contentTitle: string
+    contentText: string
+    liabilityTitle: string
+    liabilityText: string
+    back: string
+  }
+}
+
+const designTools = ['Adobe Creative Cloud', 'HTML', 'CSS', 'JavaScript']
+
+export const content: Record<Lang, Content> = {
+  de: {
+    ui: {
+      skip: 'Zum Inhalt springen',
+      nav: 'Hauptnavigation',
+      langLabel: 'Sprache',
+      scrollDown: 'Zum Abschnitt „Über mich“ scrollen',
+      nextSection: 'Weiter zu: {section}',
+      backToTop: 'Zurück nach oben'
+    },
+    nav: [
+      { id: 'about', label: 'Über mich' },
+      { id: 'experience', label: 'Erfahrung' },
+      { id: 'skills', label: 'Skills' },
+      { id: 'projects', label: 'Projekte' },
+      { id: 'contact', label: 'Kontakt' }
+    ],
+    meta: {
+      title: 'Dustin Clever – Frontend-Entwickler',
+      description:
+        'Frontend-Entwickler mit Designhintergrund: Vue.js, Nuxt.js und TypeScript. Sieben Jahre bei real.digital / Kaufland e-commerce.'
+    },
+    hero: {
+      title: 'Ich bin Dustin Clever, Frontend-Entwickler',
+      role: 'Frontend-Entwickler',
+      statement: 'Ich komme aus dem Design und baue Oberflächen mit Vue, Nuxt und TypeScript.',
+      status: 'Offen für eine neue Stelle als Frontend-Entwickler.',
+      ctaContact: 'Kontakt aufnehmen',
+      ctaCv: 'Lebenslauf als PDF',
+      imageAlt: 'Porträt von Dustin Clever',
+      aside: {
+        aboutLabel: 'Über mich',
+        aboutText: 'Sieben Jahre Frontend im Team bei real.digital / Kaufland e-commerce.',
+        aboutLink: 'Mehr erfahren',
+        workLabel: 'Meine Arbeit',
+        workText: 'Header, Produktseite, Mehrsprachigkeit und A/B-Tests.',
+        workLink: 'Projekte ansehen',
+        connectLabel: 'Vernetzen',
+        mail: 'E-Mail'
+      }
+    },
+    about: {
+      title: 'Über mich',
+      paragraphs: [
+        'Ich habe als Mediengestalter für Digital und Print angefangen: Logos, Flyer, Webseiten, später Elemente für einen E-Commerce-Shop. Aus der Gestaltung heraus bin ich in die Frontend-Entwicklung gewechselt.',
+        'Von 2018 bis 2024 habe ich bei real.digital / Kaufland e-commerce in größeren Entwicklungsteams an einer großen E-Commerce-Plattform mitgearbeitet, unter anderem an der B2C-Pattern-Library, am Header, an Produktdetailseite und Bewertungen, an A/B-Tests und Tracking sowie an der Mehrsprachigkeit unseres Micro-Frontends.',
+        'Seit Anfang 2025 baue ich in einer Auszeit eigene Content-Projekte auf (Gaming und Trading Cards auf Twitch, TikTok und YouTube). Jetzt suche ich wieder eine Stelle als Frontend-Entwickler.'
+      ],
+      strengthsTitle: 'Was ich mitbringe',
+      strengths: [
+        { title: 'Gestalterische Ausbildung', text: 'Mediengestalter Digital & Print, Erfahrung mit Adobe Creative Cloud und UX.' },
+        { title: 'Komponentenbasiert arbeiten', text: 'Mitarbeit an einer unternehmensweiten Pattern-Library mit Vuepress und Storybook.' },
+        { title: 'Arbeit im Team', text: 'Scrum mit Sprints, Dailys, Reviews, Retrospektiven und Refinements.' }
+      ],
+      factsTitle: 'Auf einen Blick',
+      facts: [
+        { label: 'Frontend', value: '2018 bis 2024 bei real.digital / Kaufland e-commerce' },
+        { label: 'Technologien', value: 'Vue.js, Nuxt.js, TypeScript, CSS/SCSS' },
+        { label: 'Ausbildung', value: 'Mediengestalter Digital & Print' },
+        { label: 'Sprachen', value: 'Deutsch (Muttersprache), Englisch (fließend)' }
+      ]
+    },
+    experience: {
+      title: 'Erfahrung',
+      workTitle: 'Berufserfahrung',
+      educationTitle: 'Ausbildung',
+      jobs: [
+        {
+          period: '01/2025 – heute',
+          title: 'Sabbatical & Content Creation',
+          org: 'Eigenes Projekt',
+          points: [
+            'Konzeption, Aufbau und Umsetzung eigener Content-Projekte',
+            'Aufbau und Betreuung eigener Social-Media-Kanäle (Twitch, TikTok, YouTube)',
+            'Produktion und Veröffentlichung von digitalem Content (Gaming & Trading Cards)',
+            'Planung, Aufnahme, Schnitt und Optimierung von Kurzvideos und Livestreams',
+            'Analyse von Reichweiten- und Performance-Kennzahlen zur Optimierung der Inhalte'
+          ],
+          stack: ['OBS Studio', 'Adobe Photoshop', 'Premiere Pro', 'CapCut', 'ElevenLabs']
+        },
+        {
+          period: '01/2018 – 12/2024',
+          title: 'Frontend-Entwickler',
+          org: 'real.digital / Kaufland e-commerce',
+          points: [
+            'Mitarbeit an der internen B2C-Pattern-Library fürs ganze Unternehmen',
+            'Federführende Umsetzung der i18n unseres Micro-Frontends für mehrere Sprachen (CZ, SK, PL, AT) mit Lokalise und Nuxt.js',
+            'Umsetzung des Website-Headers für real.de',
+            'Beteiligung am Rebranding von real.de zu kaufland.de',
+            'Umsetzung diverser A/B-Tests mit Optimizely',
+            'Trackings für Optimizely und Google Analytics',
+            'Bearbeiten von B2C-E-Mails im internen CMS mit Twig',
+            'Pflege der Product Detail Page (PDP) und der Product Reviews',
+            'Agiles Arbeiten im Scrum (Sprints, Dailys, Reviews, Retrospektiven, Refinements)'
+          ],
+          stack: ['Vue.js', 'CSS/SCSS', 'TypeScript', 'Nuxt.js', 'Vuepress/Storybook', 'Optimizely']
+        },
+        {
+          period: '08/2017 – 12/2017',
+          title: 'Mediengestalter',
+          org: 'Hitmeister',
+          points: ['Erstellung und Umsetzung von Elementen für den E-Commerce-Shop', 'Erstellung von Flyern und Visitenkarten'],
+          stack: designTools
+        },
+        { period: '03/2016 – 07/2017', title: 'Mediengestalter (Duales Studium)', org: 'Hitmeister', points: [], stack: designTools },
+        {
+          period: '09/2014 – 12/2017',
+          title: 'Mediengestalter (Duales Studium)',
+          org: 'Charara IT Solutions GmbH',
+          points: [
+            'Planung, Entwurf und Umsetzung von Logos, Flyern, Visitenkarten und Webseiten',
+            'Wartung und Pflege von Bestandswebseiten',
+            'Gestaltung einer lokalen eigenen Zeitschrift',
+            'Kunden- und Anforderungsmanagement',
+            'Projektspezifische Aufwandsschätzung mit zugehöriger Angebotserstellung'
+          ],
+          stack: designTools
+        },
+        { period: '08/2013 – 08/2014', title: 'Praktikum als Mediengestalter', org: 'Charara IT Solutions GmbH', points: [], stack: designTools }
+      ],
+      education: [
+        {
+          period: '2014 – 2017',
+          title: 'Duales Studium: Mediengestalter Digital & Print',
+          org: 'Albrecht Dürer Berufskolleg Düsseldorf',
+          note: 'Blockunterricht, praktische Erfahrung bei Charara IT Solutions GmbH und Hitmeister'
+        },
+        {
+          period: '2012 – 2013',
+          title: 'Bachelorstudium Medientechnik',
+          org: 'FH Köln',
+          note: 'Bewusst beendet, da die inhaltliche Ausrichtung nicht zu meinen Interessen und beruflichen Zielen passte.'
+        },
+        {
+          period: '2008 – 2011',
+          title: 'Ausbildung: Gestaltungstechnischer Assistent',
+          org: 'Medien und Kommunikation, b.i.b. International College',
+          note: 'Umfangreiche praktische Erfahrung mit gängigen Design-Programmen (Adobe Creative Cloud).'
+        }
+      ]
+    },
+    skills: {
+      title: 'Skills',
+      groups: [
+        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'BEM', 'Responsive Webentwicklung'] },
+        {
+          title: 'Arbeitsweise',
+          items: ['Pattern-Libraries (Vuepress, Storybook)', 'A/B-Testing (Optimizely)', 'Tracking (Google Analytics)', 'Internationalisierung (Lokalise)', 'Barrierefreiheit', 'Performance', 'Automatisierte Tests', 'Scrum']
+        },
+        { title: 'Design', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Print und Digital'] }
+      ]
+    },
+    work: {
+      title: 'Projekte',
+      intro: 'Die Arbeit bei Kaufland entstand im Team und ist nicht öffentlich einsehbar. Eigene Projekte kommen hier nach und nach dazu.',
+      placeholderLabel: 'Platzhalter',
+      projects: [
+        {
+          title: 'Kaufland e-commerce: Header, PDP und Bewertungen',
+          type: 'Berufliche Arbeit im Team',
+          placeholder: false,
+          text: 'Umsetzung des Website-Headers für real.de sowie Pflege der Produktdetailseite und der Product Reviews, dazu A/B-Tests und Tracking.'
+        },
+        {
+          title: 'Mehrsprachigkeit des Micro-Frontends',
+          type: 'Berufliche Arbeit im Team',
+          placeholder: false,
+          text: 'Federführende Umsetzung der i18n für CZ, SK, PL und AT mit Lokalise und Nuxt.js.'
+        },
+        {
+          title: 'Diese Portfolio-Website',
+          type: 'Privatprojekt',
+          placeholder: false,
+          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest. Der Quellcode kann nach Veröffentlichung hier verlinkt werden.'
+        },
+        {
+          title: 'Eigenes Frontend-Projekt',
+          type: 'Experiment',
+          placeholder: true,
+          text: 'Hier erscheint ein Projekt mit Code und Live-Demo, sobald es fertig ist.'
+        }
+      ]
+    },
+    contact: {
+      title: 'Kontakt',
+      text: 'Du suchst Verstärkung im Frontend? Schreib mir kurz, worum es geht.',
+      mail: 'E-Mail schreiben',
+      linkedin: 'LinkedIn',
+      cvDe: 'Lebenslauf (Deutsch, PDF)',
+      cvEn: 'CV (Englisch, PDF)'
+    },
+    footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum' },
+    imprint: {
+      metaTitle: 'Impressum – Dustin Clever',
+      title: 'Impressum',
+      providerTitle: 'Angaben gemäß § 5 DDG',
+      contactTitle: 'Kontakt',
+      emailLabel: 'E-Mail',
+      phoneLabel: 'Telefon',
+      contentTitle: 'Verantwortlich für den Inhalt',
+      contentText: 'Verantwortlich im Sinne von § 18 Abs. 2 MStV ist die oben genannte Person.',
+      liabilityTitle: 'Haftung für Links',
+      liabilityText:
+        'Diese Seite enthält Links zu externen Websites, zum Beispiel LinkedIn. Auf deren Inhalte habe ich keinen Einfluss. Für die Inhalte der verlinkten Seiten ist immer der jeweilige Anbieter verantwortlich.',
+      back: 'Zur Startseite'
+    }
+  },
+  en: {
+    ui: {
+      skip: 'Skip to content',
+      nav: 'Main navigation',
+      langLabel: 'Language',
+      scrollDown: 'Scroll to the About section',
+      nextSection: 'Next section: {section}',
+      backToTop: 'Back to top'
+    },
+    nav: [
+      { id: 'about', label: 'About' },
+      { id: 'experience', label: 'Experience' },
+      { id: 'skills', label: 'Skills' },
+      { id: 'projects', label: 'Projects' },
+      { id: 'contact', label: 'Contact' }
+    ],
+    meta: {
+      title: 'Dustin Clever – Frontend Developer',
+      description:
+        'Frontend developer with a design background: Vue.js, Nuxt.js and TypeScript. Seven years at real.digital / Kaufland e-commerce.'
+    },
+    hero: {
+      title: 'I’m Dustin Clever, a Frontend Developer',
+      role: 'Frontend Developer',
+      statement: 'I come from design and build interfaces with Vue, Nuxt and TypeScript.',
+      status: 'Open to a new role as a Frontend Developer.',
+      ctaContact: 'Get in touch',
+      ctaCv: 'Download CV (PDF)',
+      imageAlt: 'Portrait of Dustin Clever',
+      aside: {
+        aboutLabel: 'About me',
+        aboutText: 'Seven years of frontend work in a team at real.digital / Kaufland e-commerce.',
+        aboutLink: 'Learn more',
+        workLabel: 'My work',
+        workText: 'Header, product page, internationalization and A/B tests.',
+        workLink: 'Browse projects',
+        connectLabel: 'Connect',
+        mail: 'Email'
+      }
+    },
+    about: {
+      title: 'About',
+      paragraphs: [
+        'I started out as a media designer for digital and print: logos, flyers, websites, later elements for an e-commerce shop. From design I moved into frontend development.',
+        'From 2018 to 2024 I worked at real.digital / Kaufland e-commerce, as part of larger development teams on a large e-commerce platform. My work included the company-wide B2C pattern library, the header, the product detail page and reviews, A/B tests and tracking, and internationalization of our micro frontend.',
+        'Since early 2025 I have been on a sabbatical, building my own content projects (gaming and trading cards on Twitch, TikTok and YouTube). Now I am looking for a new position as a Frontend Developer.'
+      ],
+      strengthsTitle: 'What I bring',
+      strengths: [
+        { title: 'Design training', text: 'Trained media designer (digital and print), experienced with Adobe Creative Cloud and UX.' },
+        { title: 'Component-based work', text: 'Contributed to a company-wide pattern library using Vuepress and Storybook.' },
+        { title: 'Teamwork', text: 'Scrum with sprints, dailies, reviews, retrospectives and refinements.' }
+      ],
+      factsTitle: 'At a glance',
+      facts: [
+        { label: 'Frontend', value: '2018 to 2024 at real.digital / Kaufland e-commerce' },
+        { label: 'Technologies', value: 'Vue.js, Nuxt.js, TypeScript, CSS/SCSS' },
+        { label: 'Training', value: 'Media designer (digital and print)' },
+        { label: 'Languages', value: 'German (native), English (fluent)' }
+      ]
+    },
+    experience: {
+      title: 'Experience',
+      workTitle: 'Work experience',
+      educationTitle: 'Education',
+      jobs: [
+        {
+          period: '01/2025 – present',
+          title: 'Sabbatical & Content Creation',
+          org: 'Personal project',
+          points: [
+            'Conceptualized and developed personal content creation projects',
+            'Built and managed social media channels (Twitch, TikTok, YouTube)',
+            'Produced and published digital content on gaming and trading cards',
+            'Planned, recorded, edited and optimized short-form videos and livestreams',
+            'Analyzed performance metrics to improve content quality and reach'
+          ],
+          stack: ['OBS Studio', 'Adobe Photoshop', 'Premiere Pro', 'CapCut', 'ElevenLabs']
+        },
+        {
+          period: '01/2018 – 12/2024',
+          title: 'Frontend Developer',
+          org: 'real.digital / Kaufland e-commerce',
+          points: [
+            'Contributed to the internal company-wide B2C pattern library',
+            'Led implementation of i18n for our micro frontend supporting multiple languages (CZ, SK, PL, AT) using Lokalise and Nuxt.js',
+            'Developed the website header for real.de',
+            'Contributed to the rebranding from real.de to kaufland.de',
+            'Built various A/B tests using Optimizely',
+            'Integrated tracking for Optimizely and Google Analytics',
+            'Edited B2C emails via internal CMS using Twig',
+            'Maintained the Product Detail Page (PDP) and product reviews',
+            'Worked in an agile Scrum environment (sprints, dailies, reviews, retrospectives, refinements)'
+          ],
+          stack: ['Vue.js', 'CSS/SCSS', 'TypeScript', 'Nuxt.js', 'Vuepress/Storybook', 'Optimizely']
+        },
+        {
+          period: '08/2017 – 12/2017',
+          title: 'Media Designer',
+          org: 'Hitmeister',
+          points: ['Created and implemented various elements for the e-commerce shop', 'Designed flyers and business cards'],
+          stack: designTools
+        },
+        { period: '03/2016 – 07/2017', title: 'Media Designer (Dual Study Program)', org: 'Hitmeister', points: [], stack: designTools },
+        {
+          period: '09/2014 – 12/2017',
+          title: 'Media Designer (Dual Study Program)',
+          org: 'Charara IT Solutions GmbH',
+          points: [
+            'Planned, designed and implemented logos, flyers, business cards and websites',
+            'Maintained and updated existing websites',
+            'Designed a local in-house magazine',
+            'Customer communication and requirements management',
+            'Project-specific effort estimation and quote creation'
+          ],
+          stack: designTools
+        },
+        { period: '08/2013 – 08/2014', title: 'Internship – Media Design', org: 'Charara IT Solutions GmbH', points: [], stack: designTools }
+      ],
+      education: [
+        {
+          period: '2014 – 2017',
+          title: 'Dual Study Program: Media Design Digital & Print',
+          org: 'Albrecht Dürer Vocational College, Düsseldorf',
+          note: 'Block teaching, practical training at Charara IT Solutions GmbH and Hitmeister'
+        },
+        {
+          period: '2012 – 2013',
+          title: 'Bachelor’s Program: Media Technology',
+          org: 'Cologne University of Applied Sciences',
+          note: 'Deliberately discontinued due to a misalignment between the course content and my interests and career goals.'
+        },
+        {
+          period: '2008 – 2011',
+          title: 'Vocational Training: Design Technical Assistant',
+          org: 'Media and Communication, b.i.b. International College',
+          note: 'Extensive hands-on experience with professional design tools (Adobe Creative Cloud).'
+        }
+      ]
+    },
+    skills: {
+      title: 'Skills',
+      groups: [
+        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'BEM', 'Responsive web development'] },
+        {
+          title: 'Ways of working',
+          items: ['Pattern libraries (Vuepress, Storybook)', 'A/B testing (Optimizely)', 'Tracking (Google Analytics)', 'Internationalization (Lokalise)', 'Accessibility', 'Performance', 'Automated testing', 'Scrum']
+        },
+        { title: 'Design', items: ['UI/UX', 'Adobe Creative Cloud', 'Photoshop', 'Print and digital'] }
+      ]
+    },
+    work: {
+      title: 'Projects',
+      intro: 'My work at Kaufland was done in a team and is not publicly viewable. Personal projects will be added here over time.',
+      placeholderLabel: 'Placeholder',
+      projects: [
+        {
+          title: 'Kaufland e-commerce: header, PDP and reviews',
+          type: 'Professional work in a team',
+          placeholder: false,
+          text: 'Built the website header for real.de and maintained the product detail page and product reviews, plus A/B tests and tracking.'
+        },
+        {
+          title: 'Multilingual micro frontend',
+          type: 'Professional work in a team',
+          placeholder: false,
+          text: 'Led the implementation of i18n for CZ, SK, PL and AT using Lokalise and Nuxt.js.'
+        },
+        {
+          title: 'This portfolio website',
+          type: 'Personal project',
+          placeholder: false,
+          text: 'Nuxt, Vue and TypeScript, tested with Vitest. The source code can be linked here once published.'
+        },
+        {
+          title: 'Own frontend project',
+          type: 'Experiment',
+          placeholder: true,
+          text: 'A project with code and a live demo will appear here once it is finished.'
+        }
+      ]
+    },
+    contact: {
+      title: 'Contact',
+      text: 'Looking for frontend support? Send me a short note about what you need.',
+      mail: 'Send an email',
+      linkedin: 'LinkedIn',
+      cvDe: 'CV (German, PDF)',
+      cvEn: 'CV (English, PDF)'
+    },
+    footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice' },
+    imprint: {
+      metaTitle: 'Legal notice – Dustin Clever',
+      title: 'Legal notice',
+      providerTitle: 'Information pursuant to § 5 DDG',
+      contactTitle: 'Contact',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone',
+      contentTitle: 'Responsible for the content',
+      contentText: 'The person named above is responsible for the content in accordance with § 18 (2) MStV.',
+      liabilityTitle: 'Liability for links',
+      liabilityText:
+        'This site contains links to external websites, for example LinkedIn. I have no influence on their content. The respective provider is always responsible for the content of linked pages.',
+      back: 'Back to the home page'
+    }
+  }
+}
