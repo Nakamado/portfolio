@@ -35,6 +35,7 @@ const languages = [
         :lang="l.code"
         :hreflang="l.code"
         :aria-label="l.label"
+        :aria-current="l.code === lang ? 'page' : undefined"
       >
         {{ l.code.toUpperCase() }}
       </NuxtLink>

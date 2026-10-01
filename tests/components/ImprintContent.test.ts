@@ -3,6 +3,7 @@ import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ImprintContent from '~/components/ImprintContent.vue'
 import SiteHeader from '~/components/SiteHeader.vue'
 import SiteFooter from '~/components/SiteFooter.vue'
+import { isPlaceholder } from '~/utils/placeholder'
 
 describe('Impressum', () => {
   it('hat genau eine h1 und je Block eine h2 (deutsch)', async () => {
@@ -13,11 +14,10 @@ describe('Impressum', () => {
     expect(wrapper.text()).toContain('Dustin Clever')
   })
 
-  it('verlinkt die E-Mail-Adresse und markiert offene Angaben', async () => {
+  it('verlinkt die E-Mail-Adresse und zeigt Name, Straße und Ort', async () => {
     const wrapper = await mountSuspended(ImprintContent, { route: '/impressum' })
     expect(wrapper.find('a[href^="mailto:"]').exists()).toBe(true)
-    // Solange die Anschrift nicht eingetragen ist, wird sie als Platzhalter hervorgehoben
-    expect(wrapper.findAll('.imprint__line--todo').length).toBeGreaterThan(0)
+    expect(wrapper.findAll('.imprint__address .imprint__line')).toHaveLength(3)
   })
 
   it('ist auch auf Englisch verfügbar', async () => {
@@ -43,5 +43,17 @@ describe('Impressum', () => {
     expect(de.find('.site-footer__link').attributes('href')).toBe('/impressum')
     const en = await mountSuspended(SiteFooter, { route: '/en' })
     expect(en.find('.site-footer__link').attributes('href')).toBe('/en/legal-notice')
+  })
+})
+
+describe('isPlaceholder', () => {
+  it('erkennt offene Angaben in eckigen Klammern', () => {
+    expect(isPlaceholder('[Straße und Hausnummer ergänzen]')).toBe(true)
+    expect(isPlaceholder('[PLZ ergänzen] Odenthal')).toBe(true)
+  })
+
+  it('lässt ausgefüllte Angaben in Ruhe', () => {
+    expect(isPlaceholder('Rotdornweg 1')).toBe(false)
+    expect(isPlaceholder('51519 Odenthal')).toBe(false)
   })
 })

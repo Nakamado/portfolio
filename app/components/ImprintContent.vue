@@ -2,8 +2,6 @@
 const { t, homePath } = useLang()
 const { contactEmail, imprintStreet, imprintCity, imprintPhone } = useRuntimeConfig().public
 
-// Angaben in eckigen Klammern sind noch offen und werden sichtbar markiert.
-const isPlaceholder = (value: string) => /^\[|\]/.test(value)
 const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
 </script>
 
