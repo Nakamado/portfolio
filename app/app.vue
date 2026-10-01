@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { lang, t, paths, isImprint } = useLang()
+const { lang, t, paths, legal } = useLang()
+const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : t.value.meta.title))
 const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
 const base = siteUrl.replace(/\/$/, '')
 const abs = (path: string) => `${base}${path}`
@@ -7,7 +8,7 @@ const ogImage = base ? abs('/images/og-image.jpg') : undefined
 
 useHead({
   htmlAttrs: { lang: computed(() => lang.value) },
-  title: computed(() => (isImprint.value ? t.value.imprint.metaTitle : t.value.meta.title)),
+  title: pageTitle,
   link: computed(() =>
     base
       ? [
@@ -38,7 +39,7 @@ useHead({
 
 useSeoMeta({
   description: () => t.value.meta.description,
-  ogTitle: () => (isImprint.value ? t.value.imprint.metaTitle : t.value.meta.title),
+  ogTitle: () => pageTitle.value,
   ogDescription: () => t.value.meta.description,
   ogType: 'website',
   ogLocale: () => (lang.value === 'en' ? 'en_US' : 'de_DE'),

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t, imprintPath } = useLang()
+const { t, imprintPath, privacyPath } = useLang()
 </script>
 
 <template>
@@ -7,6 +7,9 @@ const { t, imprintPath } = useLang()
     <p class="site-footer__text">© {{ new Date().getFullYear() }} Dustin Clever</p>
     <NuxtLink class="site-footer__link text-link" :to="imprintPath">
       <span class="text-link__label">{{ t.footer.imprint }}</span>
+    </NuxtLink>
+    <NuxtLink class="site-footer__link text-link" :to="privacyPath">
+      <span class="text-link__label">{{ t.footer.privacy }}</span>
     </NuxtLink>
     <p class="site-footer__text">{{ t.footer.built }}</p>
   </footer>

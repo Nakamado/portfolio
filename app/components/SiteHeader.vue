@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { lang, t, paths, isImprint, homePath } = useLang()
-// Auf dem Impressum führen Menü und Logo zur Startseite (inkl. Anker), sonst springen sie innerhalb der Seite.
-const anchor = (id: string) => (isImprint.value ? `${homePath.value}#${id}` : `#${id}`)
+const { lang, t, paths, isLegal, homePath } = useLang()
+// Auf Impressum und Datenschutz führen Menü und Logo zur Startseite (inkl. Anker), sonst springen sie innerhalb der Seite.
+const anchor = (id: string) => (isLegal.value ? `${homePath.value}#${id}` : `#${id}`)
 
 const languages = [
   { code: 'de', label: 'Deutsch (DE)' },

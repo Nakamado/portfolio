@@ -18,7 +18,8 @@ describe('profile content', () => {
     expect(JSON.stringify(content)).not.toMatch(/senior|lead developer|architekt|architect/i)
   })
 
-  it('markiert Platzhalter-Projekte', () => {
-    expect(content.de.work.projects.some((p) => p.placeholder)).toBe(true)
+  it('zeigt keine Platzhalter-Projekte', () => {
+    expect(JSON.stringify(content.de.work)).not.toMatch(/platzhalter|placeholder/i)
+    expect(JSON.stringify(content.en.work)).not.toMatch(/platzhalter|placeholder/i)
   })
 })

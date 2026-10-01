@@ -8,7 +8,7 @@ export interface Job {
   stack?: string[]
 }
 export interface Edu { period: string; title: string; org: string; note?: string }
-export interface Project { title: string; type: string; placeholder: boolean; text: string }
+export interface Project { title: string; type: string; text: string }
 export interface SkillGroup { title: string; items: string[] }
 
 export interface Content {
@@ -35,9 +35,9 @@ export interface Content {
   }
   experience: { title: string; workTitle: string; educationTitle: string; jobs: Job[]; education: Edu[] }
   skills: { title: string; groups: SkillGroup[] }
-  work: { title: string; intro: string; placeholderLabel: string; projects: Project[] }
+  work: { title: string; intro: string; projects: Project[] }
   contact: { title: string; text: string; mail: string; linkedin: string; cvDe: string; cvEn: string }
-  footer: { built: string; imprint: string }
+  footer: { built: string; imprint: string; privacy: string }
   imprint: {
     metaTitle: string
     title: string
@@ -49,6 +49,15 @@ export interface Content {
     contentText: string
     liabilityTitle: string
     liabilityText: string
+    back: string
+  }
+  privacy: {
+    metaTitle: string
+    title: string
+    controllerTitle: string
+    emailLabel: string
+    sections: { title: string; paragraphs: string[] }[]
+    updated: string
     back: string
   }
 }
@@ -210,31 +219,21 @@ export const content: Record<Lang, Content> = {
     work: {
       title: 'Projekte',
       intro: 'Die Arbeit bei Kaufland entstand im Team und ist nicht öffentlich einsehbar. Eigene Projekte kommen hier nach und nach dazu.',
-      placeholderLabel: 'Platzhalter',
       projects: [
         {
           title: 'Kaufland e-commerce: Header, PDP und Bewertungen',
           type: 'Berufliche Arbeit im Team',
-          placeholder: false,
           text: 'Umsetzung des Website-Headers für real.de sowie Pflege der Produktdetailseite und der Product Reviews, dazu A/B-Tests und Tracking.'
         },
         {
           title: 'Mehrsprachigkeit des Micro-Frontends',
           type: 'Berufliche Arbeit im Team',
-          placeholder: false,
           text: 'Federführende Umsetzung der i18n für CZ, SK, PL und AT mit Lokalise und Nuxt.js.'
         },
         {
           title: 'Diese Portfolio-Website',
           type: 'Privatprojekt',
-          placeholder: false,
           text: 'Nuxt, Vue und TypeScript, getestet mit Vitest. Der Quellcode kann nach Veröffentlichung hier verlinkt werden.'
-        },
-        {
-          title: 'Eigenes Frontend-Projekt',
-          type: 'Experiment',
-          placeholder: true,
-          text: 'Hier erscheint ein Projekt mit Code und Live-Demo, sobald es fertig ist.'
         }
       ]
     },
@@ -246,7 +245,7 @@ export const content: Record<Lang, Content> = {
       cvDe: 'Lebenslauf (Deutsch, PDF)',
       cvEn: 'CV (Englisch, PDF)'
     },
-    footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum' },
+    footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum', privacy: 'Datenschutz' },
     imprint: {
       metaTitle: 'Impressum – Dustin Clever',
       title: 'Impressum',
@@ -259,6 +258,54 @@ export const content: Record<Lang, Content> = {
       liabilityTitle: 'Haftung für Links',
       liabilityText:
         'Diese Seite enthält Links zu externen Websites, zum Beispiel LinkedIn. Auf deren Inhalte habe ich keinen Einfluss. Für die Inhalte der verlinkten Seiten ist immer der jeweilige Anbieter verantwortlich.',
+      back: 'Zur Startseite'
+    },
+    privacy: {
+      metaTitle: 'Datenschutzerklärung – Dustin Clever',
+      title: 'Datenschutzerklärung',
+      controllerTitle: 'Verantwortlicher',
+      emailLabel: 'E-Mail',
+      sections: [
+        {
+          title: 'Überblick',
+          paragraphs: [
+            'Diese Website ist ein persönliches Portfolio. Sie setzt keine Cookies, nutzt keine Analyse- oder Tracking-Dienste, bindet keine Inhalte von Dritten ein und enthält kein Kontaktformular.'
+          ]
+        },
+        {
+          title: 'Hosting über GitHub Pages',
+          paragraphs: [
+            'Die Website wird über GitHub Pages ausgeliefert. Anbieter ist GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Seite verarbeitet GitHub technisch notwendige Daten, insbesondere deine IP-Adresse sowie Datum, Uhrzeit und aufgerufene Datei, und speichert sie in Server-Logs. Das ist nötig, um die Seite auszuliefern und sicher zu betreiben.',
+            'Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse ist die zuverlässige Darstellung meines Portfolios. Eine Verarbeitung in den USA ist möglich. Informationen zu den Garantien findest du in der Datenschutzerklärung von GitHub.'
+          ]
+        },
+        {
+          title: 'Schriftarten',
+          paragraphs: [
+            'Die verwendeten Schriften (Space Grotesk und Roboto Slab) werden beim Erstellen der Seite heruntergeladen und von dieser Website selbst ausgeliefert. Dein Browser stellt dafür keine Verbindung zu Google her.'
+          ]
+        },
+        {
+          title: 'Kontakt per E-Mail',
+          paragraphs: [
+            'Wenn du mir eine E-Mail schreibst, verarbeite ich deine Adresse und den Inhalt deiner Nachricht, um dir zu antworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b oder f DSGVO. Ich lösche die Nachrichten, sobald die Anfrage erledigt ist und keine Aufbewahrungspflichten entgegenstehen.'
+          ]
+        },
+        {
+          title: 'Externe Links',
+          paragraphs: [
+            'Die Seite verlinkt auf externe Angebote wie LinkedIn. Erst wenn du einen Link anklickst, werden Daten an den jeweiligen Anbieter übertragen. Für deren Datenverarbeitung gilt die jeweilige Datenschutzerklärung.'
+          ]
+        },
+        {
+          title: 'Deine Rechte',
+          paragraphs: [
+            'Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch gegen die Verarbeitung. Wende dich dafür an die oben genannte E-Mail-Adresse.',
+            'Du hast außerdem das Recht, dich bei einer Datenschutzaufsichtsbehörde zu beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf.'
+          ]
+        }
+      ],
+      updated: 'Stand: Oktober 2026',
       back: 'Zur Startseite'
     }
   },
@@ -416,31 +463,21 @@ export const content: Record<Lang, Content> = {
     work: {
       title: 'Projects',
       intro: 'My work at Kaufland was done in a team and is not publicly viewable. Personal projects will be added here over time.',
-      placeholderLabel: 'Placeholder',
       projects: [
         {
           title: 'Kaufland e-commerce: header, PDP and reviews',
           type: 'Professional work in a team',
-          placeholder: false,
           text: 'Built the website header for real.de and maintained the product detail page and product reviews, plus A/B tests and tracking.'
         },
         {
           title: 'Multilingual micro frontend',
           type: 'Professional work in a team',
-          placeholder: false,
           text: 'Led the implementation of i18n for CZ, SK, PL and AT using Lokalise and Nuxt.js.'
         },
         {
           title: 'This portfolio website',
           type: 'Personal project',
-          placeholder: false,
           text: 'Nuxt, Vue and TypeScript, tested with Vitest. The source code can be linked here once published.'
-        },
-        {
-          title: 'Own frontend project',
-          type: 'Experiment',
-          placeholder: true,
-          text: 'A project with code and a live demo will appear here once it is finished.'
         }
       ]
     },
@@ -452,7 +489,7 @@ export const content: Record<Lang, Content> = {
       cvDe: 'CV (German, PDF)',
       cvEn: 'CV (English, PDF)'
     },
-    footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice' },
+    footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice', privacy: 'Privacy policy' },
     imprint: {
       metaTitle: 'Legal notice – Dustin Clever',
       title: 'Legal notice',
@@ -465,6 +502,54 @@ export const content: Record<Lang, Content> = {
       liabilityTitle: 'Liability for links',
       liabilityText:
         'This site contains links to external websites, for example LinkedIn. I have no influence on their content. The respective provider is always responsible for the content of linked pages.',
+      back: 'Back to the home page'
+    },
+    privacy: {
+      metaTitle: 'Privacy policy – Dustin Clever',
+      title: 'Privacy policy',
+      controllerTitle: 'Controller',
+      emailLabel: 'Email',
+      sections: [
+        {
+          title: 'Overview',
+          paragraphs: [
+            'This website is a personal portfolio. It sets no cookies, uses no analytics or tracking services, embeds no third-party content and has no contact form.'
+          ]
+        },
+        {
+          title: 'Hosting on GitHub Pages',
+          paragraphs: [
+            'The website is served via GitHub Pages. The provider is GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. When you visit the site, GitHub processes technically necessary data, in particular your IP address as well as date, time and the requested file, and stores it in server logs. This is required to deliver and secure the site.',
+            'The legal basis is Art. 6(1)(f) GDPR. My legitimate interest is the reliable presentation of my portfolio. Processing in the USA is possible. Information about the safeguards is available in GitHub’s privacy statement.'
+          ]
+        },
+        {
+          title: 'Fonts',
+          paragraphs: [
+            'The fonts used (Space Grotesk and Roboto Slab) are downloaded when the site is built and served from this website itself. Your browser does not connect to Google for this.'
+          ]
+        },
+        {
+          title: 'Contact by email',
+          paragraphs: [
+            'If you email me, I process your address and the content of your message to reply to you. The legal basis is Art. 6(1)(b) or (f) GDPR. I delete messages once the request is dealt with and no retention duties apply.'
+          ]
+        },
+        {
+          title: 'External links',
+          paragraphs: [
+            'The site links to external services such as LinkedIn. Data is only transferred to the respective provider once you click a link. Their own privacy policies apply to that processing.'
+          ]
+        },
+        {
+          title: 'Your rights',
+          paragraphs: [
+            'You have the right of access, rectification, erasure, restriction of processing, data portability and objection to processing. Please contact me at the email address above.',
+            'You also have the right to lodge a complaint with a data protection authority, for example the State Commissioner for Data Protection and Freedom of Information of North Rhine-Westphalia, Kavalleriestraße 2–4, 40213 Düsseldorf, Germany.'
+          ]
+        }
+      ],
+      updated: 'Last updated: October 2026',
       back: 'Back to the home page'
     }
   }

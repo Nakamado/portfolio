@@ -38,4 +38,4 @@ npm run typecheck
 - Lebenslauf-PDFs liegen in `public/cv/`. Beide enthalten die Telefonnummer, die englische zusätzlich das Geburtsdatum. Für eine öffentliche Seite besser Versionen ohne diese Angaben unter gleichem Dateinamen ablegen.
 - Impressum: Seite ist angelegt (`/impressum`, `/en/legal-notice`). Straße und PLZ in `nuxt.config.ts` (`imprintStreet`, `imprintCity`) oder per `.env` eintragen; Platzhalter in eckigen Klammern werden orange markiert. Rechtlich prüfen lassen.
 - Datenschutzerklärung ergänzen (für Seiten mit deutschem Bezug in der Regel nötig)
-- Platzhalter-Projekt in `app/data/profile.ts` (`placeholder: true`) durch ein echtes ersetzen
+- Eigene Projekte in `app/data/profile.ts` unter `work.projects` ergänzen, sobald vorhanden
