@@ -6,6 +6,7 @@ import PatternSection from '~/components/PatternSection.vue'
 import PatternItem from '~/components/PatternItem.vue'
 import CodeBlock from '~/components/CodeBlock.vue'
 import { content } from '~/data/profile'
+import { useTheme } from '~/composables/useTheme'
 import { isColorValue, parseTokens } from '~/utils/tokens'
 
 const colorTokens = parseTokens(mainScss).filter((t) => isColorValue(t.value))
@@ -69,7 +70,7 @@ describe.each([
   it('zeigt jede Komponente mit Vorschau, Schnittstelle, Hinweisen und echtem Quelltext', async () => {
     const wrapper = await mountSuspended(PatternsContent, { route })
     const articles = wrapper.findAll('article.pattern')
-    expect(articles).toHaveLength(6)
+    expect(articles).toHaveLength(7)
     const code = (i: number) => articles[i]!.findAll('pre').map((pre) => pre.text())
     expect(articles[0]!.find('a.button').exists()).toBe(true)
     expect(code(0)[1]).toContain('.button {')
@@ -83,13 +84,15 @@ describe.each([
       expect.arrayContaining(['lang-switch--en'])
     ])
     expect(code(3)[1]).toContain('.lang-switch {')
-    expect(articles[4]!.findAll('li.drag-chip')).toHaveLength(3)
-    expect(code(4)[1]).toContain('<script setup')
-    expect(code(4)[1]).toContain('.drag-chip {')
-    expect(articles[5]!.get('a.text-link').attributes('href')).toBe(lang === 'de' ? '/404' : '/en/404')
-    expect(articles[5]!.get('a.text-link').text()).toBe(p.ui.openNotFound)
-    expect(code(5)[1]).toContain('defineProps<{ labels')
-    expect(code(5)[1]).toContain('.falling-stage {')
+    expect(articles[4]!.find('button.theme-switch').exists()).toBe(true)
+    expect(code(4)[1]).toContain('.theme-switch {')
+    expect(articles[5]!.findAll('li.drag-chip')).toHaveLength(3)
+    expect(code(5)[1]).toContain('<script setup')
+    expect(code(5)[1]).toContain('.drag-chip {')
+    expect(articles[6]!.get('a.text-link').attributes('href')).toBe(lang === 'de' ? '/404' : '/en/404')
+    expect(articles[6]!.get('a.text-link').text()).toBe(p.ui.openNotFound)
+    expect(code(6)[1]).toContain('defineProps<{ labels')
+    expect(code(6)[1]).toContain('.falling-stage {')
     for (const article of articles) {
       expect(article.findAll('dl dt').length).toBeGreaterThan(0)
       expect(article.findAll('ul li').length).toBeGreaterThan(0)
@@ -99,6 +102,21 @@ describe.each([
   it('zeigt im Farbbereich den echten :root-Block', async () => {
     const wrapper = await mountSuspended(PatternsContent, { route })
     expect(wrapper.get('#colors pre').text()).toContain('--blue: #1d63f0;')
+    expect(wrapper.get('#colors pre').text()).toContain("[data-theme='light']")
+  })
+
+  it('zeigt im hellen Theme die hellen Farbwerte und deren Kontraste', async () => {
+    useTheme().theme.value = 'light'
+    document.documentElement.dataset.theme = 'light' // der ThemeSwitch liest es beim Einhängen von dort
+    try {
+      const wrapper = await mountSuspended(PatternsContent, { route })
+      const bg = wrapper.findAll('#colors .tokens .token').find((el) => el.text().includes('--bg '))
+      expect(bg!.text()).toContain('#f7f8fb')
+      expect(wrapper.findAll('.pair')[0]!.text()).toMatch(lang === 'de' ? /16,9:1/ : /16\.9:1/)
+    } finally {
+      useTheme().theme.value = 'dark'
+      delete document.documentElement.dataset.theme
+    }
   })
 
   it('lässt die Demo-Links auf der Seite, ohne zu navigieren', async () => {

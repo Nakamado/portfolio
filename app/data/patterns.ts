@@ -3,7 +3,7 @@
 export interface PatternApiRow { name: string; description: string }
 
 export interface PatternComponent {
-  id: 'button' | 'text-link' | 'scroll-button' | 'lang-switch' | 'drag-chip' | 'not-found'
+  id: 'button' | 'text-link' | 'scroll-button' | 'lang-switch' | 'theme-switch' | 'drag-chip' | 'not-found'
   title: string
   description: string
   api: PatternApiRow[]
@@ -92,7 +92,7 @@ const de: PatternsContent = {
   colors: {
     title: 'Farben',
     intro:
-      'Ein dunkles Theme mit genau einem Akzentton. Alle Farben sind CSS-Variablen in main.scss, die Tabelle wird aus dieser Datei gelesen.',
+      'Ein dunkles und ein helles Theme mit genau einem Akzentton. Alle Farben sind CSS-Variablen in main.scss, die Tabelle wird aus dieser Datei gelesen und zeigt die Werte des gerade aktiven Themes (Schalter oben im Header).',
     notes: {
       bg: 'Hintergrund der Seite und der geraden Abschnitte.',
       'bg-alt': 'Hintergrund der abwechselnden Abschnitte (Über mich, Skills, Kontakt).',
@@ -247,6 +247,23 @@ const de: PatternsContent = {
         usage: '<LangSwitch lang="de" :paths="{ de: \'/\', en: \'/en\' }" label="Sprache" />'
       },
       {
+        id: 'theme-switch',
+        title: 'Theme-Schalter',
+        description:
+          'Wechselt zwischen hellem und dunklem Design. Beim ersten Besuch gilt die Systemeinstellung, danach die Wahl, die der Browser sich merkt. Ein kleines Skript im Head setzt das Theme, bevor die Seite gezeichnet wird, damit nichts aufblitzt. Die Vorschau schaltet wirklich um, auch diese Seite.',
+        api: [
+          { name: 'label', description: 'Beschriftung für Screenreader, zum Beispiel „Helles Design“. Der Zustand steht in aria-pressed.' },
+          { name: 'useTheme()', description: 'Gemeinsamer Zustand (theme, isLight, toggle). Die Farben selbst hängen an data-theme auf <html> (main.scss), die Logik steckt in utils/theme.ts.' }
+        ],
+        a11y: [
+          'Ein echter Button mit aria-label und aria-pressed (gedrückt = helles Design), per Tastatur bedienbar.',
+          'Beide Symbole stehen im HTML, welches sichtbar ist, entscheidet das CSS. Das Symbol allein trägt keine Bedeutung, der Name kommt aus dem Label.',
+          'Gespeichert wird nur die Wahl (dark oder light) im localStorage, ohne Cookie. Ist der Speicher gesperrt, gilt die Wahl bis zum Neuladen. Bei „reduzierte Bewegung“ gibt es keine Übergänge.'
+        ],
+        usageLabel: 'Verwendung im Header',
+        usage: '<ThemeSwitch label="Helles Design" />'
+      },
+      {
         id: 'drag-chip',
         title: 'Drag-Chip',
         description:
@@ -316,7 +333,7 @@ const en: PatternsContent = {
   colors: {
     title: 'Colors',
     intro:
-      'A dark theme with exactly one accent color. All colors are CSS variables in main.scss, and the table is read from that file.',
+      'A dark and a light theme with exactly one accent color. All colors are CSS variables in main.scss, and the table is read from that file and shows the values of the theme that is active right now (switch in the header).',
     notes: {
       bg: 'Page background and the even sections.',
       'bg-alt': 'Background of the alternating sections (About, Skills, Contact).',
@@ -468,6 +485,23 @@ const en: PatternsContent = {
         ],
         usageLabel: 'Usage in the header',
         usage: '<LangSwitch lang="en" :paths="{ de: \'/\', en: \'/en\' }" label="Language" />'
+      },
+      {
+        id: 'theme-switch',
+        title: 'Theme switch',
+        description:
+          'Switches between the light and the dark design. On the first visit the system setting applies, after that the choice the browser remembers. A small script in the head sets the theme before the page is painted, so nothing flashes. The preview really switches, this page included.',
+        api: [
+          { name: 'label', description: 'Label for screen readers, for example “Light theme”. The state is in aria-pressed.' },
+          { name: 'useTheme()', description: 'Shared state (theme, isLight, toggle). The colors themselves hang on data-theme on <html> (main.scss), the logic lives in utils/theme.ts.' }
+        ],
+        a11y: [
+          'A real button with aria-label and aria-pressed (pressed = light design), operable by keyboard.',
+          'Both icons are in the HTML, the CSS decides which one is visible. The icon alone carries no meaning, the name comes from the label.',
+          'Only the choice (dark or light) is stored in localStorage, without a cookie. If storage is blocked, the choice lasts until reload. With “reduced motion” there are no transitions.'
+        ],
+        usageLabel: 'Usage in the header',
+        usage: '<ThemeSwitch label="Light theme" />'
       },
       {
         id: 'drag-chip',

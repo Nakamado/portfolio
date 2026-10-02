@@ -75,4 +75,11 @@ describe('SiteHeader auf der Pattern-Library', () => {
     expect(logo.findAll('.site-header__bracket--close')).toHaveLength(1)
     expect(logo.findAll('path:not(.site-header__bracket)')).toHaveLength(1) // der Schrägstrich bleibt stehen
   })
+
+  it('hat Theme- und Sprachschalter nebeneinander im Werkzeugbereich', async () => {
+    const wrapper = await mountSuspended(SiteHeader, { route: '/' })
+    const tools = wrapper.get('.site-header__tools')
+    expect(tools.find('button.theme-switch').exists()).toBe(true)
+    expect(tools.find('nav.lang-switch').exists()).toBe(true)
+  })
 })

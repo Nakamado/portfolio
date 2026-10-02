@@ -37,6 +37,18 @@ $section-slash-margin-right: 0.35em;
   }
 }
 
+// Helles Theme: überschreibt nur die Farben. data-theme="light" setzt utils/theme.ts (Systemeinstellung oder Wahl im Header).
+:root[data-theme='light'] {
+  --bg: #f7f8fb;
+  --bg-alt: #eceff5;
+  --text: #14171f;
+  --muted: #4d5566;
+  --line: rgb(20 23 31 / 0.16);
+  --blue-light: #1650c8; // im hellen Theme dunkler als --blue, weil die Fläche heller ist
+  --focus: #1650c8;
+  color-scheme: light;
+}
+
 *,
 *::before,
 *::after {

@@ -35,11 +35,12 @@ npm run typecheck
 - `robots.txt`, `sitemap.xml` und JSON-LD (Person) werden automatisch erzeugt
 - Anker-Links (Menü, Hero) setzen den Tastaturfokus in den Zielabschnitt; Fokusrahmen sind nie abgeschnitten
 - Jeder Abschnitt füllt mindestens die Fensterhöhe unter dem Header, der Hero passt exakt hinein (Desktop)
-- `prefers-reduced-motion` wird beachtet; es werden keine Cookies gesetzt
+- `prefers-reduced-motion` wird beachtet; es werden keine Cookies gesetzt (nur die Designwahl liegt im `localStorage`)
 - Mitlaufender Pfeil-Button (`SectionPager.vue`) ab "Über mich": springt zum nächsten Abschnitt, im letzten dreht er sich nach oben und führt zum Anfang
 - Die `h2` jedes Abschnitts ist per Tab erreichbar (`tabindex="0"` in `BaseSection.vue`); Fokusrahmen sichtbar, keine Link-/Button-Semantik
 - Link-Hover: Unterstrich läuft von links nach rechts von Weiß zu Blau (`.text-link` in `main.scss`); Sprachschalter als animierter "Lichtschalter"
 - Easteregg: ASCII-Logo als Kommentar im `<head>` (`server/plugins/easter-egg.ts`) und in der Browser-Konsole (`app/plugins/easter-egg.client.ts`)
+- Heller und dunkler Modus: Beim ersten Besuch gilt die Systemeinstellung (`prefers-color-scheme`), der Sonne/Mond-Button im Header (`ThemeSwitch.vue`) wechselt und merkt sich die Wahl im `localStorage` (`utils/theme.ts`, `composables/useTheme.ts`). Ein kleines Inline-Skript im `<head>` setzt `data-theme` vor dem ersten Rendern, damit nichts aufblitzt. Das helle Theme überschreibt nur Farben (`:root[data-theme='light']` in `main.scss`); ohne JavaScript bleibt die Seite dunkel
 - Druckansicht (`app/assets/scss/_print.scss`, geladen am Ende der `main.scss`): die Startseite wird zu einem kompakten, hellen Lebenslauf. Header, Pfeile, Punktraster, Porträt und Buttons entfallen, externe Links zeigen ihre Adresse. Ansehen mit Strg+P oder in den DevTools unter Rendering → „Emulate CSS media type: print“
 - Schriften lädt `@nuxt/fonts` beim Build herunter und liefert sie selbst aus (keine Verbindung zu Google beim Seitenaufruf)
 

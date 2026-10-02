@@ -24,7 +24,10 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
         </li>
       </ul>
     </nav>
-    <LangSwitch :lang="lang" :paths="paths" :label="t.ui.langLabel" />
+    <div class="site-header__tools">
+      <ThemeSwitch :label="t.ui.themeLabel" />
+      <LangSwitch :lang="lang" :paths="paths" :label="t.ui.langLabel" />
+    </div>
   </header>
 </template>
 
@@ -100,6 +103,12 @@ $site-header-link-padding: 0.6rem;
       width: $logo-size-compact;
       height: $logo-size-compact;
     }
+  }
+
+  &__tools {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
   }
 
   &__nav {

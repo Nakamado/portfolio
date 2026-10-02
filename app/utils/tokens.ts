@@ -5,9 +5,12 @@ export interface Token {
   comment?: string
 }
 
-/** Liest den ersten :root-Block (bis zur passenden schließenden Klammer) aus dem SCSS-Quelltext. */
-export function extractRootBlock(scss: string): string {
-  const start = scss.indexOf(':root')
+/** Selektor des hellen Themes in der main.scss. */
+export const LIGHT_SELECTOR = ":root[data-theme='light']"
+
+/** Liest den ersten Block mit diesem Selektor (bis zur passenden schließenden Klammer) aus dem SCSS-Quelltext, standardmäßig :root. */
+export function extractRootBlock(scss: string, selector = ':root'): string {
+  const start = scss.indexOf(selector)
   if (start === -1) return ''
   const open = scss.indexOf('{', start)
   if (open === -1) return ''
@@ -20,8 +23,8 @@ export function extractRootBlock(scss: string): string {
 }
 
 /** Liest die Design-Tokens (--name: wert;) aus dem :root-Block, damit die Pattern-Library nie vom echten Stand abweicht. */
-export function parseTokens(scss: string): Token[] {
-  const block = extractRootBlock(scss)
+export function parseTokens(scss: string, selector = ':root'): Token[] {
+  const block = extractRootBlock(scss, selector)
   const tokens: Token[] = []
   const seen = new Set<string>()
   for (const match of block.matchAll(/^\s*--([\w-]+):\s*([^;]+);(?:[ \t]*\/\/[ \t]*(.*))?$/gm)) {
@@ -35,3 +38,12 @@ export function parseTokens(scss: string): Token[] {
 
 /** Farbwerte (Hex oder rgb) bekommen in der Pattern-Library ein Farbfeld, alles andere nicht. */
 export const isColorValue = (value: string) => /^(#|rgb)/i.test(value.trim())
+
+/** Legt die Werte eines Themes über die Grundwerte. Ein Kommentar des Themes ersetzt den Grundkommentar, sonst bleibt der alte. */
+export function mergeTokens(base: Token[], overrides: Token[]): Token[] {
+  const byName = new Map(overrides.map((token) => [token.name, token]))
+  return base.map((token) => {
+    const over = byName.get(token.name)
+    return over ? { ...token, value: over.value, comment: over.comment ?? token.comment } : token
+  })
+}

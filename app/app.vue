@@ -12,6 +12,7 @@ useHead({
   title: pageTitle,
   link: computed(() => headLinks(isNotFound.value ? '' : base, lang.value, paths.value)), // die Fehlerseite hat keine Canonical-Adresse
   script: [
+    { innerHTML: themeScript }, // setzt das Theme, bevor die Seite gezeichnet wird
     {
       type: 'application/ld+json',
       innerHTML: computed(() =>

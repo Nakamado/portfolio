@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import mainScss from '../app/assets/scss/main.scss?raw'
 import { contrastLevel, contrastRatio, contrastRows, hexToRgb, isHex, luminance } from '../app/utils/color'
-import { extractRootBlock, isColorValue, parseTokens } from '../app/utils/tokens'
+import { LIGHT_SELECTOR, extractRootBlock, isColorValue, mergeTokens, parseTokens } from '../app/utils/tokens'
+import { content } from '../app/data/profile'
 
 describe('Farbhilfen', () => {
   it('erkennt Hexfarben', () => {
@@ -82,6 +83,35 @@ describe('Design-Tokens aus dem SCSS', () => {
     expect(isColorValue('rgb(255 255 255 / 0.14)')).toBe(true)
     expect(isColorValue("'Space Grotesk', Arial")).toBe(false)
     expect(isColorValue('clamp(1.25rem, 5vw, 4rem)')).toBe(false)
+  })
+
+  it('liest Blöcke mit anderem Selektor und legt ein Theme über die Grundwerte', () => {
+    const scss = ":root {\n  --a: #000; // dunkel\n  --b: #111;\n  --c: 2rem;\n}\n:root[data-theme='light'] {\n  --a: #fff;\n  --b: #eee; // hell\n}"
+    const light = parseTokens(scss, ":root[data-theme='light']")
+    expect(light.map((t) => t.name)).toEqual(['a', 'b'])
+    expect(extractRootBlock(scss, ":root[data-theme='light']").startsWith(":root[data-theme='light']")).toBe(true)
+    expect(mergeTokens(parseTokens(scss), light)).toEqual([
+      { name: 'a', value: '#fff', comment: 'dunkel' }, // ohne eigenen Kommentar bleibt der alte
+      { name: 'b', value: '#eee', comment: 'hell' },
+      { name: 'c', value: '2rem', comment: undefined } // nicht überschrieben
+    ])
+  })
+
+  it('hat im hellen Theme nur Farben, die es im dunklen auch gibt, und alle Kontrastpaare bestehen', () => {
+    const dark = parseTokens(mainScss)
+    const light = parseTokens(mainScss, LIGHT_SELECTOR)
+    expect(light.length).toBeGreaterThan(0)
+    for (const token of light) {
+      expect(dark.map((t) => t.name), token.name).toContain(token.name)
+      expect(isColorValue(token.value), token.name).toBe(true)
+    }
+    for (const lang of ['de', 'en'] as const) {
+      for (const [name, tokens] of [['dunkel', dark], ['hell', mergeTokens(dark, light)]] as const) {
+        const rows = contrastRows(tokens, content[lang].patterns.colors.pairs)
+        expect(rows.length, name).toBe(content[lang].patterns.colors.pairs.length)
+        for (const row of rows) expect(row.level, `${name}: ${row.fg} / ${row.bg}`).not.toBe('fail')
+      }
+    }
   })
 
   it('findet in der echten main.scss alle Farben, Schriften und Layout-Werte', () => {

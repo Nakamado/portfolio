@@ -53,6 +53,7 @@ const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
 $imprint-line-todo-padding: 0.4rem;
 $todo-outline: 0.125rem;
 $todo-color: #ffb84d; // Markierung für noch offene Angaben (Warnfarbe, nur hier)
+$todo-color-light: #8a4b00; // dieselbe Markierung im hellen Theme, dunkler wegen des Kontrasts
 
 .imprint {
   max-width: $measure-text;
@@ -86,8 +87,13 @@ $todo-color: #ffb84d; // Markierung für noch offene Angaben (Warnfarbe, nur hie
     &--todo {
       width: fit-content;
       padding: 0 $imprint-line-todo-padding;
-      outline: $todo-outline dashed $todo-color;
-      color: $todo-color;
+      --todo: #{$todo-color};
+      outline: $todo-outline dashed var(--todo);
+      color: var(--todo);
+
+      :root[data-theme='light'] & {
+        --todo: #{$todo-color-light};
+      }
     }
   }
 

@@ -15,12 +15,13 @@ describe('Druckansicht', () => {
     expect(printScss).toMatch(/@page\s*{/)
   })
 
-  it('macht die Seite hell', () => {
+  it('macht die Seite hell, auch wenn das dunkle oder helle Theme aktiv ist', () => {
+    expect(printScss).toMatch(/:root,\s*:root\[data-theme\]\s*{/)
     expect(printScss).toMatch(/--bg:\s*#\{\$print-paper\}/)
     expect(printScss).toContain('color-scheme: light')
   })
 
-  it.each(['.site-header', '.pager', '.lang-switch', '.scroll-button', '.hero__portrait', '.hero-backdrop', '.hero__actions', '.skip-link', 'a[download]'])(
+  it.each(['.site-header', '.pager', '.lang-switch', '.theme-switch', '.scroll-button', '.hero__portrait', '.hero-backdrop', '.hero__actions', '.skip-link', 'a[download]'])(
     'blendet %s aus',
     (selector) => {
       const hidden = printScss.slice(0, printScss.indexOf('display: none !important'))

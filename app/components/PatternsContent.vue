@@ -3,6 +3,7 @@ import mainScss from '~/assets/scss/main.scss?raw'
 import variablesScss from '~/assets/scss/_variables.scss?raw'
 import buttonScss from '~/assets/scss/components/_button.scss?raw'
 import textLinkScss from '~/assets/scss/components/_text-link.scss?raw'
+import themeSwitchSource from '~/components/ThemeSwitch.vue?raw'
 import scrollButtonSource from '~/components/ScrollButton.vue?raw'
 import langSwitchSource from '~/components/LangSwitch.vue?raw'
 import dragChipSource from '~/components/DragChip.vue?raw'
@@ -14,12 +15,16 @@ const { lang, t, homePath } = useLang()
 const p = computed(() => t.value.patterns)
 const onNavigate = focusSection // Fokus auf den Zielabschnitt setzen (siehe utils/focusSection.ts)
 
-const tokens = parseTokens(mainScss)
-const colorTokens = tokens.filter((token) => isColorValue(token.value))
-const otherTokens = tokens.filter((token) => !isColorValue(token.value))
-const rootCode = extractRootBlock(mainScss)
-const fontValue = (name: string) => tokens.find((token) => token.name === name)!.value
-const pairs = computed(() => contrastRows(tokens, p.value.colors.pairs))
+// Die Werte folgen dem Theme, das gerade aktiv ist (Schalter im Header): dunkel ist der Grundwert, hell überschreibt die Farben.
+const { theme } = useTheme()
+const darkTokens = parseTokens(mainScss)
+const lightTokens = parseTokens(mainScss, LIGHT_SELECTOR)
+const tokens = computed(() => (theme.value === 'light' ? mergeTokens(darkTokens, lightTokens) : darkTokens))
+const colorTokens = computed(() => tokens.value.filter((token) => isColorValue(token.value)))
+const otherTokens = computed(() => tokens.value.filter((token) => !isColorValue(token.value)))
+const rootCode = `${extractRootBlock(mainScss)}\n\n${extractRootBlock(mainScss, LIGHT_SELECTOR)}`
+const fontValue = (name: string) => tokens.value.find((token) => token.name === name)!.value
+const pairs = computed(() => contrastRows(tokens.value, p.value.colors.pairs))
 const formatRatio = (ratio: number) =>
   ratio.toLocaleString(lang.value === 'en' ? 'en-US' : 'de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
@@ -31,6 +36,7 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
   'text-link': { file: 'components/_text-link.scss', code: textLinkScss },
   'scroll-button': { file: 'ScrollButton.vue', code: scrollButtonSource },
   'lang-switch': { file: 'LangSwitch.vue', code: langSwitchSource },
+  'theme-switch': { file: 'ThemeSwitch.vue', code: themeSwitchSource },
   'not-found': { file: 'FallingStage.vue', code: fallingStageSource },
   'drag-chip': { file: 'DragChip.vue', code: dragChipSource }
 }
@@ -143,6 +149,9 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
         <template v-else-if="item.id === 'lang-switch'">
           <LangSwitch lang="de" :paths="demoPaths" :label="t.ui.langLabel" @click.prevent />
           <LangSwitch lang="en" :paths="demoPaths" :label="t.ui.langLabel" @click.prevent />
+        </template>
+        <template v-else-if="item.id === 'theme-switch'">
+          <ThemeSwitch :label="t.ui.themeLabel" />
         </template>
         <template v-else-if="item.id === 'not-found'">
           <NuxtLink class="text-link" :to="notFoundPath">

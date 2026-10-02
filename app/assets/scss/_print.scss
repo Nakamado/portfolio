@@ -23,7 +23,8 @@ $print-paper: #fff;
     margin: $print-margin;
   }
 
-  :root {
+  :root,
+  :root[data-theme] {
     --bg: #{$print-paper};
     --bg-alt: #{$print-paper};
     --text: #{$print-ink};
@@ -50,6 +51,7 @@ $print-paper: #fff;
   .site-footer,
   .pager,
   .lang-switch,
+  .theme-switch,
   .scroll-button,
   .hero__scroll,
   .hero__actions,

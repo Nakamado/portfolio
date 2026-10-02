@@ -97,8 +97,8 @@ $hero-padding-top: 3.5rem;
 $hero-title-font-size: clamp(2.25rem, 8vw, 3.5rem);
 $hero-title-font-size-desktop: clamp(2.25rem, min(3.6vw, 7svh), 4.25rem);
 $hero-more-font-size: 0.8rem;
-$text-halo-color: rgb(26 29 38 / 0.85);
-$text-halo: 0 0 1.125rem $text-halo-color; // dunkler Hof um den Text (bg), damit er über dem Porträt lesbar bleibt
+$text-halo-color: color-mix(in srgb, var(--bg) 85%, transparent);
+$text-halo: 0 0 1.125rem $text-halo-color; // Hof in der Hintergrundfarbe um den Text, damit er über dem Porträt lesbar bleibt
 
 .hero {
   position: relative;

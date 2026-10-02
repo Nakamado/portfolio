@@ -14,7 +14,7 @@ export interface Project { title: string; type: string; text: string }
 export interface SkillGroup { title: string; items: string[] }
 
 export interface Content {
-  ui: Record<'skip' | 'nav' | 'langLabel' | 'scrollDown' | 'nextSection' | 'backToTop', string>
+  ui: Record<'skip' | 'nav' | 'langLabel' | 'themeLabel' | 'scrollDown' | 'nextSection' | 'backToTop', string>
   nav: { id: string; label: string }[]
   meta: { title: string; description: string }
   hero: {
@@ -82,6 +82,7 @@ export const content: Record<Lang, Content> = {
       skip: 'Zum Inhalt springen',
       nav: 'Hauptnavigation',
       langLabel: 'Sprache',
+      themeLabel: 'Helles Design',
       scrollDown: 'Zum Abschnitt „Über mich“ scrollen',
       nextSection: 'Weiter zu: {section}',
       backToTop: 'Zurück nach oben'
@@ -315,6 +316,13 @@ export const content: Record<Lang, Content> = {
           ]
         },
         {
+          title: 'Design-Auswahl (hell oder dunkel)',
+          paragraphs: [
+            'Wenn du über den Schalter im Kopfbereich das helle oder dunkle Design wählst, speichert dein Browser diese Wahl lokal auf deinem Gerät (Eintrag „theme“ im localStorage, kein Cookie). Der Eintrag wird nicht an mich oder Dritte übertragen. Er dient nur dazu, dein gewähltes Design beim nächsten Besuch wieder anzuzeigen. Ohne Auswahl verwendet die Seite die Einstellung deines Geräts. Du kannst den Eintrag jederzeit in den Einstellungen deines Browsers löschen.',
+            'Der Eintrag wird nur auf deinen ausdrücklichen Wunsch hin gesetzt und ist für die gewünschte Darstellung erforderlich. Eine Einwilligung ist dafür nach meiner Einschätzung nicht nötig (§ 25 Abs. 2 Nr. 2 TDDDG).'
+          ]
+        },
+        {
           title: 'Kontakt per E-Mail',
           paragraphs: [
             'Wenn du mir eine E-Mail schreibst, verarbeite ich deine Adresse und den Inhalt deiner Nachricht, um dir zu antworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b oder f DSGVO. Ich lösche die Nachrichten, sobald die Anfrage erledigt ist und keine Aufbewahrungspflichten entgegenstehen.'
@@ -343,6 +351,7 @@ export const content: Record<Lang, Content> = {
       skip: 'Skip to content',
       nav: 'Main navigation',
       langLabel: 'Language',
+      themeLabel: 'Light theme',
       scrollDown: 'Scroll to the About section',
       nextSection: 'Next section: {section}',
       backToTop: 'Back to top'
@@ -573,6 +582,13 @@ export const content: Record<Lang, Content> = {
           title: 'Fonts',
           paragraphs: [
             'The fonts used (Space Grotesk and Roboto Slab) are downloaded when the site is built and served from this website itself. Your browser does not connect to Google for this.'
+          ]
+        },
+        {
+          title: 'Design choice (light or dark)',
+          paragraphs: [
+            'If you pick the light or dark design with the switch in the header, your browser stores that choice locally on your device (entry “theme” in localStorage, not a cookie). The entry is not sent to me or to third parties. It only serves to show your chosen design again on your next visit. Without a choice the site uses your device setting. You can delete the entry at any time in your browser settings.',
+            'The entry is only set at your explicit request and is necessary for the display you asked for. In my assessment no consent is required for it (Section 25(2) no. 2 TDDG).'
           ]
         },
         {

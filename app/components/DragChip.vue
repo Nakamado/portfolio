@@ -68,7 +68,7 @@ function onUp(event: PointerEvent) {
 <style lang="scss" scoped>
 $chip-lift-shadow: 0 0.375rem 0.875rem $shadow-strong;
 $drag-chip-padding: 0.1rem 0.6rem;
-$chip-border: rgb(255 255 255 / 0.4);
+$chip-border: color-mix(in srgb, var(--text) 40%, transparent); // Textfarbe, blass: passt zu beiden Themes
 
 .drag-chip {
   position: relative;

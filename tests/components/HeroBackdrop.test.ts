@@ -1,8 +1,9 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, nextTick } from 'vue'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import HeroBackdrop from '~/components/HeroBackdrop.vue'
 import { buildMask } from '~/utils/dotMatrix'
+import { useTheme } from '~/composables/useTheme'
 import { stubAnimationFrames } from '../helpers/raf'
 
 function fakeContext() {
@@ -126,6 +127,43 @@ describe('HeroBackdrop', () => {
     const { wrapper } = await mount()
     expect(ctx.setTransform).toHaveBeenCalledWith(1, 0, 0, 1, 0, 0)
     expect((wrapper.element as HTMLCanvasElement).width).toBe(300)
+  })
+
+  describe('Farben aus dem Theme', () => {
+    function stubColors(values: Record<string, string>) {
+      vi.stubGlobal('getComputedStyle', () => ({ getPropertyValue: (name: string) => values[name] ?? '' }))
+    }
+
+    afterEach(() => {
+      useTheme().theme.value = 'dark'
+    })
+
+    it('liest Ruhe- und Akzentfarbe aus den CSS-Variablen', async () => {
+      stubColors({ '--text': ' #14171f ', '--blue-light': '#1650c8' })
+      const { host } = await mount()
+      expect(ctx.styles.some((c) => c.includes('20 23 31'))).toBe(true)
+      expect(ctx.styles.some((c) => c.includes('255 255 255'))).toBe(false)
+      host.dispatchEvent(pointer('pointermove', { x: 150, y: 100 }))
+      for (let i = 0; i < 5; i++) frames.flush()
+      expect(ctx.styles.some((c) => c.includes('22 80 200'))).toBe(true)
+    })
+
+    it('nimmt Ersatzfarben, wenn die Variablen keine Hexfarben sind', async () => {
+      stubColors({ '--text': 'rgb(1 2 3)' })
+      await mount()
+      expect(ctx.styles.some((c) => c.includes('255 255 255'))).toBe(true)
+    })
+
+    it('zeichnet beim Wechsel des Themes mit den neuen Farben neu', async () => {
+      stubColors({ '--text': '#ffffff' })
+      await mount()
+      stubColors({ '--text': '#14171f' })
+      const before = ctx.styles.length
+      useTheme().theme.value = 'light'
+      await nextTick()
+      expect(ctx.styles.length).toBeGreaterThan(before)
+      expect(ctx.styles.slice(before).every((c) => c.includes('20 23 31'))).toBe(true)
+    })
   })
 
   describe('mit Schrift (sign)', () => {
