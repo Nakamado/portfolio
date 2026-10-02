@@ -28,6 +28,10 @@ describe('Druckansicht', () => {
     }
   )
 
+  it('färbt den Titel im Hero blau', () => {
+    expect(printScss).toMatch(/\.hero__title\s*{\s*color:\s*var\(--blue\)/)
+  })
+
   it('zeigt externe Adressen hinter dem Link', () => {
     expect(printScss).toContain("a[href^='http']::after")
     expect(printScss).toContain('attr(href)')

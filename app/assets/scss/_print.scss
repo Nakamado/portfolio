@@ -7,8 +7,10 @@ $print-root-size: 9pt; // alle rem-Maße der Seite werden dadurch kleiner (Stand
 $print-margin: 1.5cm;
 $print-gap: 6pt;
 $print-gap-large: 12pt;
+$print-gap-small: 2pt;
 $print-section-title-size: 13pt;
 $print-small-size: 8pt;
+$print-chip-padding: 0 5pt;
 $print-date-width: 3.2cm;
 $print-ink: #111;
 $print-ink-muted: #4a4f5c;
@@ -74,6 +76,10 @@ $print-paper: #fff;
     margin-top: $print-gap;
   }
 
+  .hero__title {
+    color: var(--blue) !important; // Farbakzent für den Namen oben auf der Seite
+  }
+
   .hero__title,
   .hero__lead,
   .hero__status,
@@ -113,7 +119,7 @@ $print-paper: #fff;
   }
 
   .skills__item {
-    padding: 2pt 0 !important;
+    padding: $print-gap-small 0 !important;
   }
 
   .projects__item,
@@ -124,7 +130,7 @@ $print-paper: #fff;
 
   // Tags (Technologien) ohne Rahmenfarbe und Bewegung
   .drag-chip {
-    padding: 0 5pt !important;
+    padding: $print-chip-padding !important;
     border-color: $print-ink-muted !important;
     background: none !important;
     box-shadow: none !important;
