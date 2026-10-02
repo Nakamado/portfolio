@@ -5,10 +5,12 @@ export default defineNuxtConfig({
   css: ['~/assets/scss/main.scss'],
   typescript: { strict: true },
   fonts: {
-    // Explizit, damit alle genutzten Schriftschnitte geladen und selbst ausgeliefert werden
+    // Explizit, damit alle genutzten Schriftschnitte geladen und selbst ausgeliefert werden.
+    // Nur "latin" (deckt ä, ö, ü, ß ab) und vorab laden: so liegt die Schrift schon beim ersten Zeichnen bereit
+    // und der Text springt nicht mehr, wenn sie nachträglich eintrifft (Layout Shift auf dem Handy).
     families: [
-      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 700], styles: ['normal'] },
-      { name: 'Roboto Slab', provider: 'google', weights: [500, 700], styles: ['normal'] }
+      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 700], styles: ['normal'], subsets: ['latin'], preload: true },
+      { name: 'Roboto Slab', provider: 'google', weights: [500, 700], styles: ['normal'], subsets: ['latin'], preload: true }
     ]
   },
   app: {
