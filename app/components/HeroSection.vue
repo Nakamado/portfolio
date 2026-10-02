@@ -28,7 +28,7 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
       <img
         class="hero__image"
         src="/images/portrait.webp"
-        width="1000"
+        width="1040"
         height="810"
         :alt="t.hero.imageAlt"
         fetchpriority="high"
@@ -88,10 +88,10 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
 $hero-aside-columns: repeat(3, 1fr); // Tablet: die drei Infoblöcke nebeneinander
 $hero-portrait-height-ratio: 0.98;
 $hero-portrait-left: 33%;
-$hero-text-width: clamp(22rem, 38vw, 32rem);
-$hero-aside-width: 13rem;
+$hero-text-width: clamp(22rem, 38vw, 38rem); // wächst auf breiten Fenstern mit
+$hero-aside-width: clamp(13rem, 15vw, 17rem); // Infoblöcke bekommen auf breiten Fenstern mehr Platz
 $hero-min-height: 30rem;
-$hero-portrait-width: min(52vw, 60rem);
+$hero-portrait-width: min(52vw, 50rem); // höchstens 800 px breit
 $hero-portrait-max-height: 36rem;
 $hero-padding-top: 3.5rem;
 $hero-title-font-size: clamp(2.25rem, 8vw, 3.5rem);

@@ -159,7 +159,7 @@ const de: PatternsContent = {
       },
       {
         title: 'Hero',
-        text: 'Ab 1100 px liegt das Porträt als Hintergrundebene zwischen dem Text links und den Infoblöcken rechts. Darunter steht es unter dem Text.'
+        text: 'Ab 1024 px liegt das Porträt als Hintergrundebene zwischen dem Text links und den Infoblöcken rechts. Darunter steht es unter dem Text.'
       },
       {
         title: 'Formen',
@@ -399,7 +399,7 @@ const en: PatternsContent = {
       },
       {
         title: 'Hero',
-        text: 'From 1100 px the portrait sits as a background layer between the text on the left and the info blocks on the right. Below that it sits under the text.'
+        text: 'From 1024 px the portrait sits as a background layer between the text on the left and the info blocks on the right. Below that it sits under the text.'
       },
       {
         title: 'Shapes',
