@@ -238,7 +238,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'Diese Portfolio-Website',
           type: 'Privatprojekt',
-          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest.'
+          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest bei 100 % Testabdeckung. Lighthouse (Stand Oktober 2026): Performance 100 am Desktop und 99 mobil, dazu jeweils 100 bei Barrierefreiheit, Best Practices und SEO.'
         }
       ]
     },
@@ -487,7 +487,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'This portfolio website',
           type: 'Personal project',
-          text: 'Nuxt, Vue and TypeScript, tested with Vitest.'
+          text: 'Nuxt, Vue and TypeScript, tested with Vitest at 100% coverage. Lighthouse (as of October 2026): performance 100 on desktop and 99 on mobile, plus 100 each for accessibility, best practices and SEO.'
         }
       ]
     },
