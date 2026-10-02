@@ -9,7 +9,11 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
   <header class="site-header">
     <NuxtLink class="site-header__brand" :to="anchor('top')" @click="onNavigate">
       <svg class="site-header__logo" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" focusable="false">
-        <path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path class="site-header__bracket site-header__bracket--open" d="M8 6l-6 6 6 6" />
+          <path class="site-header__bracket site-header__bracket--close" d="M16 6l6 6-6 6" />
+          <path d="M14 4l-4 16" />
+        </g>
       </svg>
       Dustin Clever
     </NuxtLink>
@@ -29,6 +33,7 @@ $logo-size-compact: 1.75rem;
 $focus-inset: -0.1875rem;
 $site-header-brand-gap: 0.7rem;
 $site-header-brand-font-size: 1.45rem;
+$logo-spread: 0.15rem; // so weit rücken die spitzen Klammern beim Hover auseinander (in Einheiten des 24er-Rasters der Grafik)
 $site-header-link-padding: 0.6rem;
 .site-header {
   display: flex;
@@ -61,7 +66,27 @@ $site-header-link-padding: 0.6rem;
   }
 
   &__logo {
+    overflow: visible; // die Klammern wandern über den Rand der Grafik, ohne dass sich etwas im Layout verschiebt (Name bleibt stehen)
     color: var(--blue);
+  }
+
+  &__bracket {
+    transition: transform $transition-base;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // Beim Hover rücken "<" und ">" vom Schrägstrich weg
+  &__brand:hover &__bracket--open,
+  &__brand:focus-visible &__bracket--open {
+    transform: translateX(-$logo-spread);
+  }
+
+  &__brand:hover &__bracket--close,
+  &__brand:focus-visible &__bracket--close {
+    transform: translateX($logo-spread);
   }
 
   // Sehr schmale Bildschirme (320 px): Logo und Schalter sollen in eine Zeile passen

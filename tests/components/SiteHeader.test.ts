@@ -65,4 +65,14 @@ describe('SiteHeader auf der Pattern-Library', () => {
     expect(wrapper.get('.site-header__link').attributes('href')).toBe(firstLink)
     expect(wrapper.findAll('.lang-switch__link').map((l) => l.attributes('href'))).toEqual(['/pattern-library', '/en/pattern-library'])
   })
+
+  it('baut das Logo aus drei Teilen, damit sich die Klammern beim Hover einzeln bewegen lassen', async () => {
+    const wrapper = await mountSuspended(SiteHeader, { route: '/' })
+    const logo = wrapper.get('.site-header__logo')
+    expect(logo.attributes('aria-hidden')).toBe('true')
+    expect(logo.findAll('path')).toHaveLength(3)
+    expect(logo.findAll('.site-header__bracket--open')).toHaveLength(1)
+    expect(logo.findAll('.site-header__bracket--close')).toHaveLength(1)
+    expect(logo.findAll('path:not(.site-header__bracket)')).toHaveLength(1) // der Schrägstrich bleibt stehen
+  })
 })
