@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { currentSectionIndex, pagerTarget } from '../app/utils/pager'
+import { currentSectionIndex, pagerLift, pagerTarget } from '../app/utils/pager'
 
 describe('currentSectionIndex', () => {
   const line = 400
@@ -30,5 +30,17 @@ describe('pagerTarget', () => {
 
   it('führt im letzten Abschnitt zurück nach oben', () => {
     expect(pagerTarget(5)).toEqual({ id: 'top', up: true })
+  })
+})
+
+describe('pagerLift', () => {
+  it('lässt den Button unten, solange der Footer außerhalb des Fensters liegt', () => {
+    expect(pagerLift(900, 800)).toBe(0)
+    expect(pagerLift(800, 800)).toBe(0)
+  })
+
+  it('rückt den Button um die sichtbare Footer-Höhe nach oben', () => {
+    expect(pagerLift(700, 800)).toBe(100)
+    expect(pagerLift(0, 800)).toBe(800)
   })
 })

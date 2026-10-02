@@ -226,6 +226,11 @@ export const content: Record<Lang, Content> = {
           text: 'Umsetzung des Website-Headers für real.de sowie Pflege der Produktdetailseite und der Product Reviews, dazu A/B-Tests und Tracking.'
         },
         {
+          title: 'Pattern-Library für alle Teams',
+          type: 'Berufliche Arbeit im Team',
+          text: 'Komponenten selbst erstellt, bestehende in die B2C-Pattern-Library übertragen, Bugs behoben und Features ergänzt, in enger Zusammenarbeit mit den Design- und UX-Kolleg:innen. Dazu kam die Dokumentation mit Verwendung, Props und Parametern. Beim Wechsel von Vuepress auf Storybook war ich einer der Hauptverantwortlichen.'
+        },
+        {
           title: 'Mehrsprachigkeit des Micro-Frontends',
           type: 'Berufliche Arbeit im Team',
           text: 'Federführende Umsetzung der i18n für CZ, SK, PL und AT mit Lokalise und Nuxt.js.'
@@ -233,7 +238,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'Diese Portfolio-Website',
           type: 'Privatprojekt',
-          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest. Der Quellcode kann nach Veröffentlichung hier verlinkt werden.'
+          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest.'
         }
       ]
     },
@@ -470,6 +475,11 @@ export const content: Record<Lang, Content> = {
           text: 'Built the website header for real.de and maintained the product detail page and product reviews, plus A/B tests and tracking.'
         },
         {
+          title: 'Pattern library for all teams',
+          type: 'Professional work in a team',
+          text: 'Built components and moved existing ones into the B2C pattern library, fixed bugs and added features, working closely with the design and UX colleagues. I also wrote the documentation covering usage, props and parameters. I was one of the main people responsible for the switch from Vuepress to Storybook.'
+        },
+        {
           title: 'Multilingual micro frontend',
           type: 'Professional work in a team',
           text: 'Led the implementation of i18n for CZ, SK, PL and AT using Lokalise and Nuxt.js.'
@@ -477,7 +487,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'This portfolio website',
           type: 'Personal project',
-          text: 'Nuxt, Vue and TypeScript, tested with Vitest. The source code can be linked here once published.'
+          text: 'Nuxt, Vue and TypeScript, tested with Vitest.'
         }
       ]
     },

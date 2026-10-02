@@ -53,7 +53,7 @@ const languages = [
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 
-  @media (min-width: 761px) {
+  @media (min-width: 1000px) {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -78,33 +78,53 @@ const languages = [
     color: var(--blue);
   }
 
+  // Sehr schmale Bildschirme (320 px): Logo und Schalter sollen in eine Zeile passen
+  @media (max-width: 380px) {
+    &__brand {
+      gap: 0.5rem;
+      font-size: 1.15rem;
+    }
+
+    &__logo {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   &__nav {
     order: 3;
     width: 100%;
-    overflow-x: auto;
 
-    @media (min-width: 761px) {
+    @media (min-width: 1000px) {
       order: 0;
       width: auto;
-      overflow: visible; // sonst wird der Fokusrahmen abgeschnitten
     }
   }
 
   &__list {
     display: flex;
-    gap: 0.5rem;
+    flex-wrap: wrap; // auf schmalen Bildschirmen umbrechen statt seitlich zu scrollen, so sind alle Links sofort erreichbar
+    gap: 0 0.25rem;
+
+    @media (min-width: 1000px) {
+      gap: 0.5rem;
+    }
   }
 
   &__link {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
-    padding: 0 0.75rem;
+    padding: 0 0.6rem;
     color: var(--muted);
     font-weight: 500;
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.2s ease; // nur Farbwechsel zu Weiß, kein Unterstrich
+
+    @media (min-width: 1000px) {
+      padding: 0 0.75rem;
+    }
 
     &:hover {
       color: var(--text);

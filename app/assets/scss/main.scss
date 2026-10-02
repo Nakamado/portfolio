@@ -17,8 +17,8 @@
   --section-height: calc((100svh - var(--header-height)) * 0.9); // 90 Prozent: der nächste Abschnitt lugt unten hervor
   color-scheme: dark;
 
-  @media (max-width: 760px) {
-    --header-height: 6.5rem; // zweizeiliger Header, nicht fixiert
+  @media (max-width: 999px) {
+    --header-height: 6.8rem; // zweizeiliger Header, nicht fixiert
   }
 }
 
@@ -32,7 +32,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 
-  @media (min-width: 761px) {
+  @media (min-width: 1000px) {
     scroll-padding-top: var(--header-height);
   }
 

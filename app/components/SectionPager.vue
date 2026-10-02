@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { PAGER_SECTION_IDS, currentSectionIndex, pagerTarget } from '~/utils/pager'
+import { PAGER_SECTION_IDS, currentSectionIndex, pagerLift, pagerTarget } from '~/utils/pager'
 
 const { t } = useLang()
 const index = ref(0)
+const lift = ref(0) // Abstand nach oben, damit der Button über dem Footer bleibt
 
 const target = computed(() => pagerTarget(index.value))
 const visible = computed(() => index.value >= 1) // erscheint ab "Über mich"
@@ -16,6 +17,8 @@ let frame = 0
 function update() {
   frame = 0
   // Auf Seiten ohne Abschnitte (Impressum) bleibt der Button verborgen.
+  const footer = document.querySelector('.site-footer')
+  lift.value = footer ? pagerLift(footer.getBoundingClientRect().top, window.innerHeight) : 0
   if (!document.getElementById('top')) {
     index.value = 0
     return
@@ -49,6 +52,7 @@ onBeforeUnmount(() => {
   <a
     class="pager"
     :class="{ 'pager--visible': visible, 'pager--up': target.up }"
+    :style="{ '--pager-lift': `${lift}px` }"
     :href="`#${target.id}`"
     :aria-label="label"
     @click="focusSection"
@@ -62,7 +66,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .pager {
   position: fixed;
-  bottom: 1.25rem;
+  bottom: calc(1.25rem + var(--pager-lift, 0px)); // rückt über den Footer, wenn dieser ins Bild kommt
   left: var(--gutter);
   z-index: 9;
   display: inline-flex;

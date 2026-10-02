@@ -19,3 +19,11 @@ export function pagerTarget(index: number, ids: readonly string[] = PAGER_SECTIO
   const last = index >= ids.length - 1
   return { id: last ? ids[0]! : ids[index + 1]!, up: last }
 }
+
+/**
+ * Wie weit der Button nach oben rücken muss, damit er nie über dem Footer liegt.
+ * `footerTop` ist die Oberkante des Footers im Fenster, `viewportHeight` die Fensterhöhe.
+ */
+export function pagerLift(footerTop: number, viewportHeight: number): number {
+  return Math.max(0, Math.round(viewportHeight - footerTop))
+}
