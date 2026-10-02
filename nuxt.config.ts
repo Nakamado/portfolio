@@ -6,10 +6,10 @@ export default defineNuxtConfig({
   typescript: { strict: true },
   fonts: {
     // Explizit, damit alle genutzten Schriftschnitte geladen und selbst ausgeliefert werden.
-    // Nur "latin" (deckt ä, ö, ü, ß ab) und vorab laden: so liegt die Schrift schon beim ersten Zeichnen bereit
-    // und der Text springt nicht mehr, wenn sie nachträglich eintrifft (Layout Shift auf dem Handy).
+    // Die Fließtext-Schrift lädt vorab und mit font-display "optional": Kommt sie nicht rechtzeitig, bleibt die Ersatzschrift
+    // für diesen Aufruf stehen, statt den Text später umzubrechen (Layout Shift auf dem Handy). Beim nächsten Besuch ist sie im Cache.
     families: [
-      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 700], styles: ['normal'], subsets: ['latin'], preload: true },
+      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 700], styles: ['normal'], subsets: ['latin'], preload: true, display: 'optional' },
       { name: 'Roboto Slab', provider: 'google', weights: [500, 700], styles: ['normal'], subsets: ['latin'], preload: true }
     ]
   },
