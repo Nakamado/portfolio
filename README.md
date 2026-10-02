@@ -54,3 +54,11 @@ npm run typecheck
 ## Testabdeckung
 
 Ziel ist eine Abdeckung von 100 % (Anweisungen, Zweige, Funktionen, Zeilen). `npm run test:coverage` bricht ab, wenn der Wert darunter fällt; der Bericht liegt danach in `coverage/index.html`. Neuer Code in `app/` oder `shared/` kommt immer mit Tests. Server-Routen bleiben dünn, ihre Logik liegt in `shared/`.
+
+## Lighthouse und Screenshot-Tests
+
+Beide laufen gegen den fertigen Build (`nuxt generate`, Ausgabe in `.output/public`) und gehören nicht zu `npm test` (Vitest, 100 % Abdeckung).
+
+- **Lighthouse** (`npm run lighthouse`, einzeln `lighthouse:mobile` und `lighthouse:desktop`): prüft mit Lighthouse CI die Startseiten und die Pattern-Library in DE und EN, je 3 Läufe, Median. Grenzwerte stehen in `lighthouserc.mobile.json` und `lighthouserc.desktop.json`: Barrierefreiheit und SEO 100, Best Practices ab 95, Performance ab 90 (mobil) bzw. 95 (Desktop), dazu LCP, FCP, TBT, CLS und Speed Index. Berichte liegen danach in `.lighthouseci/`. Canonical und hreflang sind lokal abgeschaltet, weil sie auf die Domain aus der `.env` zeigen. Impressum, Datenschutz und 404 sind `noindex` und fehlen deshalb.
+- **Screenshot-Tests** (`npm run test:e2e`, Playwright): vergleichen Startseite, Pattern-Library, Datenschutz und 404 bei 320 bis 1440 px im dunklen und hellen Theme mit gespeicherten Bildern in `e2e/__screenshots__/`. Reduzierte Bewegung ist aktiv, damit Punktraster und fallende Chips still stehen. Nach gewollten Änderungen am Aussehen mit `npm run test:e2e:update` neue Bilder erzeugen und diese mit einchecken. Die Bilder gelten je Betriebssystem (Dateiname enthält `win32` oder `linux`).
+- Einmalig: `npm install`, danach `npx playwright install chromium`.

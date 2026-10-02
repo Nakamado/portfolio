@@ -4,3 +4,8 @@ node_modules
 dist
 .env
 coverage
+
+# Tests
+/test-results
+/playwright-report
+/.lighthouseci

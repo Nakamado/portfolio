@@ -11,19 +11,27 @@
     "typecheck": "nuxt typecheck",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "nuxt generate && playwright test",
+    "test:e2e:update": "nuxt generate && playwright test --update-snapshots",
+    "lighthouse": "nuxt generate && npm run lighthouse:mobile && npm run lighthouse:desktop",
+    "lighthouse:mobile": "lhci autorun --config=./lighthouserc.mobile.json",
+    "lighthouse:desktop": "lhci autorun --config=./lighthouserc.desktop.json"
   },
   "dependencies": {
     "nuxt": "^4.0.0",
     "vue": "^3.5.0"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.0",
     "@nuxt/fonts": "^0.11.0",
     "@nuxt/test-utils": "^4.3.2",
+    "@playwright/test": "^1.55.0",
     "@vitest/coverage-v8": "^5.0.0",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.0.11",
     "sass": "^1.80.0",
+    "serve": "^14.2.0",
     "typescript": "^5.8.0",
     "vitest": "^5.0.0",
     "vue-tsc": "^3.0.0"
