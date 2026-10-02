@@ -285,7 +285,8 @@ export const content: Record<Lang, Content> = {
           title: 'Hosting über GitHub Pages',
           paragraphs: [
             'Die Website wird über GitHub Pages ausgeliefert. Anbieter ist GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Seite verarbeitet GitHub technisch notwendige Daten, insbesondere deine IP-Adresse sowie Datum, Uhrzeit und aufgerufene Datei, und speichert sie in Server-Logs. Das ist nötig, um die Seite auszuliefern und sicher zu betreiben.',
-            'Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse ist die zuverlässige Darstellung meines Portfolios. Eine Verarbeitung in den USA ist möglich. Informationen zu den Garantien findest du in der Datenschutzerklärung von GitHub.'
+            'Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse ist die zuverlässige Darstellung meines Portfolios. Wie lange GitHub diese Daten speichert, bestimme ich nicht. Dazu gelten die Angaben von GitHub.',
+            'Da GitHub Inc. seinen Sitz in den USA hat, kann dabei eine Übermittlung personenbezogener Daten in die USA stattfinden. Nach der General Privacy Statement von GitHub ist GitHub nach eigenen Angaben gegenüber dem U.S. Department of Commerce für das EU-U.S. Data Privacy Framework zertifiziert und verpflichtet sich, dessen Grundsätze einzuhalten. Für die Übermittlung kann sich GitHub damit auf einen Angemessenheitsbeschluss der EU-Kommission stützen (Art. 45 DSGVO). Ergänzend nennt GitHub die Standardvertragsklauseln der EU-Kommission. Ich habe keinen Einfluss darauf, wie GitHub die Daten im Einzelnen verarbeitet. Maßgeblich sind die aktuelle General Privacy Statement und die Hinweise zu GitHub Pages von GitHub.'
           ]
         },
         {
@@ -535,7 +536,8 @@ export const content: Record<Lang, Content> = {
           title: 'Hosting on GitHub Pages',
           paragraphs: [
             'The website is served via GitHub Pages. The provider is GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. When you visit the site, GitHub processes technically necessary data, in particular your IP address as well as date, time and the requested file, and stores it in server logs. This is required to deliver and secure the site.',
-            'The legal basis is Art. 6(1)(f) GDPR. My legitimate interest is the reliable presentation of my portfolio. Processing in the USA is possible. Information about the safeguards is available in GitHub’s privacy statement.'
+            'The legal basis is Art. 6(1)(f) GDPR. My legitimate interest is the reliable presentation of my portfolio. I do not determine how long GitHub keeps this data. GitHub’s own information applies.',
+            'Because GitHub Inc. is based in the USA, personal data may be transferred to the USA. According to GitHub’s General Privacy Statement, GitHub states that it has certified to the U.S. Department of Commerce that it adheres to the EU-U.S. Data Privacy Framework Principles. For such transfers GitHub can therefore rely on an adequacy decision of the European Commission (Art. 45 GDPR). In addition, GitHub refers to the European Commission’s standard contractual clauses. I have no influence on how GitHub processes the data in detail. The current General Privacy Statement and GitHub’s notes on GitHub Pages are authoritative.'
           ]
         },
         {
