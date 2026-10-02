@@ -77,38 +77,53 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
 </template>
 
 <style lang="scss" scoped>
+$hero-aside-columns: repeat(3, 1fr); // Tablet: die drei Infoblöcke nebeneinander
+$hero-portrait-height-ratio: 0.98;
+$hero-portrait-left: 33%;
+$hero-text-width: clamp(22rem, 38vw, 32rem);
+$hero-aside-width: 13rem;
+$hero-min-height: 30rem;
+$hero-portrait-width: min(52vw, 60rem);
+$hero-portrait-max-height: 36rem;
+$hero-padding-top: 3.5rem;
+$hero-title-font-size: clamp(2.25rem, 8vw, 3.5rem);
+$hero-title-font-size-desktop: clamp(2.25rem, min(3.6vw, 7svh), 4.25rem);
+$hero-more-font-size: 0.8rem;
+$text-halo-color: rgb(26 29 38 / 0.85);
+$text-halo: 0 0 1.125rem $text-halo-color; // dunkler Hof um den Text (bg), damit er über dem Porträt lesbar bleibt
+
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: $columns-1;
   grid-template-areas:
     'main'
     'aside'
     'portrait';
-  gap: 2rem;
+  gap: $space-8;
   min-height: var(--section-height);
-  padding: 2.5rem var(--gutter) 0;
+  padding: $space-10 var(--gutter) 0;
   background: var(--bg);
 
-  @media (min-width: 700px) and (max-width: 1099px) {
-    padding-top: 3.5rem;
+  @include between($bp-tablet, $bp-hero) {
+    padding-top: $hero-padding-top;
   }
 
   // Desktop: Text links, Infoblöcke rechts, das Porträt liegt als Hintergrund dazwischen.
   // Der Abschnitt ist genau so hoch wie das Fenster unter dem Header.
-  @media (min-width: 1100px) {
-    grid-template-columns: minmax(0, clamp(22rem, 38vw, 32rem)) minmax(0, 1fr) minmax(0, 13rem); // breite Textspalte links, rechts die Infoblöcke
+  @include up($bp-hero) {
+    grid-template-columns: minmax(0, $hero-text-width) minmax(0, 1fr) minmax(0, $hero-aside-width); // breite Textspalte links, rechts die Infoblöcke
     grid-template-areas: 'main . aside';
-    column-gap: 2rem;
+    column-gap: $space-8;
     height: var(--section-height);
-    min-height: 30rem;
+    min-height: $hero-min-height;
     padding-top: 0;
   }
 
   &__main,
   &__aside {
     position: relative;
-    z-index: 1;
+    z-index: $z-above;
     align-self: center;
   }
 
@@ -126,61 +141,61 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
   &__status,
   &__label,
   &__text {
-    text-shadow: 0 0 18px rgb(26 29 38 / 0.85); // Lesbarkeit, falls Text über das Porträt reicht
+    text-shadow: $text-halo; // Lesbarkeit, falls Text über das Porträt reicht
   }
 
   &__title {
-    margin-bottom: 1.25rem;
-    font-size: clamp(2.25rem, 8vw, 3.5rem);
+    margin-bottom: $space-5;
+    font-size: $hero-title-font-size;
     text-wrap: balance;
 
-    @media (min-width: 1100px) {
-      font-size: clamp(2.25rem, min(3.6vw, 7svh), 4.25rem);
+    @include up($bp-hero) {
+      font-size: $hero-title-font-size-desktop;
     }
   }
 
   &__lead {
     color: var(--muted);
-    font-size: 1.15rem;
+    font-size: $font-lg;
   }
 
   &__status {
-    margin-bottom: 1.5rem;
-    font-weight: 500;
+    margin-bottom: $space-6;
+    font-weight: $weight-medium;
   }
 
   &__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 1.5rem;
+    gap: $space-2 $space-6;
   }
 
   &__scroll {
-    margin-top: 2rem;
+    margin-top: $space-8;
 
-    @media (max-width: 1099px), (max-height: 720px) {
+    @media (max-width: $bp-hero - $bp-step), (max-height: $vh-short) {
       display: none; // spart Platz; Menü und Button "Kontakt" genügen
     }
   }
 
   &__portrait {
     position: relative; // über dem Punktraster
-    z-index: 0;
+    z-index: $z-behind;
     grid-area: portrait;
     align-self: end;
     // Mobil und Tablet: volle Breite am unteren Rand, die Bildkanten liegen am Bildschirmrand
     width: calc(100% + 2 * var(--gutter));
     margin-inline: calc(-1 * var(--gutter));
 
-    @media (min-width: 1100px) {
+    @include up($bp-hero) {
       // Porträt sitzt rechts von der Mitte: links bleibt Platz für den Text, das Gesicht liegt zwischen Text und Infoblöcken
       position: absolute;
-      inset: auto auto 0 33%;
-      z-index: 0;
+      inset: auto auto 0 $hero-portrait-left;
+      z-index: $z-behind;
       grid-area: auto;
       display: block;
-      width: min(52vw, 60rem);
+      width: $hero-portrait-width;
       margin-inline: 0;
       pointer-events: none;
     }
@@ -189,38 +204,38 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
   &__image {
     width: 100%;
     height: auto;
-    max-height: 36rem;
+    max-height: $hero-portrait-max-height;
     object-fit: contain;
     object-position: 50% 100%;
 
-    @media (min-width: 1100px) {
+    @include up($bp-hero) {
       width: 100%;
       height: auto;
-      max-height: calc(var(--section-height) * 0.98);
+      max-height: calc(var(--section-height) * $hero-portrait-height-ratio);
     }
   }
 
   &__aside {
-    @media (min-width: 1100px) {
+    @include up($bp-hero) {
       justify-self: end; // ganz an den rechten Rand
     }
 
-    @media (min-width: 700px) and (max-width: 1099px) {
+    @include between($bp-tablet, $bp-hero) {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      grid-template-columns: $hero-aside-columns;
+      gap: $space-8;
     }
   }
 
   &__block {
-    padding: 1rem 0;
-    border-top: 1px solid var(--line);
+    padding: $space-4 0;
+    border-top: $border-line;
 
     &:first-child {
       border-top: 0;
     }
 
-    @media (min-width: 700px) and (max-width: 1099px) {
+    @include between($bp-tablet, $bp-hero) {
       padding: 0;
       border-top: 0;
     }
@@ -228,30 +243,30 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
 
   &__label {
     margin-bottom: 0.4rem;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-size: $font-xs;
+    font-weight: $weight-bold;
+    letter-spacing: $tracking-caps;
     text-transform: uppercase;
   }
 
   &__text {
     margin-bottom: 0.4rem;
     color: var(--muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: $font-md;
+    line-height: $leading-normal;
   }
 
   &__more {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-size: $hero-more-font-size;
+    font-weight: $weight-bold;
+    letter-spacing: $tracking-caps;
     text-transform: uppercase;
   }
 
   &__social {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1.25rem;
+    gap: $space-1 $space-5;
   }
 }
 </style>

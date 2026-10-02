@@ -25,19 +25,24 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
 </template>
 
 <style lang="scss" scoped>
+$logo-size-compact: 1.75rem;
+$focus-inset: -0.1875rem;
+$site-header-brand-gap: 0.7rem;
+$site-header-brand-font-size: 1.45rem;
+$site-header-link-padding: 0.6rem;
 .site-header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem 1.5rem;
-  padding: 0.5rem var(--gutter);
+  gap: $space-1 $space-6;
+  padding: $space-2 var(--gutter);
   background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  border-bottom: $border-line;
 
-  @media (min-width: 1000px) {
+  @include up($bp-nav) {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: $z-header;
     flex-wrap: nowrap;
     min-height: var(--header-height);
   }
@@ -45,12 +50,12 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
   &__brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
-    min-height: 2.75rem;
+    gap: $site-header-brand-gap;
+    min-height: $tap-target;
     margin-right: auto;
     font-family: var(--font-display);
-    font-size: 1.45rem;
-    font-weight: 700;
+    font-size: $site-header-brand-font-size;
+    font-weight: $weight-bold;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -60,15 +65,15 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
   }
 
   // Sehr schmale Bildschirme (320 px): Logo und Schalter sollen in eine Zeile passen
-  @media (max-width: 380px) {
+  @include down($bp-compact) {
     &__brand {
-      gap: 0.5rem;
-      font-size: 1.15rem;
+      gap: $space-2;
+      font-size: $font-lg;
     }
 
     &__logo {
-      width: 28px;
-      height: 28px;
+      width: $logo-size-compact;
+      height: $logo-size-compact;
     }
   }
 
@@ -76,7 +81,7 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
     order: 3;
     width: 100%;
 
-    @media (min-width: 1000px) {
+    @include up($bp-nav) {
       order: 0;
       width: auto;
     }
@@ -85,26 +90,26 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
   &__list {
     display: flex;
     flex-wrap: wrap; // auf schmalen Bildschirmen umbrechen statt seitlich zu scrollen, so sind alle Links sofort erreichbar
-    gap: 0 0.25rem;
+    gap: 0 $space-1;
 
-    @media (min-width: 1000px) {
-      gap: 0.5rem;
+    @include up($bp-nav) {
+      gap: $space-2;
     }
   }
 
   &__link {
     display: inline-flex;
     align-items: center;
-    min-height: 2.75rem;
-    padding: 0 0.6rem;
+    min-height: $tap-target;
+    padding: 0 $site-header-link-padding;
     color: var(--muted);
-    font-weight: 500;
+    font-weight: $weight-medium;
     text-decoration: none;
     white-space: nowrap;
-    transition: color 0.2s ease; // nur Farbwechsel zu Weiß, kein Unterstrich
+    transition: color $transition-fast; // nur Farbwechsel zu Weiß, kein Unterstrich
 
-    @media (min-width: 1000px) {
-      padding: 0 0.75rem;
+    @include up($bp-nav) {
+      padding: 0 $space-3;
     }
 
     &:hover {
@@ -112,7 +117,7 @@ const anchor = (id: string) => (isHome.value ? `#${id}` : `${homePath.value}#${i
     }
 
     &:focus-visible {
-      outline-offset: -3px; // Rahmen innen, damit er nie abgeschnitten wird
+      outline-offset: $focus-inset; // Rahmen innen, damit er nie abgeschnitten wird
     }
   }
 }

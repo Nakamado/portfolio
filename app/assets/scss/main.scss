@@ -3,10 +3,21 @@
 @use './components/button';
 @use './components/text-link';
 
+$focus-outline: 0.1875rem; // Breite und Abstand des Fokusrahmens
+$font-base: 1.0625rem; // 17 px
+$leading-body: 1.65;
+$paragraph-gap: 1em;
+$prose-width: 65ch;
+$skip-link-offset: -5rem;
+
+$section-padding: clamp(3.5rem, 8vw, 6rem);
+$section-slash-margin-right: 0.35em;
+
 :root {
   --bg: #1a1d26;
   --bg-alt: #232937;
   --text: #fff;
+  --on-blue: #fff; // Schrift und Symbole auf blue-Flächen
   --muted: #aab1c0;
   --line: rgb(255 255 255 / 0.14);
   --blue: #1d63f0;
@@ -20,7 +31,7 @@
   --section-height: calc((100svh - var(--header-height)) * 0.9); // 90 Prozent: der nächste Abschnitt lugt unten hervor
   color-scheme: dark;
 
-  @media (max-width: 999px) {
+  @include down($bp-nav) {
     --header-height: 6.8rem; // zweizeiliger Header, nicht fixiert
   }
 }
@@ -35,7 +46,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 
-  @media (min-width: 1000px) {
+  @include up($bp-nav) {
     scroll-padding-top: var(--header-height);
   }
 
@@ -48,7 +59,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 400 1.0625rem/1.65 var(--font);
+  font: 400 #{$font-base}/#{$leading-body} var(--font);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -58,25 +69,25 @@ h3,
 h4 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-weight: $weight-bold;
+  line-height: $leading-tight;
+  letter-spacing: $tracking-tight;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: $font-2xl;
 }
 
 h4 {
   font-family: var(--font); // Einträge bleiben in der Textschrift
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: $font-lg;
+  font-weight: $weight-medium;
+  letter-spacing: $tracking-tight;
 }
 
 p {
-  margin: 0 0 1em;
-  max-width: 65ch;
+  margin: 0 0 $paragraph-gap;
+  max-width: $prose-width;
 }
 
 ul,
@@ -100,8 +111,8 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+  outline: $focus-outline solid var(--focus);
+  outline-offset: $focus-outline;
 }
 
 // Container werden per Skript fokussiert, brauchen aber keinen sichtbaren Rahmen (Überschriften behalten ihren)
@@ -113,24 +124,24 @@ main[tabindex='-1']:focus {
 // ---- Block: skip-link
 .skip-link {
   position: absolute;
-  top: -5rem;
+  top: $skip-link-offset;
   left: var(--gutter);
-  z-index: 20;
-  padding: 0.75rem 1rem;
+  z-index: $z-skip-link;
+  padding: $space-3 $space-4;
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
 
   &:focus {
-    top: 0.75rem;
+    top: $space-3;
   }
 }
 
 // ---- Block: visually-hidden
 .visually-hidden {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+  width: $hairline;
+  height: $hairline;
+  margin: -$hairline;
   padding: 0;
   overflow: hidden;
   clip: rect(0 0 0 0);
@@ -144,7 +155,7 @@ main[tabindex='-1']:focus {
   flex-direction: column;
   justify-content: center;
   min-height: var(--section-height);
-  padding: clamp(3.5rem, 8vw, 6rem) var(--gutter);
+  padding: $section-padding var(--gutter);
   background: var(--bg);
 
   &--alt {
@@ -152,18 +163,18 @@ main[tabindex='-1']:focus {
   }
 
   &__title {
-    margin-bottom: 2.5rem;
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: $space-10;
+    font-size: $font-title-lg;
   }
 
   &__slash {
-    margin-right: 0.35em;
+    margin-right: $section-slash-margin-right;
     color: var(--blue);
   }
 
   &__intro {
-    margin-bottom: 2rem;
+    margin-bottom: $space-8;
     color: var(--muted);
-    font-size: 1.15rem;
+    font-size: $font-lg;
   }
 }

@@ -50,24 +50,28 @@ const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
 </template>
 
 <style lang="scss" scoped>
+$imprint-line-todo-padding: 0.4rem;
+$todo-outline: 0.125rem;
+$todo-color: #ffb84d; // Markierung für noch offene Angaben (Warnfarbe, nur hier)
+
 .imprint {
-  max-width: 48rem;
+  max-width: $measure-text;
   min-height: calc(100svh - var(--header-height));
   margin: 0 auto;
-  padding: clamp(3rem, 8vw, 5rem) var(--gutter);
+  padding: $page-padding-y var(--gutter);
 
   &__title {
-    margin-bottom: 2.5rem;
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    margin-bottom: $space-10;
+    font-size: $font-title;
   }
 
   &__block {
-    margin-bottom: 2rem;
+    margin-bottom: $space-8;
   }
 
   &__heading {
-    margin-bottom: 0.75rem;
-    font-size: 1.35rem;
+    margin-bottom: $space-3;
+    font-size: $font-xl;
   }
 
   &__address {
@@ -76,19 +80,19 @@ const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
 
   &__line {
     display: block;
-    margin: 0 0 0.25rem;
+    margin: 0 0 $space-1;
 
     // Offene Angabe, die noch ergänzt werden muss
     &--todo {
       width: fit-content;
-      padding: 0 0.4rem;
-      outline: 2px dashed #ffb84d;
-      color: #ffb84d;
+      padding: 0 $imprint-line-todo-padding;
+      outline: $todo-outline dashed $todo-color;
+      color: $todo-color;
     }
   }
 
   &__back {
-    margin-top: 1rem;
+    margin-top: $space-4;
   }
 }
 </style>

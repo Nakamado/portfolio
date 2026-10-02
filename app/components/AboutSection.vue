@@ -29,40 +29,44 @@ const { t } = useLang()
 </template>
 
 <style lang="scss" scoped>
+$about-columns: 1.2fr 1fr; // Text etwas breiter als das Porträt
+$about-gap: clamp(2rem, 6vw, 5rem);
+$list-item-padding: 0.9rem;
+$list-text-margin-top: 0.15rem;
 .about {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-columns: $about-columns;
+  gap: $about-gap;
 
-  @media (max-width: 860px) {
-    grid-template-columns: 1fr;
+  @include down($bp-about) {
+    grid-template-columns: $columns-1;
   }
 
   &__paragraph {
-    font-size: 1.15rem;
+    font-size: $font-lg;
   }
 
   &__subtitle {
-    margin-bottom: 1rem;
+    margin-bottom: $space-4;
 
     &--spaced {
-      margin-top: 2.5rem;
+      margin-top: $space-10;
     }
   }
 }
 
 .list {
   &__item {
-    padding: 0.9rem 0;
-    border-top: 1px solid var(--line);
+    padding: $list-item-padding 0;
+    border-top: $border-line;
   }
 
   &__term {
-    font-weight: 700;
+    font-weight: $weight-bold;
   }
 
   &__text {
-    margin-top: 0.15rem;
+    margin-top: $list-text-margin-top;
     color: var(--muted);
   }
 }

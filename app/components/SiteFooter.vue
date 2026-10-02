@@ -27,18 +27,18 @@ const { t, imprintPath, privacyPath, patternsPath } = useLang()
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.25rem;
-  padding: 1.25rem var(--gutter);
+  gap: $space-1;
+  padding: $space-5 var(--gutter);
   background: var(--bg);
-  border-top: 1px solid var(--line);
+  border-top: $border-line;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: $font-sm;
 
-  @media (min-width: 768px) {
+  @include up($bp-footer) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem 1.5rem;
+    gap: $space-2 $space-6;
   }
 
   &__text {
@@ -48,7 +48,7 @@ const { t, imprintPath, privacyPath, patternsPath } = useLang()
   &__links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 1.5rem;
+    gap: 0 $space-6;
   }
 
   &__link {

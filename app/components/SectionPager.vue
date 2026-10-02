@@ -64,28 +64,32 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
+$pager-shadow: 0 0.25rem 0.875rem $shadow-strong;
+$pager-size: 3.5rem;
+$pager-offset: 1rem; // Versatz im ausgeblendeten Zustand
+$pager-bottom: 1.25rem;
 .pager {
   position: fixed;
-  bottom: calc(1.25rem + var(--pager-lift, 0px)); // rückt über den Footer, wenn dieser ins Bild kommt
+  bottom: calc($pager-bottom + var(--pager-lift, 0rem)); // rückt über den Footer, wenn dieser ins Bild kommt
   left: var(--gutter);
-  z-index: 9;
+  z-index: $z-pager;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: $pager-size;
+  height: $pager-size;
   border-radius: 50%;
   background: var(--blue);
-  box-shadow: 0 4px 14px rgb(0 0 0 / 0.4);
-  color: #fff;
+  box-shadow: $pager-shadow;
+  color: var(--on-blue);
   opacity: 0;
   visibility: hidden; // nimmt den Button im Hero auch aus Tab-Reihenfolge und Screenreader
-  transform: translateY(1rem);
+  transform: translateY($pager-offset);
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    visibility 0.3s,
-    background-color 0.2s;
+    opacity $transition-base,
+    transform $transition-base,
+    visibility $duration-base,
+    background-color $duration-fast;
 
   &--visible {
     opacity: 1;
@@ -98,7 +102,7 @@ onBeforeUnmount(() => {
   }
 
   &__icon {
-    transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1);
+    transition: transform $duration-spring-long $ease-spring-soft;
   }
 
   &--up &__icon {

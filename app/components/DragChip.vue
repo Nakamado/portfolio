@@ -53,29 +53,33 @@ function onUp() {
 </template>
 
 <style lang="scss" scoped>
+$chip-lift-shadow: 0 0.375rem 0.875rem $shadow-strong;
+$drag-chip-padding: 0.1rem 0.6rem;
+$chip-border: rgb(255 255 255 / 0.4);
+
 .drag-chip {
   position: relative;
-  padding: 0.1rem 0.6rem;
-  border: 1px solid rgb(255 255 255 / 0.4);
+  padding: $drag-chip-padding;
+  border: $hairline solid $chip-border;
   background: var(--bg);
-  font-size: 0.85rem;
+  font-size: $font-xs;
   cursor: grab;
   touch-action: none; // sonst scrollt der Finger statt den Tag zu ziehen
   user-select: none;
   transition:
-    transform 0.55s cubic-bezier(0.3, 1.6, 0.5, 1), // federt beim Zurückspringen leicht über
-    border-color 0.2s ease;
+    transform $duration-spring $ease-spring-strong, // federt beim Zurückspringen leicht über
+    border-color $transition-fast;
 
   &:hover {
     border-color: var(--blue-light);
   }
 
   &--dragging {
-    z-index: 2;
+    z-index: $z-lifted;
     border-color: var(--blue-light);
-    box-shadow: 0 6px 14px rgb(0 0 0 / 0.4);
+    box-shadow: $chip-lift-shadow;
     cursor: grabbing;
-    transition: border-color 0.2s ease; // beim Ziehen folgt der Tag ohne Verzögerung
+    transition: border-color $transition-fast; // beim Ziehen folgt der Tag ohne Verzögerung
   }
 
   &--instant {

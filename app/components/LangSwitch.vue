@@ -29,15 +29,23 @@ const languages = [
 </template>
 
 <style lang="scss" scoped>
+$switch-border: 0.125rem;
+$switch-link-height: 2.5rem;
+$switch-focus-inset: -0.25rem;
+$lang-switch-link-font-size: 0.875rem;
+$knob-shadow-color: rgb(0 0 0 / 0.35);
+$knob-shadow: 0 0.125rem 0.25rem $knob-shadow-color;
+$switch-fade: 0.35s ease; // Spur wechselt die Farbe etwas langsamer als der Knopf springt
+
 .lang-switch {
   position: relative;
   display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  border: 2px solid var(--text);
+  grid-template-columns: $columns-2;
+  border: $switch-border solid var(--text);
   background: var(--bg);
   transition:
-    background-color 0.35s ease,
-    border-color 0.35s ease;
+    background-color $switch-fade,
+    border-color $switch-fade;
 
   &--en {
     border-color: var(--blue);
@@ -46,13 +54,13 @@ const languages = [
 
   &__knob {
     position: absolute;
-    top: 2px;
-    bottom: 2px;
-    left: 2px;
-    width: calc(50% - 2px);
-    background: #fff;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.35);
-    transition: transform 0.4s cubic-bezier(0.3, 1.5, 0.5, 1); // leichtes Überschwingen wie ein Kippschalter
+    top: $switch-border;
+    bottom: $switch-border;
+    left: $switch-border;
+    width: calc(50% - $switch-border);
+    background: var(--text);
+    box-shadow: $knob-shadow;
+    transition: transform $duration-slow $ease-spring; // leichtes Überschwingen wie ein Kippschalter
   }
 
   &--en &__knob {
@@ -61,21 +69,21 @@ const languages = [
 
   &__link {
     position: relative;
-    z-index: 1;
+    z-index: $z-above;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.75rem;
-    min-height: 2.5rem;
+    min-width: $tap-target;
+    min-height: $switch-link-height;
     color: var(--text);
-    font-size: 0.875rem;
-    font-weight: 700;
+    font-size: $lang-switch-link-font-size;
+    font-weight: $weight-bold;
     text-decoration: none;
     text-transform: uppercase; // im HTML steht de/en, angezeigt wird DE/EN
-    transition: color 0.3s ease;
+    transition: color $transition-base;
 
     &:focus-visible {
-      outline-offset: -4px;
+      outline-offset: $switch-focus-inset;
     }
 
     &[aria-current='page'] {

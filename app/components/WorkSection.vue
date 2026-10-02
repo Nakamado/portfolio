@@ -16,25 +16,30 @@ const { t } = useLang()
 </template>
 
 <style lang="scss" scoped>
+$card-min-width: 17rem;
+$card-accent-width: 0.1875rem;
+$projects-type-margin-bottom: 0.4rem;
+$projects-title-margin-bottom: 0.6rem;
+$projects-title-font-size: 1.3rem;
 .projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax($card-min-width, 1fr));
+  gap: $space-8;
 
   &__item {
-    padding-top: 1rem;
-    border-top: 3px solid var(--blue);
+    padding-top: $space-4;
+    border-top: $card-accent-width solid var(--blue);
   }
 
   &__type {
-    margin-bottom: 0.4rem;
+    margin-bottom: $projects-type-margin-bottom;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: $font-sm;
   }
 
   &__title {
-    margin-bottom: 0.6rem;
-    font-size: 1.3rem;
+    margin-bottom: $projects-title-margin-bottom;
+    font-size: $projects-title-font-size;
   }
 }
 </style>

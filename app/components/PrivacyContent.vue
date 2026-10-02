@@ -40,27 +40,27 @@ const { contactEmail, imprintStreet, imprintCity } = useRuntimeConfig().public
 
 <style lang="scss" scoped>
 .privacy {
-  max-width: 48rem;
+  max-width: $measure-text;
   min-height: var(--section-height);
   margin: 0 auto;
-  padding: clamp(3rem, 8vw, 5rem) var(--gutter);
+  padding: $page-padding-y var(--gutter);
 
   &__title {
-    margin-bottom: 2.5rem;
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    margin-bottom: $space-10;
+    font-size: $font-title;
   }
 
   &__block {
-    margin-bottom: 2rem;
+    margin-bottom: $space-8;
   }
 
   &__heading {
-    margin-bottom: 0.75rem;
-    font-size: 1.35rem;
+    margin-bottom: $space-3;
+    font-size: $font-xl;
   }
 
   &__text {
-    margin-bottom: 0.75rem;
+    margin-bottom: $space-3;
   }
 
   &__address {
@@ -69,17 +69,17 @@ const { contactEmail, imprintStreet, imprintCity } = useRuntimeConfig().public
 
   &__line {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: $space-1;
   }
 
   &__updated {
-    margin-top: 2.5rem;
+    margin-top: $space-10;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: $font-sm;
   }
 
   &__back {
-    margin-top: 0.5rem;
+    margin-top: $space-2;
   }
 }
 </style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import mainScss from '~/assets/scss/main.scss?raw'
+import variablesScss from '~/assets/scss/_variables.scss?raw'
 import buttonScss from '~/assets/scss/components/_button.scss?raw'
 import textLinkScss from '~/assets/scss/components/_text-link.scss?raw'
 import scrollButtonSource from '~/components/ScrollButton.vue?raw'
@@ -117,6 +118,10 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
           </div>
         </li>
       </ul>
+
+      <h3 class="patterns__subtitle">{{ p.layout.scssTitle }}</h3>
+      <p class="patterns__note">{{ p.layout.scssIntro }}</p>
+      <CodeBlock :code="variablesScss" file="assets/scss/_variables.scss" :summary="p.ui.showCode" />
     </PatternSection>
 
     <PatternSection id="components" :title="p.components.title" :intro="p.components.intro">
@@ -151,31 +156,34 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
 </template>
 
 <style lang="scss" scoped>
+$swatch-size: 3.5rem;
+$font-sample-font-size: 1.6rem;
+$rule-title-font-size: 1.2rem;
 .patterns {
-  max-width: 60rem;
+  max-width: $measure-page;
   min-height: calc(100svh - var(--header-height));
   margin: 0 auto;
-  padding: clamp(3rem, 8vw, 5rem) var(--gutter);
+  padding: $page-padding-y var(--gutter);
 
   &__title {
-    margin-bottom: 1.5rem;
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    margin-bottom: $space-6;
+    font-size: $font-title;
   }
 
   &__intro {
     color: var(--muted);
-    font-size: 1.15rem;
+    font-size: $font-lg;
   }
 
   &__toc-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 1.5rem;
-    margin-bottom: 2rem;
+    gap: 0 $space-6;
+    margin-bottom: $space-8;
   }
 
   &__subtitle {
-    margin: 2.5rem 0 0.75rem;
+    margin: $space-10 0 $space-3;
   }
 
   &__note {
@@ -183,38 +191,38 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
   }
 
   &__back {
-    margin-top: 2rem;
+    margin-top: $space-8;
   }
 }
 
 code {
   color: var(--text);
-  font: 500 0.9em ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font: $weight-medium $font-mono-size $font-mono;
   overflow-wrap: anywhere;
 }
 
 .tokens {
   display: grid;
-  gap: 1px;
-  border: 1px solid var(--line);
+  gap: $hairline;
+  border: $border-line;
   background: var(--line);
 
-  @media (min-width: 700px) {
-    grid-template-columns: 1fr 1fr;
+  @include up($bp-tablet) {
+    grid-template-columns: $columns-2;
   }
 }
 
 .token {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
+  gap: $space-4;
+  padding: $space-4;
   background: var(--bg);
 
   &__swatch {
     flex: none;
-    width: 3.5rem;
-    height: 3.5rem;
-    border: 1px solid var(--line);
+    width: $swatch-size;
+    height: $swatch-size;
+    border: $border-line;
   }
 
   &__body {
@@ -223,12 +231,12 @@ code {
 
   &__name,
   &__note {
-    margin: 0 0 0.25rem;
+    margin: 0 0 $space-1;
   }
 
   &__note {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: $font-md;
   }
 
   &__value {
@@ -238,22 +246,22 @@ code {
 
 .pairs {
   display: grid;
-  gap: 0.75rem;
+  gap: $space-3;
 }
 
 .pair {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $space-4;
 
   &__preview {
     display: grid;
     flex: none;
     place-items: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    border: 1px solid var(--line);
-    font-weight: 700;
+    width: $swatch-size;
+    height: $swatch-size;
+    border: $border-line;
+    font-weight: $weight-bold;
   }
 
   &__use,
@@ -262,64 +270,64 @@ code {
   }
 
   &__use {
-    font-weight: 500;
+    font-weight: $weight-medium;
   }
 
   &__meta {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: $font-md;
   }
 }
 
 .fonts {
   display: grid;
-  gap: 1.5rem;
+  gap: $space-6;
 
-  @media (min-width: 700px) {
-    grid-template-columns: 1fr 1fr;
+  @include up($bp-tablet) {
+    grid-template-columns: $columns-2;
   }
 }
 
 .font {
-  padding: 1.5rem;
-  border: 1px solid var(--line);
+  padding: $space-6;
+  border: $border-line;
   background: var(--bg-alt);
 
   p {
-    margin: 0 0 0.25rem;
+    margin: 0 0 $space-1;
   }
 
   &__sample {
-    margin-bottom: 1rem !important;
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 1.2;
+    margin-bottom: $space-4 !important;
+    font-size: $font-sample-font-size;
+    font-weight: $weight-bold;
+    line-height: $leading-snug;
   }
 
   &__name {
-    font-weight: 500;
+    font-weight: $weight-medium;
   }
 
   &__role,
   &__token {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: $font-md;
   }
 }
 
 .scale {
   display: grid;
-  gap: 1.25rem;
+  gap: $space-5;
 
   &__row {
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--line);
+    padding-bottom: $space-5;
+    border-bottom: $border-line;
   }
 
   &__label {
-    margin: 0 0 0.5rem;
+    margin: 0 0 $space-2;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: $font-sm;
   }
 
   &__sample {
@@ -328,52 +336,52 @@ code {
 
     &--title {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.15;
+      font-size: $font-title-lg;
+      font-weight: $weight-bold;
+      line-height: $leading-tight;
     }
 
     &--h3 {
       font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      line-height: 1.15;
+      font-size: $font-2xl;
+      font-weight: $weight-bold;
+      line-height: $leading-tight;
     }
 
     &--h4 {
-      font-size: 1.15rem;
-      font-weight: 500;
+      font-size: $font-lg;
+      font-weight: $weight-medium;
     }
   }
 }
 
 .notes {
   display: grid;
-  gap: 0.5rem;
-  margin-top: 2rem;
-  padding-left: 1.25rem;
+  gap: $space-2;
+  margin-top: $space-8;
+  padding-left: $list-indent;
   list-style: square;
   color: var(--muted);
 }
 
 .rules {
   display: grid;
-  gap: 1.5rem;
+  gap: $space-6;
 
-  @media (min-width: 700px) {
-    grid-template-columns: 1fr 1fr;
+  @include up($bp-tablet) {
+    grid-template-columns: $columns-2;
   }
 }
 
 .rule {
-  padding: 1.25rem;
-  border: 1px solid var(--line);
+  padding: $space-5;
+  border: $border-line;
 
   &__title {
-    margin-bottom: 0.5rem;
+    margin-bottom: $space-2;
     font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: $rule-title-font-size;
+    font-weight: $weight-bold;
   }
 
   &__text {
@@ -385,6 +393,6 @@ code {
 .demo-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: $space-2;
 }
 </style>

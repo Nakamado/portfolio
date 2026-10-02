@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxt/test-utils/module'],
   css: ['~/assets/scss/main.scss'],
   typescript: { strict: true },
+  vite: {
+    css: {
+      // SCSS-Variablen und Mixins (Breakpoints, Mindestgrößen, Übergänge) stehen in jeder SCSS-Datei und jedem <style lang="scss"> bereit
+      preprocessorOptions: { scss: { additionalData: '@use "~/assets/scss/variables" as *;\n' } }
+    }
+  },
   fonts: {
     // Explizit, damit alle genutzten Schriftschnitte geladen und selbst ausgeliefert werden.
     // Die Fließtext-Schrift lädt vorab und mit font-display "optional": Kommt sie nicht rechtzeitig, bleibt die Ersatzschrift

@@ -32,21 +32,23 @@ const { contactEmail, linkedinUrl } = useRuntimeConfig().public
 </template>
 
 <style lang="scss" scoped>
+$contact-mail-font-size: clamp(1.4rem, 4.5vw, 3.25rem);
+$contact-links-gap: 1.75rem;
 .contact {
   &__mail {
-    --underline: 4px;
+    --underline: 0.25rem;
 
-    font-size: clamp(1.4rem, 4.5vw, 3.25rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: $contact-mail-font-size;
+    font-weight: $weight-bold;
+    letter-spacing: $tracking-tighter;
     overflow-wrap: anywhere;
   }
 
   &__links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.75rem;
-    margin-top: 1.5rem;
+    gap: $space-2 $contact-links-gap;
+    margin-top: $space-6;
   }
 }
 </style>

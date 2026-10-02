@@ -1,12 +1,14 @@
 // Block: button – Hauptaktion (z. B. „Kontakt aufnehmen“). Eckig, ein Akzentton, Hover etwas dunkler.
+@use '../variables' as *; // additionalData gilt nur für Einstiegsdateien, eingebundene Teildateien laden die Variablen selbst
+
 .button {
   display: inline-flex;
   align-items: center;
-  min-height: 3rem;
-  padding: 0.75rem 1.5rem;
+  min-height: $button-height;
+  padding: $space-3 $space-6;
   background: var(--blue);
-  color: #fff;
-  font-weight: 500;
+  color: var(--on-blue);
+  font-weight: $weight-medium;
   text-decoration: none;
 
   &:hover {

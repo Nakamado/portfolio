@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
 .hero-backdrop {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: $z-behind;
   width: 100%;
   height: 100%;
   pointer-events: none; // Ereignisse hört der Hero-Abschnitt ab

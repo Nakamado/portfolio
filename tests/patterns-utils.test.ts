@@ -86,7 +86,7 @@ describe('Design-Tokens aus dem SCSS', () => {
 
   it('findet in der echten main.scss alle Farben, Schriften und Layout-Werte', () => {
     const names = parseTokens(mainScss).map((t) => t.name)
-    expect(names).toEqual(expect.arrayContaining(['bg', 'bg-alt', 'text', 'muted', 'line', 'blue', 'blue-dark', 'blue-light', 'focus', 'font', 'font-display', 'gutter', 'header-height', 'section-height']))
+    expect(names).toEqual(expect.arrayContaining(['bg', 'bg-alt', 'text', 'on-blue', 'muted', 'line', 'blue', 'blue-dark', 'blue-light', 'focus', 'font', 'font-display', 'gutter', 'header-height', 'section-height']))
     expect(new Set(names).size).toBe(names.length)
   })
 })

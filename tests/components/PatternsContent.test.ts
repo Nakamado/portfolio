@@ -62,6 +62,7 @@ describe.each([
     expect(wrapper.findAll('.font')).toHaveLength(2)
     expect(wrapper.get('#typography').text()).toContain('Roboto Slab')
     expect(wrapper.get('#typography').text()).toContain('Space Grotesk')
+    expect(wrapper.get('#layout pre').text()).toContain('$bp-hero: 68.75rem;')
     expect(wrapper.findAll('#layout .token').map((el) => el.text()).join(' ')).toContain('--gutter')
   })
 

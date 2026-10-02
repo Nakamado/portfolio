@@ -1,0 +1,112 @@
+// SCSS-Variablen und Mixins: Werte, die sich nicht als CSS-Variable (:root) eignen, weil sie in Media Queries stehen
+// oder nur beim Kompilieren gebraucht werden. Die Datei wird über nuxt.config.ts in jede SCSS-Datei und jeden <style lang="scss"> geladen.
+// Farben, Schriften und Abstände, die sich zur Laufzeit ändern können, bleiben CSS-Variablen in main.scss.
+
+// Breakpoints (Mobile First, jeweils ab dieser Breite; in rem, damit sie auch bei größerer Browser-Schrift mitgehen)
+$bp-compact: 23.75rem; // 380 px: sehr schmale Handys, Header-Logo und Sprachschalter müssen in eine Zeile
+$bp-tablet: 43.75rem; // 700 px: zweispaltige Raster, Tablet-Layout im Hero
+$bp-footer: 48rem; // 768 px: Footer in einer Zeile
+$bp-about: 53.75rem; // 860 px: Über mich, Porträt und Text untereinander
+$bp-nav: 62.5rem; // 1000 px: Header einzeilig und fixiert
+$bp-hero: 68.75rem; // 1100 px: Hero mit Porträt als Hintergrund
+$vh-short: 45rem; // 720 px: niedrige Fenster, Scroll-Button entfällt
+$bp-step: 0.0625rem; // 1 px: Abstand zwischen up() und down(), damit sich beide nie überlappen
+
+// Bedienbarkeit
+$tap-target: 2.75rem; // 44 px: Mindesthöhe für alles Klickbare
+$button-height: 3rem;
+
+// Breiten
+$measure-text: 48rem; // Lesebreite der Rechtstexte
+$measure-page: 60rem; // Breite der Pattern-Library
+
+// Abstände: Schritte von 0,25 rem (Zahl = Wert in rem × 4, also $space-4 = 1 rem). Für padding, margin und gap.
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+
+// Abstände, die auf mehreren Seiten gleich sind
+$page-padding-y: clamp(3rem, 8vw, 5rem); // oben und unten bei Impressum, Datenschutz und Pattern-Library
+$list-indent: $space-5; // Einzug von Aufzählungen
+
+// Schrift
+$font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; // Quelltext und Variablennamen
+$font-mono-size: 0.9em; // Quelltext im Fließtext, etwas kleiner als die Umgebung
+
+// Schriftgrößen, die mehrfach vorkommen (Einzelwerte stehen als lokale Variable in der jeweiligen Komponente)
+$font-xs: 0.85rem; // Beschriftungen, kleine Hinweise
+$font-sm: 0.9rem;
+$font-md: 0.95rem; // Nebentext
+$font-lg: 1.15rem; // Einleitungen und Einträge
+$font-xl: 1.35rem;
+$font-2xl: 1.5rem; // Überschrift der Ebene 3
+$font-title: clamp(2rem, 5vw, 3.25rem); // Seitentitel (Impressum, Datenschutz, Pattern-Library)
+$font-title-lg: clamp(2rem, 5vw, 3.5rem); // Abschnittsüberschriften
+
+// Schriftschnitt, Zeilenhöhe, Laufweite
+$weight-medium: 500;
+$weight-bold: 700;
+$leading-tight: 1.15; // Überschriften
+$leading-snug: 1.2;
+$leading-normal: 1.5; // kleiner Fließtext
+$tracking-caps: 0.08em; // Großbuchstaben-Labels
+$tracking-tight: -0.01em; // große Überschriften
+$tracking-tighter: -0.02em; // sehr große Überschriften
+
+// Linien
+$hairline: 0.0625rem; // 1 px: feinste Linie
+$border-line: $hairline solid var(--line); // feine Trennlinie und Rahmen
+
+// Schatten
+$shadow-strong: rgb(0 0 0 / 0.4); // Pager-Button und angehobener Drag-Chip
+
+// Stapelreihenfolge (z-index)
+$z-behind: 0;
+$z-above: 1;
+$z-lifted: 2; // angehobener Drag-Chip
+$z-pager: 9;
+$z-header: 10;
+$z-skip-link: 20; // immer ganz oben, damit er beim Tabben sichtbar ist
+
+// Spalten
+$columns-1: 1fr;
+$columns-2: 1fr 1fr;
+
+// Übergänge
+$duration-fast: 0.2s;
+$duration-base: 0.3s;
+$duration-slow: 0.4s;
+$duration-spring: 0.55s;
+$duration-spring-long: 0.6s;
+$transition-fast: $duration-fast ease;
+$transition-base: $duration-base ease;
+$transition-slow: $duration-slow ease;
+// Federn mit leichtem Überschwingen (die Kurve geht über 1)
+$ease-spring-soft: cubic-bezier(0.3, 1.4, 0.5, 1);
+$ease-spring: cubic-bezier(0.3, 1.5, 0.5, 1);
+$ease-spring-strong: cubic-bezier(0.3, 1.6, 0.5, 1);
+
+@mixin up($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Bis eine Breite davor: down($bp-hero) gilt bis 1099 px und ist das Gegenstück zu up($bp-hero)
+@mixin down($breakpoint) {
+  @media (max-width: $breakpoint - $bp-step) {
+    @content;
+  }
+}
+
+@mixin between($min, $max) {
+  @media (min-width: $min) and (max-width: $max - $bp-step) {
+    @content;
+  }
+}

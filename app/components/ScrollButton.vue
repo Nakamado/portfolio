@@ -14,16 +14,17 @@ const onNavigate = focusSection // siehe utils/focusSection.ts
 </template>
 
 <style lang="scss" scoped>
+$scroll-button-size: 4rem;
 .scroll-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
+  width: $scroll-button-size;
+  height: $scroll-button-size;
   border-radius: 50%;
   background: var(--blue);
-  color: #fff;
-  transition: background-color 0.2s ease;
+  color: var(--on-blue);
+  transition: background-color $transition-fast;
 
   &:hover {
     background: var(--blue-dark);

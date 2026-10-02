@@ -16,18 +16,19 @@ const { t } = useLang()
 </template>
 
 <style lang="scss" scoped>
+$skill-min-width: 15rem;
 .skills {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax($skill-min-width, 1fr));
+  gap: $space-10;
 
   &__list {
-    margin-top: 1rem;
+    margin-top: $space-4;
   }
 
   &__item {
-    padding: 0.5rem 0;
-    border-top: 1px solid var(--line);
+    padding: $space-2 0;
+    border-top: $border-line;
   }
 }
 </style>

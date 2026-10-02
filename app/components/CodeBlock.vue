@@ -14,19 +14,20 @@ defineProps<{ code: string; file: string; summary: string; open?: boolean }>()
 </template>
 
 <style lang="scss" scoped>
+$code-line-height: 1.6;
 .code {
-  border: 1px solid var(--line);
+  border: $border-line;
   background: var(--bg);
 
   &__summary {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.25rem 0.75rem;
-    min-height: 2.75rem;
-    padding: 0.5rem 1rem;
+    gap: $space-1 $space-3;
+    min-height: $tap-target;
+    padding: $space-2 $space-4;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: $weight-medium;
   }
 
   &__label {
@@ -35,16 +36,16 @@ defineProps<{ code: string; file: string; summary: string; open?: boolean }>()
 
   &__file {
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: $font-xs;
   }
 
   &__pre {
     margin: 0;
-    padding: 1rem;
+    padding: $space-4;
     overflow-x: auto;
-    border-top: 1px solid var(--line);
+    border-top: $border-line;
     color: var(--muted);
-    font: 400 0.85rem/1.6 ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font: 400 #{$font-xs}/#{$code-line-height} $font-mono; // Interpolation, sonst teilt Sass
     tab-size: 2;
   }
 }

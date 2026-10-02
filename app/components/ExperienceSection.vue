@@ -36,12 +36,21 @@ const { t } = useLang()
 </template>
 
 <style lang="scss" scoped>
+$point-width: 70ch;
+$timeline-dash-top: 0.78em; // Strich vor dem Stichpunkt auf Höhe der ersten Zeile
+$timeline-dash-height: 0.125rem;
+$timeline-date-width: 11rem;
+$experience-subtitle-spaced-margin-top: 4.5rem;
+$timeline-item-padding: 1.75rem;
+$timeline-org-margin: 0.2rem;
+$timeline-point-padding-left: 1.1rem;
+$chips-gap: 0.4rem;
 .experience {
   &__subtitle {
-    margin-bottom: 1rem;
+    margin-bottom: $space-4;
 
     &--spaced {
-      margin-top: 4.5rem;
+      margin-top: $experience-subtitle-spaced-margin-top;
     }
   }
 }
@@ -49,14 +58,14 @@ const { t } = useLang()
 .timeline {
   &__item {
     display: grid;
-    grid-template-columns: 11rem 1fr;
-    gap: 1.5rem;
-    padding: 1.75rem 0;
-    border-top: 1px solid var(--line);
+    grid-template-columns: $timeline-date-width 1fr;
+    gap: $space-6;
+    padding: $timeline-item-padding 0;
+    border-top: $border-line;
 
-    @media (max-width: 700px) {
-      grid-template-columns: 1fr;
-      gap: 0.25rem;
+    @include down($bp-tablet) {
+      grid-template-columns: $columns-1;
+      gap: $space-1;
     }
   }
 
@@ -66,32 +75,32 @@ const { t } = useLang()
   }
 
   &__org {
-    margin: 0.2rem 0 0;
+    margin: $timeline-org-margin 0 0;
     color: var(--muted);
   }
 
   &__points {
-    margin: 1rem 0;
+    margin: $space-4 0;
   }
 
   &__point {
     position: relative;
-    max-width: 70ch;
-    padding-left: 1.1rem;
+    max-width: $point-width;
+    padding-left: $timeline-point-padding-left;
 
     &::before {
       content: '';
       position: absolute;
-      top: 0.78em;
+      top: $timeline-dash-top;
       left: 0;
       width: 0.5rem;
-      height: 2px;
+      height: $timeline-dash-height;
       background: var(--blue);
     }
   }
 
   &__note {
-    margin: 0.5rem 0 0;
+    margin: $space-2 0 0;
     color: var(--muted);
   }
 }
@@ -99,7 +108,7 @@ const { t } = useLang()
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
+  gap: $chips-gap;
+  margin-top: $space-3;
 }
 </style>

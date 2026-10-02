@@ -35,15 +35,18 @@ const { t } = useLang()
 </template>
 
 <style lang="scss" scoped>
+$preview-min-height: 7rem;
+$api-name-min: 10rem; // Spalte mit dem Namen in der Schnittstellen-Liste
+$api-name-max: 14rem;
 .pattern {
-  margin-bottom: 3rem;
+  margin-bottom: $space-12;
 
   &:last-child {
     margin-bottom: 0;
   }
 
   &__title {
-    margin-bottom: 0.75rem;
+    margin-bottom: $space-3;
   }
 
   &__text {
@@ -54,26 +57,26 @@ const { t } = useLang()
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem 2rem;
-    min-height: 7rem;
-    margin: 1.5rem 0;
-    padding: 2rem;
-    border: 1px solid var(--line);
+    gap: $space-4 $space-8;
+    min-height: $preview-min-height;
+    margin: $space-6 0;
+    padding: $space-8;
+    border: $border-line;
     background: var(--bg-alt);
   }
 
   &__heading {
-    margin: 1.5rem 0 0.5rem;
+    margin: $space-6 0 $space-2;
   }
 
   &__api-row {
     display: grid;
-    gap: 0.25rem 1.5rem;
-    padding: 0.75rem 0;
-    border-top: 1px solid var(--line);
+    gap: $space-1 $space-6;
+    padding: $space-3 0;
+    border-top: $border-line;
 
-    @media (min-width: 700px) {
-      grid-template-columns: minmax(10rem, 14rem) 1fr;
+    @include up($bp-tablet) {
+      grid-template-columns: minmax($api-name-min, $api-name-max) 1fr;
     }
 
     dd {
@@ -84,24 +87,24 @@ const { t } = useLang()
 
   &__list {
     display: grid;
-    gap: 0.5rem;
-    padding-left: 1.25rem;
+    gap: $space-2;
+    padding-left: $list-indent;
     list-style: square;
     color: var(--muted);
   }
 
   &__usage {
-    margin: 1.5rem 0 0.5rem;
-    font-weight: 500;
+    margin: $space-6 0 $space-2;
+    font-weight: $weight-medium;
   }
 
   .code + .code {
-    margin-top: 0.75rem;
+    margin-top: $space-3;
   }
 }
 
 code {
   color: var(--text);
-  font: 500 0.9em ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font: $weight-medium $font-mono-size $font-mono;
 }
 </style>

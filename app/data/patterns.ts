@@ -54,6 +54,8 @@ export interface PatternsContent {
     intro: string
     rules: { title: string; text: string }[]
     tokensTitle: string
+    scssTitle: string
+    scssIntro: string
   }
   components: { title: string; intro: string; items: PatternComponent[] }
   back: string
@@ -93,6 +95,7 @@ const de: PatternsContent = {
       bg: 'Hintergrund der Seite und der geraden Abschnitte.',
       'bg-alt': 'Hintergrund der abwechselnden Abschnitte (Über mich, Skills, Kontakt).',
       text: 'Fließtext und Überschriften.',
+      'on-blue': 'Schrift und Symbole auf blauen Flächen (Button, Scroll-Button).',
       muted: 'Zweitfarbe für Einleitungen, Hinweise und Menüpunkte im Ruhezustand.',
       line: 'Feine Trennlinien und Rahmen (Weiß mit 14 % Deckkraft).',
       blue: 'Akzent: Button, Logo-Symbol und der Schrägstrich vor Abschnittsüberschriften.',
@@ -107,8 +110,8 @@ const de: PatternsContent = {
       { fg: 'text', bg: 'bg', use: 'Fließtext auf dem Seitenhintergrund' },
       { fg: 'muted', bg: 'bg', use: 'Zweittext auf dem Seitenhintergrund' },
       { fg: 'muted', bg: 'bg-alt', use: 'Zweittext auf abwechselnden Abschnitten' },
-      { fg: 'text', bg: 'blue', use: 'Beschriftung des Buttons' },
-      { fg: 'text', bg: 'blue-dark', use: 'Beschriftung des Buttons im Hover' },
+      { fg: 'on-blue', bg: 'blue', use: 'Beschriftung des Buttons' },
+      { fg: 'on-blue', bg: 'blue-dark', use: 'Beschriftung des Buttons im Hover' },
       { fg: 'blue-light', bg: 'bg', use: 'Unterstrich und Rahmen im Hover' },
       { fg: 'focus', bg: 'bg', use: 'Fokusrahmen' },
       { fg: 'blue', bg: 'bg', use: 'Akzent (Logo, Schrägstrich), rein dekorativ' }
@@ -165,7 +168,9 @@ const de: PatternsContent = {
         text: 'Klickflächen sind mindestens 44 px hoch. Der Fokusrahmen ist 3 px stark und überall sichtbar. Bei „reduzierte Bewegung“ werden Übergänge und Animationen abgeschaltet oder verkürzt.'
       }
     ],
-    tokensTitle: 'Variablen für Schrift und Layout'
+    tokensTitle: 'Variablen für Schrift und Layout',
+    scssTitle: 'SCSS-Variablen und Mixins',
+    scssIntro: 'Breakpoints, Abstände, Schriftgrößen, Mindestgrößen und Übergänge liegen in einer eigenen SCSS-Datei, weil sie in Media Queries stehen oder sich zur Laufzeit nicht ändern. Die Abstände folgen einer Skala in 0,25-rem-Schritten, mit den Mixins up(), down() und between() heißt ein Breakpoint überall gleich. Werte, die nur an einer Stelle vorkommen, stehen als lokale Variable in der jeweiligen Komponente. Die Datei wird beim Build in jede SCSS-Datei geladen.'
   },
   components: {
     title: 'Komponenten',
@@ -295,6 +300,7 @@ const en: PatternsContent = {
       bg: 'Page background and the even sections.',
       'bg-alt': 'Background of the alternating sections (About, Skills, Contact).',
       text: 'Body text and headings.',
+      'on-blue': 'Text and icons on blue surfaces (button, scroll button).',
       muted: 'Secondary color for intros, hints and menu items at rest.',
       line: 'Fine divider lines and borders (white at 14% opacity).',
       blue: 'Accent: button, logo symbol and the slash in front of section headings.',
@@ -309,8 +315,8 @@ const en: PatternsContent = {
       { fg: 'text', bg: 'bg', use: 'Body text on the page background' },
       { fg: 'muted', bg: 'bg', use: 'Secondary text on the page background' },
       { fg: 'muted', bg: 'bg-alt', use: 'Secondary text on alternating sections' },
-      { fg: 'text', bg: 'blue', use: 'Button label' },
-      { fg: 'text', bg: 'blue-dark', use: 'Button label on hover' },
+      { fg: 'on-blue', bg: 'blue', use: 'Button label' },
+      { fg: 'on-blue', bg: 'blue-dark', use: 'Button label on hover' },
       { fg: 'blue-light', bg: 'bg', use: 'Underline and border on hover' },
       { fg: 'focus', bg: 'bg', use: 'Focus ring' },
       { fg: 'blue', bg: 'bg', use: 'Accent (logo, slash), purely decorative' }
@@ -366,7 +372,9 @@ const en: PatternsContent = {
         text: 'Click targets are at least 44 px tall. The focus ring is 3 px thick and visible everywhere. With “reduced motion”, transitions and animations are switched off or shortened.'
       }
     ],
-    tokensTitle: 'Type and layout variables'
+    tokensTitle: 'Type and layout variables',
+    scssTitle: 'SCSS variables and mixins',
+    scssIntro: 'Breakpoints, spacing, font sizes, minimum sizes and transitions live in their own SCSS file, because they are used in media queries or never change at runtime. Spacing follows a scale in steps of 0.25 rem, and with the mixins up(), down() and between() a breakpoint has the same name everywhere. Values that occur in only one place are local variables in their component. The file is loaded into every SCSS file at build time.'
   },
   components: {
     title: 'Components',

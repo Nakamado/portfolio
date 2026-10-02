@@ -12,19 +12,21 @@ defineProps<{ id: string; title: string; intro: string }>()
 </template>
 
 <style lang="scss" scoped>
+$pattern-section-title-font-size: clamp(1.75rem, 4vw, 2.5rem);
+$pattern-section-intro-font-size: 1.1rem;
 .pattern-section {
-  padding: 3rem 0;
-  border-top: 1px solid var(--line);
+  padding: $space-12 0;
+  border-top: $border-line;
 
   &__title {
-    margin-bottom: 1rem;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: $space-4;
+    font-size: $pattern-section-title-font-size;
   }
 
   &__intro {
-    margin-bottom: 2rem;
+    margin-bottom: $space-8;
     color: var(--muted);
-    font-size: 1.1rem;
+    font-size: $pattern-section-intro-font-size;
   }
 }
 </style>
