@@ -77,8 +77,7 @@ function resize() {
 
 function onMove(event: PointerEvent) {
   if (event.pointerType === 'touch') return
-  const rect = canvas.value?.getBoundingClientRect()
-  if (!rect) return
+  const rect = canvas.value!.getBoundingClientRect() // Listener hängen nur, solange die Komponente eingehängt ist
   pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top }
   start()
 }
@@ -90,14 +89,14 @@ function onLeave() {
 onMounted(() => {
   reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   resize()
-  if (typeof ResizeObserver !== 'undefined' && canvas.value) {
+  if (typeof ResizeObserver !== 'undefined') {
     observer = new ResizeObserver(resize)
-    observer.observe(canvas.value)
+    observer.observe(canvas.value!)
   }
-  host = canvas.value?.parentElement ?? null
-  if (!reduced && host) {
-    host.addEventListener('pointermove', onMove)
-    host.addEventListener('pointerleave', onLeave)
+  host = canvas.value!.parentElement
+  if (!reduced) {
+    host!.addEventListener('pointermove', onMove)
+    host!.addEventListener('pointerleave', onLeave)
   }
 })
 

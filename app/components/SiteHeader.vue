@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { lang, t, paths, isLegal, homePath } = useLang()
 // Auf Impressum und Datenschutz führen Menü und Logo zur Startseite (inkl. Anker), sonst springen sie innerhalb der Seite.
+const onNavigate = focusSection // Fokus auf den Zielabschnitt setzen (siehe utils/focusSection.ts)
 const anchor = (id: string) => (isLegal.value ? `${homePath.value}#${id}` : `#${id}`)
 
 const languages = [
@@ -11,7 +12,7 @@ const languages = [
 
 <template>
   <header class="site-header">
-    <NuxtLink class="site-header__brand" :to="anchor('top')" @click="focusSection">
+    <NuxtLink class="site-header__brand" :to="anchor('top')" @click="onNavigate">
       <svg class="site-header__logo" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" focusable="false">
         <path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
@@ -20,7 +21,7 @@ const languages = [
     <nav class="site-header__nav" :aria-label="t.ui.nav">
       <ul class="site-header__list">
         <li v-for="item in t.nav" :key="item.id" class="site-header__item">
-          <NuxtLink class="site-header__link" :to="anchor(item.id)" @click="focusSection">{{ item.label }}</NuxtLink>
+          <NuxtLink class="site-header__link" :to="anchor(item.id)" @click="onNavigate">{{ item.label }}</NuxtLink>
         </li>
       </ul>
     </nav>

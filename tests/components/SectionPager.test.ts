@@ -10,3 +10,13 @@ describe('SectionPager', () => {
     expect(wrapper.attributes('aria-label')).toContain('Über mich')
   })
 })
+
+describe('SectionPager: Klick', () => {
+  it('setzt den Fokus auf den Zielabschnitt', async () => {
+    document.body.innerHTML = '<section id="about" tabindex="-1"></section>'
+    const wrapper = await mountSuspended(SectionPager, { route: '/' })
+    await wrapper.trigger('click')
+    expect(document.activeElement?.id).toBe('about')
+    document.body.innerHTML = ''
+  })
+})

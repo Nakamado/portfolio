@@ -39,3 +39,7 @@ npm run typecheck
 - Impressum: Seite ist angelegt (`/impressum`, `/en/legal-notice`). Straße und PLZ in `nuxt.config.ts` (`imprintStreet`, `imprintCity`) oder per `.env` eintragen; Platzhalter in eckigen Klammern werden orange markiert. Rechtlich prüfen lassen.
 - Datenschutzerklärung ergänzen (für Seiten mit deutschem Bezug in der Regel nötig)
 - Eigene Projekte in `app/data/profile.ts` unter `work.projects` ergänzen, sobald vorhanden
+
+## Testabdeckung
+
+Ziel ist eine Abdeckung von 100 % (Anweisungen, Zweige, Funktionen, Zeilen). `npm run test:coverage` bricht ab, wenn der Wert darunter fällt; der Bericht liegt danach in `coverage/index.html`. Neuer Code in `app/` oder `shared/` kommt immer mit Tests. Server-Routen bleiben dünn, ihre Logik liegt in `shared/`.

@@ -9,7 +9,7 @@ const target = computed(() => pagerTarget(index.value))
 const visible = computed(() => index.value >= 1) // erscheint ab "Über mich"
 const label = computed(() => {
   if (target.value.up) return t.value.ui.backToTop
-  const name = t.value.nav.find((item) => item.id === target.value.id)?.label ?? ''
+  const name = t.value.nav.find((item) => item.id === target.value.id)!.label // jede Ziel-ID außer "top" steht in der Navigation
   return t.value.ui.nextSection.replace('{section}', name)
 })
 

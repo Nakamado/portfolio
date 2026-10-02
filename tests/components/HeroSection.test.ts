@@ -1,0 +1,52 @@
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
+import HeroSection from '~/components/HeroSection.vue'
+
+describe('HeroSection', () => {
+  // useRuntimeConfig braucht die Nuxt-Instanz und darf deshalb erst innerhalb der Tests laufen
+  const config = () => useRuntimeConfig().public
+  let original = ''
+  beforeEach(() => {
+    original = config().linkedinUrl
+  })
+  afterEach(() => {
+    config().linkedinUrl = original
+  })
+
+  it('verlinkt den deutschen Lebenslauf, Kontakt und LinkedIn', async () => {
+    config().linkedinUrl = 'https://www.linkedin.com/in/test/'
+    const wrapper = await mountSuspended(HeroSection, { route: '/' })
+    expect(wrapper.get('a[download]').attributes('href')).toBe('/cv/Lebenslauf-Dustin-Clever.pdf')
+    expect(wrapper.find('a[href="https://www.linkedin.com/in/test/"]').exists()).toBe(true)
+    expect(wrapper.find('a[href^="mailto:"]').exists()).toBe(true)
+    expect(wrapper.get('h1').text()).toBeTruthy()
+  })
+
+  it('verlinkt den englischen Lebenslauf', async () => {
+    const wrapper = await mountSuspended(HeroSection, { route: '/en' })
+    expect(wrapper.get('a[download]').attributes('href')).toBe('/cv/CV-Dustin-Clever.pdf')
+  })
+
+  it('blendet LinkedIn aus, wenn keine URL gesetzt ist', async () => {
+    config().linkedinUrl = ''
+    const wrapper = await mountSuspended(HeroSection, { route: '/' })
+    expect(wrapper.find('a[href*="linkedin"]').exists()).toBe(false)
+    expect(wrapper.find('a[href^="mailto:"]').exists()).toBe(true)
+  })
+
+  it('setzt nach Klick auf einen Ankerlink den Fokus auf den Zielabschnitt', async () => {
+    document.body.innerHTML = ['contact', 'about', 'projects'].map((id) => `<section id="${id}" tabindex="-1"></section>`).join('')
+    const wrapper = await mountSuspended(HeroSection, { route: '/' })
+    for (const [selector, id] of [
+      ['a.button', 'contact'],
+      ['a.hero__scroll', 'about'],
+      ['.hero__more[href="#about"]', 'about'],
+      ['.hero__more[href="#projects"]', 'projects']
+    ] as const) {
+      ;(document.activeElement as HTMLElement | null)?.blur()
+      await wrapper.get(selector).trigger('click')
+      expect(document.activeElement?.id).toBe(id)
+    }
+    document.body.innerHTML = ''
+  })
+})

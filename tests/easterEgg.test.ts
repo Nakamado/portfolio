@@ -20,3 +20,11 @@ describe('Easteregg im <head>', () => {
     expect(easterEggComment('test@example.com')).not.toContain('LinkedIn')
   })
 })
+
+describe('Easteregg-Kontaktzeilen', () => {
+  it('enthält E-Mail und optional LinkedIn', async () => {
+    const { easterEggContacts } = await import('../app/data/easterEgg')
+    expect(easterEggContacts('a@b.de')).toEqual(['Say hi: a@b.de'])
+    expect(easterEggContacts('a@b.de', 'https://li')).toEqual(['Say hi: a@b.de', 'LinkedIn: https://li'])
+  })
+})

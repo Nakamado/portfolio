@@ -2,6 +2,9 @@
 const { t, homePath } = useLang()
 const { contactEmail, imprintStreet, imprintCity, imprintPhone } = useRuntimeConfig().public
 
+// Angaben in eckigen Klammern sind noch offen und werden sichtbar markiert (siehe utils/placeholder.ts).
+const streetOpen = isPlaceholder(imprintStreet)
+const cityOpen = isPlaceholder(imprintCity)
 const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
 </script>
 
@@ -13,8 +16,8 @@ const telHref = computed(() => `tel:${imprintPhone.replace(/[^+\d]/g, '')}`)
       <h2 id="imprint-provider" class="imprint__heading">{{ t.imprint.providerTitle }}</h2>
       <address class="imprint__address">
         <span class="imprint__line">Dustin Clever</span>
-        <span class="imprint__line" :class="{ 'imprint__line--todo': isPlaceholder(imprintStreet) }">{{ imprintStreet }}</span>
-        <span class="imprint__line" :class="{ 'imprint__line--todo': isPlaceholder(imprintCity) }">{{ imprintCity }}</span>
+        <span class="imprint__line" :class="{ 'imprint__line--todo': streetOpen }">{{ imprintStreet }}</span>
+        <span class="imprint__line" :class="{ 'imprint__line--todo': cityOpen }">{{ imprintCity }}</span>
       </address>
     </section>
 

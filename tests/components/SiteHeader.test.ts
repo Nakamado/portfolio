@@ -29,3 +29,28 @@ describe('SiteHeader', () => {
     expect(en.find('.lang-switch').classes()).toContain('lang-switch--en')
   })
 })
+
+describe('SiteHeader: Fokus nach Klick', () => {
+  it('setzt nach Klick auf Logo und Menüpunkt den Fokus auf den Zielabschnitt', async () => {
+    document.body.innerHTML = '<section id="top" tabindex="-1"></section><section id="about" tabindex="-1"><h2 tabindex="0">x</h2></section>'
+    const wrapper = await mountSuspended(SiteHeader, { route: '/' })
+    await wrapper.get('.site-header__brand').trigger('click')
+    expect(document.activeElement?.id).toBe('top')
+    await wrapper.get('.site-header__link').trigger('click')
+    expect(document.activeElement?.tagName).toBe('H2')
+    document.body.innerHTML = ''
+  })
+
+  it('behält die Klick-Handler auch nach einem erneuten Rendern (Sprachwechsel)', async () => {
+    document.body.innerHTML = '<section id="top" tabindex="-1"></section><section id="about" tabindex="-1"></section>'
+    const wrapper = await mountSuspended(SiteHeader, { route: '/' })
+    await navigateTo('/en')
+    await nextTick()
+    await nextTick()
+    await wrapper.get('.site-header__brand').trigger('click')
+    expect(document.activeElement?.id).toBe('top')
+    await wrapper.get('.site-header__link').trigger('click')
+    expect(document.activeElement?.id).toBe('about')
+    document.body.innerHTML = ''
+  })
+})

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ImprintContent from '~/components/ImprintContent.vue'
 import SiteHeader from '~/components/SiteHeader.vue'
@@ -55,5 +55,41 @@ describe('isPlaceholder', () => {
   it('lässt ausgefüllte Angaben in Ruhe', () => {
     expect(isPlaceholder('Rotdornweg 1')).toBe(false)
     expect(isPlaceholder('51519 Odenthal')).toBe(false)
+  })
+})
+
+describe('Impressum: Telefonnummer', () => {
+  let original = ''
+  beforeEach(() => {
+    original = useRuntimeConfig().public.imprintPhone
+  })
+  afterEach(() => {
+    useRuntimeConfig().public.imprintPhone = original
+  })
+
+  it('erscheint als tel-Link ohne Leerzeichen, wenn eine Nummer gesetzt ist', async () => {
+    useRuntimeConfig().public.imprintPhone = '+49 123 456-789'
+    const wrapper = await mountSuspended(ImprintContent, { route: '/impressum' })
+    expect(wrapper.find('a[href="tel:+49123456789"]').exists()).toBe(true)
+  })
+
+  it('entfällt ohne Nummer', async () => {
+    useRuntimeConfig().public.imprintPhone = ''
+    const wrapper = await mountSuspended(ImprintContent, { route: '/impressum' })
+    expect(wrapper.find('a[href^="tel:"]').exists()).toBe(false)
+  })
+
+  it('markiert offene Platzhalter in der Adresse', async () => {
+    const config = useRuntimeConfig().public
+    const { imprintStreet, imprintCity } = config
+    config.imprintStreet = '[Straße ergänzen]'
+    config.imprintCity = '[PLZ ergänzen]'
+    try {
+      const wrapper = await mountSuspended(ImprintContent, { route: '/impressum' })
+      expect(wrapper.findAll('.imprint__line--todo')).toHaveLength(2)
+    } finally {
+      config.imprintStreet = imprintStreet
+      config.imprintCity = imprintCity
+    }
   })
 })

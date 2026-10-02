@@ -2,36 +2,18 @@
 const { lang, t, paths, legal } = useLang()
 const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : t.value.meta.title))
 const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
-const base = siteUrl.replace(/\/$/, '')
-const abs = (path: string) => `${base}${path}`
-const ogImage = base ? abs('/images/og-image.jpg') : undefined
+const base = normalizeBase(siteUrl)
+const social = socialImage(base)
 
 useHead({
   htmlAttrs: { lang: computed(() => lang.value) },
   title: pageTitle,
-  link: computed(() =>
-    base
-      ? [
-          { rel: 'canonical', href: abs(paths.value[lang.value]) },
-          { rel: 'alternate', hreflang: 'de', href: abs(paths.value.de) },
-          { rel: 'alternate', hreflang: 'en', href: abs(paths.value.en) },
-          { rel: 'alternate', hreflang: 'x-default', href: abs(paths.value.de) }
-        ]
-      : []
-  ),
+  link: computed(() => headLinks(base, lang.value, paths.value)),
   script: [
     {
       type: 'application/ld+json',
       innerHTML: computed(() =>
-        JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Person',
-          name: 'Dustin Clever',
-          jobTitle: t.value.hero.role,
-          email: contactEmail,
-          ...(base ? { url: abs(paths.value[lang.value]), image: abs('/images/og-image.jpg') } : {}),
-          ...(linkedinUrl ? { sameAs: [linkedinUrl] } : {})
-        })
+        JSON.stringify(personSchema({ base, lang: lang.value, paths: paths.value, role: t.value.hero.role, email: contactEmail, linkedinUrl }))
       )
     }
   ]
@@ -44,13 +26,13 @@ useSeoMeta({
   ogType: 'website',
   ogLocale: () => (lang.value === 'en' ? 'en_US' : 'de_DE'),
   ogLocaleAlternate: () => (lang.value === 'en' ? 'de_DE' : 'en_US'),
-  ogUrl: () => (base ? abs(paths.value[lang.value]) : undefined),
-  ogImage,
-  ogImageWidth: ogImage ? 1200 : undefined,
-  ogImageHeight: ogImage ? 630 : undefined,
+  ogUrl: () => pageUrl(base, paths.value[lang.value]),
+  ogImage: social.image,
+  ogImageWidth: social.width,
+  ogImageHeight: social.height,
   ogImageAlt: () => t.value.hero.imageAlt,
-  twitterCard: ogImage ? 'summary_large_image' : 'summary',
-  twitterImage: ogImage
+  twitterCard: social.card,
+  twitterImage: social.image
 })
 </script>
 
