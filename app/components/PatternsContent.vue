@@ -236,7 +236,7 @@ code {
 
   &__note {
     color: var(--muted);
-    font-size: $font-md;
+    font-size: $font-sm;
   }
 
   &__value {
@@ -275,7 +275,7 @@ code {
 
   &__meta {
     color: var(--muted);
-    font-size: $font-md;
+    font-size: $font-sm;
   }
 }
 
@@ -311,7 +311,7 @@ code {
   &__role,
   &__token {
     color: var(--muted);
-    font-size: $font-md;
+    font-size: $font-sm;
   }
 }
 

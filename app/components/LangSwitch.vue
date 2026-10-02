@@ -32,7 +32,6 @@ const languages = [
 $switch-border: 0.125rem;
 $switch-link-height: 2.5rem;
 $switch-focus-inset: -0.25rem;
-$lang-switch-link-font-size: 0.875rem;
 $knob-shadow-color: rgb(0 0 0 / 0.35);
 $knob-shadow: 0 0.125rem 0.25rem $knob-shadow-color;
 $switch-fade: 0.35s ease; // Spur wechselt die Farbe etwas langsamer als der Knopf springt
@@ -76,7 +75,7 @@ $switch-fade: 0.35s ease; // Spur wechselt die Farbe etwas langsamer als der Kno
     min-width: $tap-target;
     min-height: $switch-link-height;
     color: var(--text);
-    font-size: $lang-switch-link-font-size;
+    font-size: $font-sm;
     font-weight: $weight-bold;
     text-decoration: none;
     text-transform: uppercase; // im HTML steht de/en, angezeigt wird DE/EN

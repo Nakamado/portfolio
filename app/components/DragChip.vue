@@ -41,7 +41,7 @@ function onUp() {
   <li
     class="drag-chip"
     :class="{ 'drag-chip--dragging': dragging, 'drag-chip--instant': reduced }"
-    :style="{ transform: `translate(${x}px, ${y}px)` }"
+    :style="{ '--x': `${x}px`, '--y': `${y}px` }"
     @pointerdown="onDown"
     @pointermove="onMove"
     @pointerup="onUp"
@@ -62,10 +62,11 @@ $chip-border: rgb(255 255 255 / 0.4);
   padding: $drag-chip-padding;
   border: $hairline solid $chip-border;
   background: var(--bg);
-  font-size: $font-xs;
+  font-size: $font-sm;
   cursor: grab;
   touch-action: none; // sonst scrollt der Finger statt den Tag zu ziehen
   user-select: none;
+  transform: translate(var(--x, 0), var(--y, 0)); // die Position setzt das Skript als Variablen, hier steht nur, was daraus wird
   transition:
     transform $duration-spring $ease-spring-strong, // federt beim Zurückspringen leicht über
     border-color $transition-fast;

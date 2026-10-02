@@ -40,9 +40,7 @@ $font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; // Quell
 $font-mono-size: 0.9em; // Quelltext im Fließtext, etwas kleiner als die Umgebung
 
 // Schriftgrößen, die mehrfach vorkommen (Einzelwerte stehen als lokale Variable in der jeweiligen Komponente)
-$font-xs: 0.85rem; // Beschriftungen, kleine Hinweise
-$font-sm: 0.9rem;
-$font-md: 0.95rem; // Nebentext
+$font-sm: 0.9rem; // Beschriftungen, Nebentext, Quelltext
 $font-lg: 1.15rem; // Einleitungen und Einträge
 $font-xl: 1.35rem;
 $font-2xl: 1.5rem; // Überschrift der Ebene 3

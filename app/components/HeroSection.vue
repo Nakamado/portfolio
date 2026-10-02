@@ -243,7 +243,7 @@ $text-halo: 0 0 1.125rem $text-halo-color; // dunkler Hof um den Text (bg), dami
 
   &__label {
     margin-bottom: 0.4rem;
-    font-size: $font-xs;
+    font-size: $font-sm;
     font-weight: $weight-bold;
     letter-spacing: $tracking-caps;
     text-transform: uppercase;
@@ -252,7 +252,7 @@ $text-halo: 0 0 1.125rem $text-halo-color; // dunkler Hof um den Text (bg), dami
   &__text {
     margin-bottom: 0.4rem;
     color: var(--muted);
-    font-size: $font-md;
+    font-size: $font-sm;
     line-height: $leading-normal;
   }
 

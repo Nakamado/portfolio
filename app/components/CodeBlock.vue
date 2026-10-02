@@ -36,7 +36,7 @@ $code-line-height: 1.6;
 
   &__file {
     color: var(--muted);
-    font-size: $font-xs;
+    font-size: $font-sm;
   }
 
   &__pre {
@@ -45,7 +45,7 @@ $code-line-height: 1.6;
     overflow-x: auto;
     border-top: $border-line;
     color: var(--muted);
-    font: 400 #{$font-xs}/#{$code-line-height} $font-mono; // Interpolation, sonst teilt Sass
+    font: 400 #{$font-sm}/#{$code-line-height} $font-mono; // Interpolation, sonst teilt Sass
     tab-size: 2;
   }
 }

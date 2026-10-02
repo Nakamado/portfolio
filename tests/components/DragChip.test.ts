@@ -15,17 +15,17 @@ describe('DragChip', () => {
     expect(wrapper.classes()).toContain('drag-chip--dragging')
 
     await wrapper.trigger('pointermove', { clientX: 50, clientY: 30 })
-    expect(wrapper.attributes('style')).toContain('translate(40px, 20px)')
+    expect(wrapper.attributes('style')).toContain('--x: 40px; --y: 20px')
 
     await wrapper.trigger('pointerup')
     expect(wrapper.classes()).not.toContain('drag-chip--dragging')
-    expect(wrapper.attributes('style')).toContain('translate(0px, 0px)')
+    expect(wrapper.attributes('style')).toContain('--x: 0px; --y: 0px')
   })
 
   it('ignoriert Mausbewegung ohne gedrückte Taste', async () => {
     const wrapper = await mountSuspended(DragChip, { slots: { default: 'TS' } })
     await wrapper.trigger('pointermove', { clientX: 80, clientY: 80 })
-    expect(wrapper.attributes('style')).toContain('translate(0px, 0px)')
+    expect(wrapper.attributes('style')).toContain('--x: 0px; --y: 0px')
   })
 
   it('ignoriert die rechte Maustaste', async () => {
@@ -37,7 +37,7 @@ describe('DragChip', () => {
   it('ignoriert Loslassen ohne vorheriges Greifen', async () => {
     const wrapper = await mountSuspended(DragChip, { slots: { default: 'HTML' } })
     await wrapper.trigger('pointerup')
-    expect(wrapper.attributes('style')).toContain('translate(0px, 0px)')
+    expect(wrapper.attributes('style')).toContain('--x: 0px; --y: 0px')
   })
 
   it('nutzt Pointer Capture, wenn vorhanden, und kommt auch damit klar, wenn es fehlschlägt', async () => {
