@@ -40,6 +40,7 @@ npm run typecheck
 - Die `h2` jedes Abschnitts ist per Tab erreichbar (`tabindex="0"` in `BaseSection.vue`); Fokusrahmen sichtbar, keine Link-/Button-Semantik
 - Link-Hover: Unterstrich läuft von links nach rechts von Weiß zu Blau (`.text-link` in `main.scss`); Sprachschalter als animierter "Lichtschalter"
 - Easteregg: ASCII-Logo als Kommentar im `<head>` (`server/plugins/easter-egg.ts`) und in der Browser-Konsole (`app/plugins/easter-egg.client.ts`)
+- Druckansicht (`app/assets/scss/_print.scss`, geladen am Ende der `main.scss`): die Startseite wird zu einem kompakten, hellen Lebenslauf. Header, Pfeile, Punktraster, Porträt und Buttons entfallen, externe Links zeigen ihre Adresse. Ansehen mit Strg+P oder in den DevTools unter Rendering → „Emulate CSS media type: print“
 - Schriften lädt `@nuxt/fonts` beim Build herunter und liefert sie selbst aus (keine Verbindung zu Google beim Seitenaufruf)
 
 ## Vor der Veröffentlichung

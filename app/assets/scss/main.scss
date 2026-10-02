@@ -1,5 +1,6 @@
 // Design Tokens, Reset und globale Blöcke (BEM): .section, .skip-link, .visually-hidden.
 // Button und Text-Link liegen in components/ und werden hier eingebunden; die Pattern-Library zeigt sie als Quelltext.
+@use 'sass:meta';
 @use './components/button';
 @use './components/text-link';
 
@@ -191,3 +192,6 @@ main[tabindex='-1']:focus {
     font-size: $font-lg;
   }
 }
+
+// Druckansicht (am Ende, damit sie die Farben von :root überschreibt)
+@include meta.load-css('print');

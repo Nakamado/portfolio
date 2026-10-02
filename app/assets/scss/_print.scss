@@ -1,0 +1,164 @@
+// Druckansicht: die Startseite wird zu einem kompakten, hellen Lebenslauf.
+// Bedienung und Deko (Header, Pfeile, Punktraster, Porträt, Buttons) entfallen, Links zeigen ihre Adresse.
+// Die Datei wird am Ende der main.scss geladen, damit die Farben die :root-Werte überschreiben.
+// Die Komponenten setzen ihre Maße mit höherer Spezifität (scoped), deshalb steht hier öfter !important.
+
+$print-root-size: 9pt; // alle rem-Maße der Seite werden dadurch kleiner (Standard sind 12 px statt 16 px)
+$print-margin: 1.5cm;
+$print-gap: 6pt;
+$print-gap-large: 12pt;
+$print-section-title-size: 13pt;
+$print-small-size: 8pt;
+$print-date-width: 3.2cm;
+$print-ink: #111;
+$print-ink-muted: #4a4f5c;
+$print-line: #c8ccd6;
+$print-accent: #1650c8;
+$print-paper: #fff;
+
+@media print {
+  @page {
+    margin: $print-margin;
+  }
+
+  :root {
+    --bg: #{$print-paper};
+    --bg-alt: #{$print-paper};
+    --text: #{$print-ink};
+    --muted: #{$print-ink-muted};
+    --line: #{$print-line};
+    --blue: #{$print-accent};
+    --blue-dark: #{$print-accent};
+    --blue-light: #{$print-accent};
+    color-scheme: light;
+  }
+
+  html {
+    font-size: $print-root-size;
+  }
+
+  body {
+    background: $print-paper;
+    color: $print-ink;
+  }
+
+  // Bedienung und Deko
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .pager,
+  .lang-switch,
+  .scroll-button,
+  .hero__scroll,
+  .hero__actions,
+  .hero__portrait,
+  .hero__more,
+  .hero-backdrop,
+  .hero__block:nth-child(-n + 2),
+  .contact__item:has(> a[download]),
+  a[download],
+  .text-link svg {
+    display: none !important;
+  }
+
+  // Abschnitte: kein Fensterhöhen-Layout, keine Flächen
+  .hero,
+  .section {
+    display: block !important;
+    min-height: 0 !important;
+    padding: $print-gap 0 !important;
+    background: none !important;
+  }
+
+  .hero__aside {
+    margin-top: $print-gap;
+  }
+
+  .hero__title,
+  .hero__lead,
+  .hero__status,
+  .hero__label,
+  .hero__text {
+    text-shadow: none !important;
+  }
+
+  .section__title {
+    margin-bottom: $print-gap !important;
+    font-size: $print-section-title-size !important;
+  }
+
+  // Zeitleiste: Zeitraum links, Inhalt rechts, ein Eintrag bleibt auf einer Seite
+  .timeline__item {
+    grid-template-columns: $print-date-width 1fr !important;
+    gap: $print-gap-large !important;
+    padding: $print-gap 0 !important;
+    break-inside: avoid;
+  }
+
+  .timeline__point::before {
+    top: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    background: none !important;
+    content: '–';
+    color: $print-ink-muted;
+  }
+
+  .experience__subtitle--spaced {
+    margin-top: $print-gap-large !important;
+  }
+
+  .skills {
+    gap: $print-gap-large !important;
+  }
+
+  .skills__item {
+    padding: 2pt 0 !important;
+  }
+
+  .projects__item,
+  .skills__group,
+  .list__item {
+    break-inside: avoid;
+  }
+
+  // Tags (Technologien) ohne Rahmenfarbe und Bewegung
+  .drag-chip {
+    padding: 0 5pt !important;
+    border-color: $print-ink-muted !important;
+    background: none !important;
+    box-shadow: none !important;
+    font-size: $print-small-size !important;
+    transform: none !important;
+  }
+
+  // Links: Farbe der Umgebung, bei externen Adressen steht die Adresse dahinter
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .text-link__label {
+    background-image: none !important;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    color: $print-ink-muted;
+    font-size: $print-small-size;
+    word-break: break-all;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+}
