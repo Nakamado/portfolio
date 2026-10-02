@@ -38,7 +38,7 @@ export interface Content {
   experience: { title: string; workTitle: string; educationTitle: string; jobs: Job[]; education: Edu[] }
   skills: { title: string; groups: SkillGroup[] }
   work: { title: string; intro: string; projects: Project[] }
-  contact: { title: string; text: string; mail: string; linkedin: string; cvDe: string; cvEn: string }
+  contact: { title: string; text: string; mail: string; linkedin: string; github: string; cvDe: string; cvEn: string }
   footer: { built: string; imprint: string; privacy: string; patterns: string }
   patterns: PatternsContent
   notFound: {
@@ -259,6 +259,7 @@ export const content: Record<Lang, Content> = {
       text: 'Du suchst Verstärkung im Frontend? Schreib mir kurz, worum es geht.',
       mail: 'E-Mail schreiben',
       linkedin: 'LinkedIn',
+      github: 'GitHub',
       cvDe: 'Lebenslauf (Deutsch, PDF)',
       cvEn: 'CV (Englisch, PDF)'
     },
@@ -284,7 +285,7 @@ export const content: Record<Lang, Content> = {
       contentText: 'Verantwortlich im Sinne von § 18 Abs. 2 MStV ist die oben genannte Person.',
       liabilityTitle: 'Haftung für Links',
       liabilityText:
-        'Diese Seite enthält Links zu externen Websites, zum Beispiel LinkedIn. Auf deren Inhalte habe ich keinen Einfluss. Für die Inhalte der verlinkten Seiten ist immer der jeweilige Anbieter verantwortlich.',
+        'Diese Seite enthält Links zu externen Websites, zum Beispiel LinkedIn und GitHub. Auf deren Inhalte habe ich keinen Einfluss. Für die Inhalte der verlinkten Seiten ist immer der jeweilige Anbieter verantwortlich.',
       back: 'Zur Startseite'
     },
     privacy: {
@@ -322,7 +323,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'Externe Links',
           paragraphs: [
-            'Die Seite verlinkt auf externe Angebote wie LinkedIn. Erst wenn du einen Link anklickst, werden Daten an den jeweiligen Anbieter übertragen. Für deren Datenverarbeitung gilt die jeweilige Datenschutzerklärung.'
+            'Die Seite verlinkt auf externe Angebote wie LinkedIn und GitHub. Erst wenn du einen Link anklickst, werden Daten an den jeweiligen Anbieter übertragen. Für deren Datenverarbeitung gilt die jeweilige Datenschutzerklärung.'
           ]
         },
         {
@@ -519,6 +520,7 @@ export const content: Record<Lang, Content> = {
       text: 'Looking for frontend support? Send me a short note about what you need.',
       mail: 'Send an email',
       linkedin: 'LinkedIn',
+      github: 'GitHub',
       cvDe: 'CV (German, PDF)',
       cvEn: 'CV (English, PDF)'
     },
@@ -544,7 +546,7 @@ export const content: Record<Lang, Content> = {
       contentText: 'The person named above is responsible for the content in accordance with § 18 (2) MStV.',
       liabilityTitle: 'Liability for links',
       liabilityText:
-        'This site contains links to external websites, for example LinkedIn. I have no influence on their content. The respective provider is always responsible for the content of linked pages.',
+        'This site contains links to external websites, for example LinkedIn and GitHub. I have no influence on their content. The respective provider is always responsible for the content of linked pages.',
       back: 'Back to the home page'
     },
     privacy: {
@@ -582,7 +584,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'External links',
           paragraphs: [
-            'The site links to external services such as LinkedIn. Data is only transferred to the respective provider once you click a link. Their own privacy policies apply to that processing.'
+            'The site links to external services such as LinkedIn and GitHub. Data is only transferred to the respective provider once you click a link. Their own privacy policies apply to that processing.'
           ]
         },
         {

@@ -38,4 +38,28 @@ describe('ContactSection', () => {
       expect(wrapper.find('a[href*="linkedin"]').exists()).toBe(false)
     })
   })
+
+  describe('GitHub', () => {
+    let original = ''
+    beforeEach(() => {
+      original = useRuntimeConfig().public.githubUrl
+    })
+    afterEach(() => {
+      useRuntimeConfig().public.githubUrl = original
+    })
+
+    it('wird verlinkt, wenn eine URL gesetzt ist', async () => {
+      useRuntimeConfig().public.githubUrl = 'https://github.com/test'
+      const wrapper = await mountSuspended(ContactSection)
+      const link = wrapper.get('a[href="https://github.com/test"]')
+      expect(link.text()).toBe('GitHub')
+      expect(link.attributes('rel')).toBe('me noopener')
+    })
+
+    it('entfällt ohne URL', async () => {
+      useRuntimeConfig().public.githubUrl = ''
+      const wrapper = await mountSuspended(ContactSection)
+      expect(wrapper.find('a[href*="github"]').exists()).toBe(false)
+    })
+  })
 })

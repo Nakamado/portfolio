@@ -24,9 +24,10 @@ export function headLinks(base: string, lang: Lang, paths: PathMap) {
 /** Rechtstexte sollen erreichbar, aber nicht in den Suchergebnissen sein. */
 export const robotsContent = (isLegal: boolean) => (isLegal ? 'noindex, follow' : 'index, follow')
 
-/** Strukturierte Daten (schema.org/Person); URL, Bild und LinkedIn nur, wenn bekannt. */
-export function personSchema(options: { base: string; lang: Lang; paths: PathMap; role: string; email: string; linkedinUrl?: string }) {
-  const { base, lang, paths, role, email, linkedinUrl } = options
+/** Strukturierte Daten (schema.org/Person); URL, Bild und Profile (LinkedIn, GitHub) nur, wenn bekannt. */
+export function personSchema(options: { base: string; lang: Lang; paths: PathMap; role: string; email: string; linkedinUrl?: string; githubUrl?: string }) {
+  const { base, lang, paths, role, email, linkedinUrl, githubUrl } = options
+  const profiles = [linkedinUrl, githubUrl].filter(Boolean)
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -34,7 +35,7 @@ export function personSchema(options: { base: string; lang: Lang; paths: PathMap
     jobTitle: role,
     email,
     ...(base ? { url: absoluteUrl(base, paths[lang]), image: absoluteUrl(base, '/images/og-image.jpg') } : {}),
-    ...(linkedinUrl ? { sameAs: [linkedinUrl] } : {})
+    ...(profiles.length ? { sameAs: profiles } : {})
   }
 }
 

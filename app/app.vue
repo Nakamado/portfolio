@@ -3,7 +3,7 @@ const { lang, t, paths, legal, isNotFound, noindex, isPatterns } = useLang()
 const pageTitle = computed(() =>
   legal.value ? t.value[legal.value].metaTitle : isPatterns.value ? t.value.patterns.metaTitle : isNotFound.value ? t.value.notFound.metaTitle : t.value.meta.title
 )
-const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
+const { siteUrl, linkedinUrl, githubUrl, contactEmail } = useRuntimeConfig().public
 const base = normalizeBase(siteUrl)
 const social = socialImage(base)
 
@@ -15,7 +15,7 @@ useHead({
     {
       type: 'application/ld+json',
       innerHTML: computed(() =>
-        JSON.stringify(personSchema({ base, lang: lang.value, paths: paths.value, role: t.value.hero.role, email: contactEmail, linkedinUrl }))
+        JSON.stringify(personSchema({ base, lang: lang.value, paths: paths.value, role: t.value.hero.role, email: contactEmail, linkedinUrl, githubUrl }))
       )
     }
   ]

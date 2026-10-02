@@ -20,11 +20,15 @@ describe('SEO-Helfer', () => {
     expect(links[3]!.href).toBe('https://example.com/impressum')
   })
 
-  it('baut die Strukturdaten mit und ohne Domain und LinkedIn', () => {
+  it('baut die Strukturdaten mit und ohne Domain, LinkedIn und GitHub', () => {
     const full = personSchema({ base: 'https://example.com', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', linkedinUrl: 'https://li' })
     expect(full.url).toBe('https://example.com/impressum')
     expect(full.image).toBe('https://example.com/images/og-image.jpg')
     expect(full.sameAs).toEqual(['https://li'])
+    const both = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', linkedinUrl: 'https://li', githubUrl: 'https://gh' })
+    expect(both.sameAs).toEqual(['https://li', 'https://gh'])
+    const onlyGithub = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', githubUrl: 'https://gh' })
+    expect(onlyGithub.sameAs).toEqual(['https://gh'])
     const minimal = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de' })
     expect(minimal).not.toHaveProperty('url')
     expect(minimal).not.toHaveProperty('sameAs')

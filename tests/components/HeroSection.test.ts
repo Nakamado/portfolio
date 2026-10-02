@@ -5,12 +5,13 @@ import HeroSection from '~/components/HeroSection.vue'
 describe('HeroSection', () => {
   // useRuntimeConfig braucht die Nuxt-Instanz und darf deshalb erst innerhalb der Tests laufen
   const config = () => useRuntimeConfig().public
-  let original = ''
+  let original = { linkedin: '', github: '' }
   beforeEach(() => {
-    original = config().linkedinUrl
+    original = { linkedin: config().linkedinUrl, github: config().githubUrl }
   })
   afterEach(() => {
-    config().linkedinUrl = original
+    config().linkedinUrl = original.linkedin
+    config().githubUrl = original.github
   })
 
   it('verlinkt den deutschen Lebenslauf, Kontakt und LinkedIn', async () => {
@@ -20,6 +21,16 @@ describe('HeroSection', () => {
     expect(wrapper.find('a[href="https://www.linkedin.com/in/test/"]').exists()).toBe(true)
     expect(wrapper.find('a[href^="mailto:"]').exists()).toBe(true)
     expect(wrapper.get('h1').text()).toBeTruthy()
+  })
+
+  it('verlinkt GitHub, wenn eine URL gesetzt ist, und blendet es sonst aus', async () => {
+    config().githubUrl = 'https://github.com/test'
+    const wrapper = await mountSuspended(HeroSection, { route: '/' })
+    expect(wrapper.get('a[href="https://github.com/test"]').text()).toBe('GitHub')
+
+    config().githubUrl = ''
+    const without = await mountSuspended(HeroSection, { route: '/' })
+    expect(without.find('a[href*="github"]').exists()).toBe(false)
   })
 
   it('verlinkt den englischen Lebenslauf', async () => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useLang()
-const { contactEmail, linkedinUrl } = useRuntimeConfig().public
+const { contactEmail, linkedinUrl, githubUrl } = useRuntimeConfig().public
 </script>
 
 <template>
@@ -15,6 +15,11 @@ const { contactEmail, linkedinUrl } = useRuntimeConfig().public
       <li v-if="linkedinUrl" class="contact__item">
         <a class="text-link" :href="linkedinUrl" rel="me noopener" target="_blank">
           <span class="text-link__label">{{ t.contact.linkedin }}</span>
+        </a>
+      </li>
+      <li v-if="githubUrl" class="contact__item">
+        <a class="text-link" :href="githubUrl" rel="me noopener" target="_blank">
+          <span class="text-link__label">{{ t.contact.github }}</span>
         </a>
       </li>
       <li class="contact__item">

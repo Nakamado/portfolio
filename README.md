@@ -44,7 +44,7 @@ npm run typecheck
 - Schriften lädt `@nuxt/fonts` beim Build herunter und liefert sie selbst aus (keine Verbindung zu Google beim Seitenaufruf)
 
 ## Vor der Veröffentlichung
-- `.env` aus `.env.example` anlegen: `NUXT_PUBLIC_CONTACT_EMAIL`, `NUXT_PUBLIC_LINKEDIN_URL`, `NUXT_PUBLIC_SITE_URL` (z. B. `https://dein-name.de`)
+- `.env` aus `.env.example` anlegen: `NUXT_PUBLIC_CONTACT_EMAIL`, `NUXT_PUBLIC_LINKEDIN_URL`, `NUXT_PUBLIC_GITHUB_URL`, `NUXT_PUBLIC_SITE_URL` (z. B. `https://dein-name.de`)
 - Lebenslauf-PDFs liegen in `public/cv/`. Beide enthalten die Telefonnummer, die englische zusätzlich das Geburtsdatum. Für eine öffentliche Seite besser Versionen ohne diese Angaben unter gleichem Dateinamen ablegen.
 - Impressum: Seite ist angelegt (`/impressum`, `/en/legal-notice`). Straße und PLZ in `nuxt.config.ts` (`imprintStreet`, `imprintCity`) oder per `.env` eintragen; Platzhalter in eckigen Klammern werden orange markiert. Rechtlich prüfen lassen.
 - Datenschutzerklärung ergänzen (für Seiten mit deutschem Bezug in der Regel nötig)
