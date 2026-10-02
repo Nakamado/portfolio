@@ -3,7 +3,7 @@
 export interface PatternApiRow { name: string; description: string }
 
 export interface PatternComponent {
-  id: 'button' | 'text-link' | 'scroll-button' | 'lang-switch' | 'drag-chip'
+  id: 'button' | 'text-link' | 'scroll-button' | 'lang-switch' | 'drag-chip' | 'not-found'
   title: string
   description: string
   api: PatternApiRow[]
@@ -28,6 +28,7 @@ export interface PatternsContent {
     showCode: string
     codeLabel: string
     preview: string
+    openNotFound: string
     api: string
     a11y: string
     levels: { AAA: string; AA: string; UI: string; fail: string }
@@ -83,6 +84,7 @@ const de: PatternsContent = {
     showCode: 'Quelltext anzeigen',
     codeLabel: 'Quelltext',
     preview: 'Vorschau',
+    openNotFound: '404-Seite ansehen',
     api: 'Schnittstelle',
     a11y: 'Barrierefreiheit',
     levels: { AAA: 'AAA', AA: 'AA', UI: 'ab 3:1 (Bedienelemente, große Schrift)', fail: 'unter 3:1' }
@@ -248,10 +250,11 @@ const de: PatternsContent = {
         id: 'drag-chip',
         title: 'Drag-Chip',
         description:
-          'Der kleine Tag bei den Technologien in der Erfahrung. Er lässt sich mit Maus oder Finger greifen, verschieben und springt beim Loslassen federnd zurück. Rein dekorativ: Inhalt bleibt ein normales Listenelement.',
+          'Der kleine Tag bei den Technologien in der Erfahrung. Er lässt sich mit Maus oder Finger greifen, verschieben und springt beim Loslassen federnd zurück. Rein dekorativ: Inhalt bleibt ein normales Listenelement. Auf der 404-Seite steuert eine Physik seine Position.',
         api: [
           { name: 'Slot (default)', description: 'Die Beschriftung des Tags, zum Beispiel „Vue“.' },
-          { name: 'Props, Events', description: 'Keine. Das Ziehen und Zurückfedern steckt in der Komponente.' }
+          { name: 'Props', description: 'Alle optional. offset: Position {x, y}, die der Aufrufer bestimmt (dann kein Zurückfedern). still: nicht greifbar.' },
+          { name: 'Events', description: 'grab, drag und release mit dem Pointer-Ereignis, damit der Aufrufer die Position berechnen kann.' }
         ],
         a11y: [
           'Für Screenreader ein gewöhnliches Listenelement, es braucht keinen Fokus und keine Bedienung.',
@@ -260,6 +263,23 @@ const de: PatternsContent = {
         ],
         usageLabel: 'Verwendung in der Erfahrung',
         usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
+      },
+      {
+        id: 'not-found',
+        title: '404-Seite',
+        description:
+          'Wer eine Adresse aufruft, die es nicht gibt, sieht erst ganz normal Text und darüber ein paar Tags. Dann fallen die Tags auf den Footer, prallen ab und bleiben liegen, und im Punktraster aus dem Hero leuchtet „404“ auf. Die Tags lassen sich greifen und wegwerfen, das Raster weicht dem Mauszeiger aus. Der Text ist der eigentliche Inhalt, alles andere ist Beigabe.',
+        api: [
+          { name: 'FallingStage', description: 'Prop labels (die Tags), Event fall (die Tags beginnen zu fallen) und ein Slot für den Inhalt. Rendert die Tags als DragChip und rechnet die Physik (utils/physics.ts). Der Boden ist die Unterkante der Bühne.' },
+          { name: 'HeroBackdrop', description: 'Dasselbe Punktraster wie im Hero, hier über die ganze Bühne. Props sign (Text aus den Ziffern 0 und 4) und lit: die Schrift leuchtet auf, sobald lit true ist. Passt sie nicht ins Raster (schmale Fenster), bleibt sie weg.' }
+        ],
+        a11y: [
+          'Raster und Tags sind rein dekorativ (aria-hidden). Überschrift, Text und Links sind der echte Inhalt.',
+          'Bei „reduzierte Bewegung“ liegen die Tags sofort am Boden, nichts fällt und nichts lässt sich werfen. „404“ steht ohne Übergang im Raster.',
+          'Die Seite steht auf noindex und nicht in der Sitemap. Die Sprache folgt der Adresse (/en/… ist Englisch).'
+        ],
+        usageLabel: 'Verwendung auf der 404-Seite',
+        usage: '<FallingStage :labels="labels" @fall="fallen = true">\n  <HeroBackdrop sign="404" :lit="fallen" />\n  <h1>Diese Seite gibt es nicht</h1>\n</FallingStage>'
       }
     ]
   },
@@ -288,6 +308,7 @@ const en: PatternsContent = {
     showCode: 'Show source code',
     codeLabel: 'Source code',
     preview: 'Preview',
+    openNotFound: 'Open the 404 page',
     api: 'Interface',
     a11y: 'Accessibility',
     levels: { AAA: 'AAA', AA: 'AA', UI: '3:1 and up (controls, large text)', fail: 'below 3:1' }
@@ -452,10 +473,11 @@ const en: PatternsContent = {
         id: 'drag-chip',
         title: 'Drag chip',
         description:
-          'The small tag for the technologies in the experience section. You can grab it with mouse or finger, move it, and it springs back when released. Purely decorative: the content stays a normal list item.',
+          'The small tag for the technologies in the experience section. You can grab it with mouse or finger, move it, and it springs back when released. Purely decorative: the content stays a normal list item. On the 404 page a physics simulation controls its position.',
         api: [
           { name: 'Slot (default)', description: 'The label of the tag, for example “Vue”.' },
-          { name: 'Props, events', description: 'None. Dragging and springing back live inside the component.' }
+          { name: 'Props', description: 'All optional. offset: a position {x, y} set by the caller (no springing back then). still: cannot be grabbed.' },
+          { name: 'Events', description: 'grab, drag and release with the pointer event, so the caller can work out the position.' }
         ],
         a11y: [
           'For screen readers an ordinary list item, it needs no focus and no interaction.',
@@ -464,6 +486,23 @@ const en: PatternsContent = {
         ],
         usageLabel: 'Usage in the experience section',
         usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
+      },
+      {
+        id: 'not-found',
+        title: '404 page',
+        description:
+          'Anyone who opens an address that does not exist first sees ordinary text with a few tags above it. Then the tags fall onto the footer, bounce and stay there, and “404” lights up in the dot grid from the hero. You can grab the tags and throw them, and the grid moves away from the pointer. The text is the actual content, everything else is a bonus.',
+        api: [
+          { name: 'FallingStage', description: 'Prop labels (the tags), event fall (the tags start to fall) and a slot for the content. Renders the tags as DragChip and runs the physics (utils/physics.ts). The floor is the bottom edge of the stage.' },
+          { name: 'HeroBackdrop', description: 'The same dot grid as in the hero, here across the whole stage. Props sign (text made of the digits 0 and 4) and lit: the lettering lights up as soon as lit is true. If it does not fit into the grid (narrow windows) it is left out.' }
+        ],
+        a11y: [
+          'Grid and tags are purely decorative (aria-hidden). Heading, text and links are the real content.',
+          'With “reduced motion” the tags lie on the floor right away, nothing falls and nothing can be thrown. “404” shows in the grid without a transition.',
+          'The page is set to noindex and is not in the sitemap. Its language follows the address (/en/… is English).'
+        ],
+        usageLabel: 'Usage on the 404 page',
+        usage: '<FallingStage :labels="labels" @fall="fallen = true">\n  <HeroBackdrop sign="404" :lit="fallen" />\n  <h1>This page does not exist</h1>\n</FallingStage>'
       }
     ]
   },

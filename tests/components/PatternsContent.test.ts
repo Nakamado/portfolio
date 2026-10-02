@@ -69,7 +69,7 @@ describe.each([
   it('zeigt jede Komponente mit Vorschau, Schnittstelle, Hinweisen und echtem Quelltext', async () => {
     const wrapper = await mountSuspended(PatternsContent, { route })
     const articles = wrapper.findAll('article.pattern')
-    expect(articles).toHaveLength(5)
+    expect(articles).toHaveLength(6)
     const code = (i: number) => articles[i]!.findAll('pre').map((pre) => pre.text())
     expect(articles[0]!.find('a.button').exists()).toBe(true)
     expect(code(0)[1]).toContain('.button {')
@@ -86,6 +86,10 @@ describe.each([
     expect(articles[4]!.findAll('li.drag-chip')).toHaveLength(3)
     expect(code(4)[1]).toContain('<script setup')
     expect(code(4)[1]).toContain('.drag-chip {')
+    expect(articles[5]!.get('a.text-link').attributes('href')).toBe(lang === 'de' ? '/404' : '/en/404')
+    expect(articles[5]!.get('a.text-link').text()).toBe(p.ui.openNotFound)
+    expect(code(5)[1]).toContain('defineProps<{ labels')
+    expect(code(5)[1]).toContain('.falling-stage {')
     for (const article of articles) {
       expect(article.findAll('dl dt').length).toBeGreaterThan(0)
       expect(article.findAll('ul li').length).toBeGreaterThan(0)
@@ -99,7 +103,7 @@ describe.each([
 
   it('lässt die Demo-Links auf der Seite, ohne zu navigieren', async () => {
     const wrapper = await mountSuspended(PatternsContent, { route })
-    for (const selector of ['a.button', 'a.text-link', 'a.scroll-button', 'a.lang-switch__link']) {
+    for (const selector of ['a.button', 'a.text-link[href="#components"]', 'a.scroll-button', 'a.lang-switch__link']) {
       const targets = wrapper.findAll(`article ${selector}`)
       expect(targets.length, selector).toBeGreaterThan(0)
       for (const target of targets) {

@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    prerender: { routes: ['/', '/en', '/impressum', '/en/legal-notice', '/datenschutz', '/en/privacy', '/pattern-library', '/en/pattern-library', '/robots.txt', '/sitemap.xml'] }
+    prerender: { routes: ['/', '/en', '/impressum', '/en/legal-notice', '/datenschutz', '/en/privacy', '/pattern-library', '/en/pattern-library', '/404.html', '/robots.txt', '/sitemap.xml'] }
   },
   // Per .env überschreibbar: NUXT_PUBLIC_CONTACT_EMAIL, NUXT_PUBLIC_LINKEDIN_URL, NUXT_PUBLIC_SITE_URL
   runtimeConfig: {

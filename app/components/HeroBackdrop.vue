@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { createGrid, pushAway, type GridPoint } from '~/utils/dotGrid'
+import { buildMask, signCells } from '~/utils/dotMatrix'
 
 // Punktraster hinter dem Hero. Die Punkte weichen dem Mauszeiger aus und färben sich blau.
+// Mit `sign` (zum Beispiel "404") bilden Punkte eine Schrift, die aufleuchtet, sobald `lit` true ist. Sie sitzt mittig, oder (mit `signAt`,
+// einem Selektor) auf der Höhe eines Platzhalter-Elements im selben Abschnitt. Ist der Platzhalter ausgeblendet, bleibt die Schrift weg.
 // Rein dekorativ: aria-hidden, keine Interaktion per Tastatur nötig, bei "reduzierter Bewegung" nur ein ruhiges Raster.
+const props = defineProps<{ sign?: string; signAt?: string; lit?: boolean }>()
 const GAP = 30
 const RADIUS = 130
 const STRENGTH = 22
+const SIGN_LEVEL = 0.7 // so stark leuchten die Punkte der Schrift (1 wäre so kräftig wie nahe am Zeiger)
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 
@@ -15,6 +20,8 @@ interface Dot extends GridPoint {
 }
 
 let dots: Dot[] = []
+let signDots = new Set<number>() // Nummern der Punkte, die zur Schrift gehören
+let reveal = 0 // 0 bis 1: wie weit die Schrift aufgeleuchtet ist
 let ctx: CanvasRenderingContext2D | null = null
 let width = 0
 let height = 0
@@ -25,10 +32,13 @@ let observer: ResizeObserver | null = null
 let host: HTMLElement | null = null
 
 function draw(): boolean {
-  if (!ctx) return false
-  ctx.clearRect(0, 0, width, height)
-  let moving = false
-  for (const dot of dots) {
+  const c = ctx // der Verweis bleibt auch in der Schleife gesetzt
+  if (!c) return false
+  c.clearRect(0, 0, width, height)
+  const target = Number(props.lit)
+  reveal = reduced ? target : reveal + (target - reveal) * 0.08
+  let moving = Math.abs(target - reveal) > 0.01
+  dots.forEach((dot, index) => {
     let intensity = 0
     let targetX = 0
     let targetY = 0
@@ -43,12 +53,12 @@ function draw(): boolean {
     if (Math.abs(targetX - dot.ox) > 0.05 || Math.abs(targetY - dot.oy) > 0.05) moving = true
 
     // Nähe zum Zeiger: größer und blau, sonst ein ruhiger heller Punkt
-    const near = Math.min(1, Math.hypot(dot.ox, dot.oy) / (STRENGTH * 0.6))
-    ctx.beginPath()
-    ctx.arc(dot.x + dot.ox, dot.y + dot.oy, 1.3 + near * 1.8, 0, Math.PI * 2)
-    ctx.fillStyle = near > 0.02 || intensity > 0.02 ? `rgb(79 140 255 / ${0.25 + near * 0.75})` : 'rgb(255 255 255 / 0.13)'
-    ctx.fill()
-  }
+    const near = Math.max(Math.min(1, Math.hypot(dot.ox, dot.oy) / (STRENGTH * 0.6)), signDots.has(index) ? reveal * SIGN_LEVEL : 0)
+    c.beginPath()
+    c.arc(dot.x + dot.ox, dot.y + dot.oy, 1.3 + near * 1.8, 0, Math.PI * 2)
+    c.fillStyle = near > 0.02 || intensity > 0.02 ? `rgb(79 140 255 / ${0.25 + near * 0.75})` : 'rgb(255 255 255 / 0.13)'
+    c.fill()
+  })
   return moving || pointer !== null
 }
 
@@ -58,6 +68,15 @@ function loop() {
 }
 function start() {
   if (!frame) frame = requestAnimationFrame(loop)
+}
+
+/** Erste Zeile der Schrift, damit sie in der Höhe des Platzhalters sitzt (undefined: mittig, -1: keine Schrift). */
+function anchorRow(rows: number, maskRows: number, canvasTop: number): number | undefined {
+  if (!props.signAt) return undefined
+  const anchor = canvas.value!.parentElement!.querySelector<HTMLElement>(props.signAt)?.getBoundingClientRect()
+  if (!anchor || anchor.height === 0) return -1
+  const offsetY = (height - (rows - 1) * GAP) / 2
+  return Math.round((anchor.top + anchor.height / 2 - canvasTop - offsetY) / GAP - (maskRows - 1) / 2)
 }
 
 function resize() {
@@ -72,6 +91,9 @@ function resize() {
   ctx = el.getContext('2d')
   ctx?.setTransform(ratio, 0, 0, ratio, 0, 0)
   dots = createGrid(width, height, GAP).map((p) => ({ ...p, ox: 0, oy: 0 }))
+  const rows = Math.floor(height / GAP)
+  const mask = props.sign ? buildMask(props.sign) : []
+  signDots = props.sign ? signCells(mask, Math.floor(width / GAP), rows, anchorRow(rows, mask.length, rect.top)) : new Set()
   draw()
 }
 
@@ -85,6 +107,14 @@ function onLeave() {
   pointer = null
   start() // Punkte gleiten zurück
 }
+
+watch(
+  () => props.lit,
+  () => {
+    if (reduced) draw()
+    else start()
+  }
+)
 
 onMounted(() => {
   reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches

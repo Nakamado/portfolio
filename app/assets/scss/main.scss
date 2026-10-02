@@ -121,6 +121,19 @@ main[tabindex='-1']:focus {
   outline: none;
 }
 
+// 404-Seite: Header, Inhalt und Footer füllen genau die Fensterhöhe, der Footer ist ohne Scrollen sichtbar und dient als Boden
+#__nuxt:has(.not-found) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+
+  > .main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
 // ---- Block: skip-link
 .skip-link {
   position: absolute;

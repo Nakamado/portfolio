@@ -1,8 +1,15 @@
 <script setup lang="ts">
-// Kleine Spielerei: der Tag lässt sich mit der Maus (oder dem Finger) greifen und verschieben
-// und springt beim Loslassen zurück. Rein dekorativ, der Inhalt bleibt ein normaler Listeneintrag.
-const x = ref(0)
-const y = ref(0)
+// Kleine Spielerei: der Tag lässt sich mit der Maus (oder dem Finger) greifen und verschieben.
+// Allein springt er beim Loslassen zurück. Mit `offset` bestimmt der Aufrufer die Position (zum Beispiel eine Physik) und
+// bekommt dafür die Ereignisse grab, drag und release. Rein dekorativ, der Inhalt bleibt ein normales Listenelement.
+const props = defineProps<{
+  offset?: { x: number; y: number }
+  still?: boolean
+}>()
+const emit = defineEmits<{ grab: [event: PointerEvent]; drag: [event: PointerEvent]; release: [event: PointerEvent] }>()
+
+const own = ref({ x: 0, y: 0 })
+const position = computed(() => props.offset ?? own.value)
 const dragging = ref(false)
 
 let startX = 0
@@ -14,10 +21,11 @@ onMounted(() => {
 })
 
 function onDown(event: PointerEvent) {
-  if (event.button !== undefined && event.button > 0) return
+  if (props.still || (event.button !== undefined && event.button > 0)) return
   dragging.value = true
-  startX = event.clientX - x.value
-  startY = event.clientY - y.value
+  startX = event.clientX - position.value.x
+  startY = event.clientY - position.value.y
+  emit('grab', event)
   try {
     ;(event.currentTarget as HTMLElement | null)?.setPointerCapture?.(event.pointerId)
   } catch {
@@ -26,22 +34,27 @@ function onDown(event: PointerEvent) {
 }
 function onMove(event: PointerEvent) {
   if (!dragging.value) return
-  x.value = event.clientX - startX
-  y.value = event.clientY - startY
+  if (!props.offset) own.value = { x: event.clientX - startX, y: event.clientY - startY }
+  emit('drag', event)
 }
-function onUp() {
+function onUp(event: PointerEvent) {
   if (!dragging.value) return
   dragging.value = false
-  x.value = 0
-  y.value = 0
+  if (!props.offset) own.value = { x: 0, y: 0 }
+  emit('release', event)
 }
 </script>
 
 <template>
   <li
     class="drag-chip"
-    :class="{ 'drag-chip--dragging': dragging, 'drag-chip--instant': reduced }"
-    :style="{ '--x': `${x}px`, '--y': `${y}px` }"
+    :class="{
+      'drag-chip--dragging': dragging,
+      'drag-chip--instant': reduced,
+      'drag-chip--controlled': offset,
+      'drag-chip--still': still
+    }"
+    :style="{ '--x': `${position.x}px`, '--y': `${position.y}px` }"
     @pointerdown="onDown"
     @pointermove="onMove"
     @pointerup="onUp"
@@ -85,6 +98,17 @@ $chip-border: rgb(255 255 255 / 0.4);
 
   &--instant {
     transition: none;
+  }
+
+  // Die Position kommt vom Aufrufer (jedes Bild neu), also kein Federn
+  &--controlled {
+    transition: border-color $transition-fast;
+  }
+
+  // Bei "reduzierter Bewegung" bleibt alles liegen
+  &--still {
+    cursor: default;
+    pointer-events: none;
   }
 }
 </style>

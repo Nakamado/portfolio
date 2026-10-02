@@ -14,6 +14,14 @@ describe('profile content', () => {
     expect(periods('en')).toEqual(periods('de'))
   })
 
+  it('hat die 404-Texte in DE und EN vollständig', () => {
+    const keys = Object.keys(content.de.notFound)
+    expect(Object.keys(content.en.notFound)).toEqual(keys)
+    for (const lang of ['de', 'en'] as const) {
+      for (const key of keys) expect(content[lang].notFound[key as keyof typeof content.de.notFound], `${lang}.${key}`).not.toBe('')
+    }
+  })
+
   it('positioniert nicht als Senior, Lead oder Architekt', () => {
     expect(JSON.stringify(content)).not.toMatch(/senior|lead developer|architekt|architect/i)
   })

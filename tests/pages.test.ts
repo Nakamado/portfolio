@@ -8,6 +8,7 @@ import Privacy from '~/pages/datenschutz.vue'
 import PrivacyEn from '~/pages/en/privacy.vue'
 import Patterns from '~/pages/pattern-library.vue'
 import PatternsEn from '~/pages/en/pattern-library.vue'
+import NotFound from '~/pages/[...slug].vue'
 
 describe('Seiten', () => {
   it.each([
@@ -18,9 +19,12 @@ describe('Seiten', () => {
     ['Datenschutz', Privacy, '/datenschutz', '.privacy'],
     ['Privacy', PrivacyEn, '/en/privacy', '.privacy'],
     ['Pattern-Library', Patterns, '/pattern-library', '.patterns'],
-    ['Pattern library', PatternsEn, '/en/pattern-library', '.patterns']
+    ['Pattern library', PatternsEn, '/en/pattern-library', '.patterns'],
+    ['404 (DE)', NotFound, '/gibt-es-nicht', '.not-found'],
+    ['404 (EN)', NotFound, '/en/does-not-exist', '.not-found']
   ])('%s rendert ihren Inhalt', async (_name, page, route, selector) => {
     const wrapper = await mountSuspended(page, { route })
     expect(wrapper.find(selector).exists()).toBe(true)
+    wrapper.unmount() // die 404-Seite hat einen Timer, der sonst nach dem Test weiterläuft
   })
 })

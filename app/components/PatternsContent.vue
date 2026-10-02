@@ -6,6 +6,7 @@ import textLinkScss from '~/assets/scss/components/_text-link.scss?raw'
 import scrollButtonSource from '~/components/ScrollButton.vue?raw'
 import langSwitchSource from '~/components/LangSwitch.vue?raw'
 import dragChipSource from '~/components/DragChip.vue?raw'
+import fallingStageSource from '~/components/FallingStage.vue?raw'
 import type { PatternComponent } from '~/data/patterns'
 
 // Alles, was die Seite zeigt, kommt aus den echten Dateien der Website (Variablen, Quelltext) und aus data/patterns.ts (Erklärungen).
@@ -22,6 +23,7 @@ const pairs = computed(() => contrastRows(tokens, p.value.colors.pairs))
 const formatRatio = (ratio: number) =>
   ratio.toLocaleString(lang.value === 'en' ? 'en-US' : 'de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
+const notFoundPath = computed(() => (lang.value === 'en' ? '/en/404' : '/404')) // jede unbekannte Adresse zeigt die Fehlerseite
 const demoPaths = { de: '#components', en: '#components' } // Demo: die Links bleiben auf der Seite
 const scaleClasses = ['title', 'h3', 'h4', 'body']
 const sources: Record<PatternComponent['id'], { file: string; code: string }> = {
@@ -29,6 +31,7 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
   'text-link': { file: 'components/_text-link.scss', code: textLinkScss },
   'scroll-button': { file: 'ScrollButton.vue', code: scrollButtonSource },
   'lang-switch': { file: 'LangSwitch.vue', code: langSwitchSource },
+  'not-found': { file: 'FallingStage.vue', code: fallingStageSource },
   'drag-chip': { file: 'DragChip.vue', code: dragChipSource }
 }
 </script>
@@ -140,6 +143,11 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
         <template v-else-if="item.id === 'lang-switch'">
           <LangSwitch lang="de" :paths="demoPaths" :label="t.ui.langLabel" @click.prevent />
           <LangSwitch lang="en" :paths="demoPaths" :label="t.ui.langLabel" @click.prevent />
+        </template>
+        <template v-else-if="item.id === 'not-found'">
+          <NuxtLink class="text-link" :to="notFoundPath">
+            <span class="text-link__label">{{ p.ui.openNotFound }}</span>
+          </NuxtLink>
         </template>
         <ul v-else class="demo-chips">
           <DragChip>Vue</DragChip>

@@ -16,11 +16,11 @@ export function stubAnimationFrames() {
   return {
     pending: () => queue.length,
     cancelled,
-    /** Führt die aktuell wartenden Frames genau einmal aus. */
-    flush() {
+    /** Führt die aktuell wartenden Frames genau einmal aus (`time` ist der Zeitstempel in ms). */
+    flush(time = 0) {
       const current = queue
       queue = []
-      current.forEach((item) => item.cb(0))
+      current.forEach((item) => item.cb(time))
     }
   }
 }

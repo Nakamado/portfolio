@@ -6,6 +6,7 @@ export type LegalPage = 'imprint' | 'privacy'
  * Sprache ergibt sich aus der URL: "/" = Deutsch, "/en" = Englisch.
  * Impressum: /impressum und /en/legal-notice, Datenschutz: /datenschutz und /en/privacy,
  * Pattern-Library: /pattern-library und /en/pattern-library.
+ * Alles andere ist die 404-Seite, ihre Sprache folgt ebenfalls dem Präfix (/en/...).
  */
 export function useLang() {
   const route = useRoute()
@@ -21,7 +22,11 @@ export function useLang() {
   const isImprint = computed(() => legal.value === 'imprint')
   const isLegal = computed(() => legal.value !== null)
   /** Startseite: nur hier gibt es die Abschnitte, zu denen Menü und Logo scrollen. */
-  const isHome = computed(() => !isLegal.value && !isPatterns.value)
+  const isHome = computed(() => /^\/(en)?\/?$/.test(route.path))
+  /** Jede andere Adresse zeigt die 404-Seite (Catch-all in pages/[...slug].vue). */
+  const isNotFound = computed(() => !isHome.value && !isLegal.value && !isPatterns.value)
+  /** Seiten, die nicht in die Suchergebnisse sollen: Rechtstexte und die Fehlerseite. */
+  const noindex = computed(() => isLegal.value || isNotFound.value)
 
   /** Gleiche Seite in der jeweils anderen Sprache (für Sprachschalter, canonical und hreflang). */
   const paths = computed<Record<Lang, string>>(() => {
@@ -35,5 +40,5 @@ export function useLang() {
   const privacyPath = computed(() => (lang.value === 'en' ? '/en/privacy' : '/datenschutz'))
   const patternsPath = computed(() => (lang.value === 'en' ? '/en/pattern-library' : '/pattern-library'))
 
-  return { lang, t, paths, legal, isImprint, isLegal, isPatterns, isHome, homePath, imprintPath, privacyPath, patternsPath }
+  return { lang, t, paths, legal, isImprint, isLegal, isPatterns, isHome, isNotFound, noindex, homePath, imprintPath, privacyPath, patternsPath }
 }

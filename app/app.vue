@@ -1,6 +1,8 @@
 <script setup lang="ts">
-const { lang, t, paths, legal, isLegal, isPatterns } = useLang()
-const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : isPatterns.value ? t.value.patterns.metaTitle : t.value.meta.title))
+const { lang, t, paths, legal, isNotFound, noindex, isPatterns } = useLang()
+const pageTitle = computed(() =>
+  legal.value ? t.value[legal.value].metaTitle : isPatterns.value ? t.value.patterns.metaTitle : isNotFound.value ? t.value.notFound.metaTitle : t.value.meta.title
+)
 const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
 const base = normalizeBase(siteUrl)
 const social = socialImage(base)
@@ -8,7 +10,7 @@ const social = socialImage(base)
 useHead({
   htmlAttrs: { lang: computed(() => lang.value) },
   title: pageTitle,
-  link: computed(() => headLinks(base, lang.value, paths.value)),
+  link: computed(() => headLinks(isNotFound.value ? '' : base, lang.value, paths.value)), // die Fehlerseite hat keine Canonical-Adresse
   script: [
     {
       type: 'application/ld+json',
@@ -21,7 +23,7 @@ useHead({
 
 useSeoMeta({
   description: () => t.value.meta.description,
-  robots: () => robotsContent(isLegal.value),
+  robots: () => robotsContent(noindex.value),
   ogTitle: () => pageTitle.value,
   ogDescription: () => t.value.meta.description,
   ogType: 'website',

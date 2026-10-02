@@ -64,4 +64,41 @@ describe('DragChip', () => {
     await nextTick()
     expect(wrapper.classes()).toContain('drag-chip--dragging')
   })
+
+  describe('mit vorgegebener Position (offset)', () => {
+    const offset = { x: 12, y: 34 }
+
+    it('zeigt die vorgegebene Position und federt nicht', async () => {
+      const wrapper = await mountSuspended(DragChip, { props: { offset }, slots: { default: 'Vue' } })
+      expect(wrapper.attributes('style')).toContain('--x: 12px; --y: 34px')
+      expect(wrapper.classes()).toContain('drag-chip--controlled')
+    })
+
+    it('meldet Greifen, Ziehen und Loslassen und bewegt sich nicht selbst', async () => {
+      const wrapper = await mountSuspended(DragChip, { props: { offset }, slots: { default: 'Vue' } })
+      await wrapper.trigger('pointerdown', { clientX: 10, clientY: 10, button: 0 })
+      await wrapper.trigger('pointermove', { clientX: 50, clientY: 30 })
+      await wrapper.trigger('pointerup')
+      expect(wrapper.emitted('grab')).toHaveLength(1)
+      expect(wrapper.emitted('drag')).toHaveLength(1)
+      expect(wrapper.emitted('release')).toHaveLength(1)
+      expect(wrapper.attributes('style')).toContain('--x: 12px; --y: 34px')
+    })
+
+    it('meldet ohne Greifen weder Ziehen noch Loslassen', async () => {
+      const wrapper = await mountSuspended(DragChip, { props: { offset }, slots: { default: 'Vue' } })
+      await wrapper.trigger('pointermove', { clientX: 50, clientY: 30 })
+      await wrapper.trigger('pointerup')
+      expect(wrapper.emitted('drag')).toBeUndefined()
+      expect(wrapper.emitted('release')).toBeUndefined()
+    })
+  })
+
+  it('lässt sich mit still nicht greifen', async () => {
+    const wrapper = await mountSuspended(DragChip, { props: { still: true }, slots: { default: 'x' } })
+    expect(wrapper.classes()).toContain('drag-chip--still')
+    await wrapper.trigger('pointerdown', { clientX: 1, clientY: 1, button: 0 })
+    expect(wrapper.classes()).not.toContain('drag-chip--dragging')
+    expect(wrapper.emitted('grab')).toBeUndefined()
+  })
 })

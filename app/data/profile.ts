@@ -41,6 +41,15 @@ export interface Content {
   contact: { title: string; text: string; mail: string; linkedin: string; cvDe: string; cvEn: string }
   footer: { built: string; imprint: string; privacy: string; patterns: string }
   patterns: PatternsContent
+  notFound: {
+    metaTitle: string
+    code: string
+    title: string
+    textBefore: string
+    textAfter: string
+    home: string
+    patterns: string
+  }
   imprint: {
     metaTitle: string
     title: string
@@ -255,6 +264,15 @@ export const content: Record<Lang, Content> = {
     },
     footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum', privacy: 'Datenschutz', patterns: 'Pattern-Library' },
     patterns: patternsContent.de,
+    notFound: {
+      metaTitle: 'Seite nicht gefunden – Dustin Clever',
+      code: 'Fehler 404',
+      title: 'Diese Seite gibt es nicht',
+      textBefore: 'Der Link zeigt ins Leere (',
+      textAfter: '). Das passiert den Besten.',
+      home: 'Zur Startseite',
+      patterns: 'Pattern-Library ansehen'
+    },
     imprint: {
       metaTitle: 'Impressum – Dustin Clever',
       title: 'Impressum',
@@ -506,6 +524,15 @@ export const content: Record<Lang, Content> = {
     },
     footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice', privacy: 'Privacy policy', patterns: 'Pattern library' },
     patterns: patternsContent.en,
+    notFound: {
+      metaTitle: 'Page not found – Dustin Clever',
+      code: 'Error 404',
+      title: 'This page does not exist',
+      textBefore: 'The link points nowhere (',
+      textAfter: '). It happens to the best of us.',
+      home: 'Back to the home page',
+      patterns: 'See the pattern library'
+    },
     imprint: {
       metaTitle: 'Legal notice – Dustin Clever',
       title: 'Legal notice',
