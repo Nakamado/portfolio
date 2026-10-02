@@ -12,12 +12,20 @@ npm run typecheck
 
 ## Aufbau
 - `app/data/profile.ts` – alle Inhalte, Deutsch und Englisch an einer Stelle
-- `app/data/patterns.ts` – Texte der Pattern-Library (`/pattern-library`, `/en/pattern-library`); Farben, Schriften und Quelltexte liest die Seite beim Build direkt aus `main.scss`, `components/_button.scss`, `components/_text-link.scss` und `DragChip.vue`
+- `app/data/patterns.ts` – Texte der Pattern-Library (`/pattern-library`, `/en/pattern-library`); Farben, Schriften und Quelltexte liest die Seite beim Build direkt aus `main.scss`, `components/_button.scss`, `components/_text-link.scss`, `DragChip.vue` und `FallingStage.vue`
 - `app/pages/index.vue` (`/`, Deutsch) und `app/pages/en/index.vue` (`/en`, Englisch)
 - `app/components/` – ein Block pro Komponente, Klassen nach BEM (`block__element--modifier`)
 - `app/assets/scss/main.scss` – Design Tokens, Reset und globale Blöcke (`section`, `button`, `text-link`)
 - `public/images/portrait.webp` – freigestelltes Porträt (WebP mit Transparenz). Beim Austauschen `width`/`height` in `HeroSection.vue` an das neue Seitenverhältnis anpassen. `og-image.jpg` ist das Social-Preview-Bild (1200×630).
 - `app/router.options.ts` – Scrollen zu Ankern (fixierter Header, reduzierte Bewegung); `app/utils/focusSection.ts` setzt den Fokus in den Zielabschnitt
+
+## 404-Seite
+- `app/pages/[...slug].vue` fängt jede unbekannte Adresse ab (`/en/…` zeigt Englisch). `/404.html` wird beim Build erzeugt, GitHub Pages liefert sie für unbekannte URLs aus. Die Seite steht auf `noindex`, hat keine Canonical-Adresse und fehlt in der Sitemap.
+- `NotFoundContent.vue` setzt sie zusammen: Text und Links sind der eigentliche Inhalt, Raster und Tags sind Beigabe (aria-hidden).
+- `FallingStage.vue` lässt die Tags (`DragChip.vue` mit `offset`) nach 1,4 s auf den Footer fallen; die Physik steckt in `app/utils/physics.ts`. Man kann sie greifen und werfen.
+- `HeroBackdrop.vue` ist dasselbe Punktraster wie im Hero. Mit `sign="404"` leuchtet die Zahl im Raster auf (`app/utils/dotMatrix.ts`), sobald die Tags fallen. Auf schmalen Fenstern (unter ca. 510 px) passt sie nicht ins Raster und bleibt weg.
+- Bei `prefers-reduced-motion` liegen die Tags sofort am Boden, nichts fällt, die Zahl steht ohne Animation da.
+- Zu sehen in der Pattern-Library (Eintrag „404-Seite“) und lokal unter z. B. `/nope`.
 
 ## SEO und Barrierefreiheit
 - Je Sprache eine eigene URL (`/` und `/en`) mit `lang`, Canonical, hreflang und Open Graph (greift, sobald `NUXT_PUBLIC_SITE_URL` gesetzt ist)
