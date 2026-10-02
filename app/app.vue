@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { lang, t, paths, legal } = useLang()
+const { lang, t, paths, legal, isLegal } = useLang()
 const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : t.value.meta.title))
 const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
 const base = normalizeBase(siteUrl)
@@ -21,6 +21,7 @@ useHead({
 
 useSeoMeta({
   description: () => t.value.meta.description,
+  robots: () => robotsContent(isLegal.value),
   ogTitle: () => pageTitle.value,
   ogDescription: () => t.value.meta.description,
   ogType: 'website',

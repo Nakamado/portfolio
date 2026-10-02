@@ -1,5 +1,5 @@
-/** Seiten, die in der Sitemap stehen (Startseite und Rechtstexte, jeweils DE und EN). */
-export const SITEMAP_PATHS = ['/', '/en', '/impressum', '/en/legal-notice', '/datenschutz', '/en/privacy'] as const
+/** Seiten, die in der Sitemap stehen: nur die Startseiten. Impressum und Datenschutz sind bewusst auf noindex gesetzt. */
+export const SITEMAP_PATHS = ['/', '/en'] as const
 
 const trimSlash = (url: string) => url.replace(/\/$/, '')
 

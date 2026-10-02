@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pageUrl, absoluteUrl, headLinks, normalizeBase, personSchema, socialImage } from '../app/utils/seo'
+import { robotsContent, pageUrl, absoluteUrl, headLinks, normalizeBase, personSchema, socialImage } from '../app/utils/seo'
 
 const paths = { de: '/impressum', en: '/en/legal-notice' }
 
@@ -29,6 +29,11 @@ describe('SEO-Helfer', () => {
     expect(minimal).not.toHaveProperty('url')
     expect(minimal).not.toHaveProperty('sameAs')
     expect(minimal.jobTitle).toBe('Frontend Developer')
+  })
+
+  it('setzt Rechtstexte auf noindex und alle anderen Seiten auf index', () => {
+    expect(robotsContent(true)).toBe('noindex, follow')
+    expect(robotsContent(false)).toBe('index, follow')
   })
 
   it('wählt das Vorschaubild passend zur Domain', () => {

@@ -21,6 +21,9 @@ export function headLinks(base: string, lang: Lang, paths: PathMap) {
   ]
 }
 
+/** Rechtstexte sollen erreichbar, aber nicht in den Suchergebnissen sein. */
+export const robotsContent = (isLegal: boolean) => (isLegal ? 'noindex, follow' : 'index, follow')
+
 /** Strukturierte Daten (schema.org/Person); URL, Bild und LinkedIn nur, wenn bekannt. */
 export function personSchema(options: { base: string; lang: Lang; paths: PathMap; role: string; email: string; linkedinUrl?: string }) {
   const { base, lang, paths, role, email, linkedinUrl } = options

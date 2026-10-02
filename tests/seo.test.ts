@@ -15,8 +15,14 @@ describe('sitemap.xml', () => {
   it('listet alle Seiten mit absoluter URL', () => {
     const xml = buildSitemap('https://example.com')
     for (const path of SITEMAP_PATHS) expect(xml).toContain(`<loc>https://example.com${path}</loc>`)
-    expect(xml).toContain('/impressum')
-    expect(xml).toContain('/en/privacy')
+  })
+
+  it('enthält die Rechtstexte nicht (sie sind auf noindex gesetzt)', () => {
+    const xml = buildSitemap('https://example.com')
+    expect(xml).not.toContain('/impressum')
+    expect(xml).not.toContain('/datenschutz')
+    expect(xml).not.toContain('/en/privacy')
+    expect(xml).not.toContain('/en/legal-notice')
   })
 
   it('entfernt einen Schrägstrich am Ende der Domain', () => {
