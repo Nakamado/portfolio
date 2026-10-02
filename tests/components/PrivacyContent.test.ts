@@ -26,11 +26,11 @@ describe('Datenschutzerklärung', () => {
     expect(wrapper.findAll('.lang-switch__link').map((l) => l.attributes('href'))).toEqual(['/datenschutz', '/en/privacy'])
   })
 
-  it('der Footer verlinkt Impressum und Datenschutz je Sprache', async () => {
+  it('der Footer verlinkt Impressum, Datenschutz und Pattern-Library je Sprache', async () => {
     const de = await mountSuspended(SiteFooter, { route: '/' })
-    expect(de.findAll('.site-footer__link').map((l) => l.attributes('href'))).toEqual(['/impressum', '/datenschutz'])
+    expect(de.findAll('.site-footer__link').map((l) => l.attributes('href'))).toEqual(['/impressum', '/datenschutz', '/pattern-library'])
     const en = await mountSuspended(SiteFooter, { route: '/en' })
-    expect(en.findAll('.site-footer__link').map((l) => l.attributes('href'))).toEqual(['/en/legal-notice', '/en/privacy'])
+    expect(en.findAll('.site-footer__link').map((l) => l.attributes('href'))).toEqual(['/en/legal-notice', '/en/privacy', '/en/pattern-library'])
   })
 
   it('hat in beiden Sprachen gleich viele Abschnitte', () => {

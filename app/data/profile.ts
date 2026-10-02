@@ -1,3 +1,5 @@
+import { patternsContent, type PatternsContent } from './patterns'
+
 export type Lang = 'de' | 'en'
 
 export interface Job {
@@ -37,7 +39,8 @@ export interface Content {
   skills: { title: string; groups: SkillGroup[] }
   work: { title: string; intro: string; projects: Project[] }
   contact: { title: string; text: string; mail: string; linkedin: string; cvDe: string; cvEn: string }
-  footer: { built: string; imprint: string; privacy: string }
+  footer: { built: string; imprint: string; privacy: string; patterns: string }
+  patterns: PatternsContent
   imprint: {
     metaTitle: string
     title: string
@@ -250,7 +253,8 @@ export const content: Record<Lang, Content> = {
       cvDe: 'Lebenslauf (Deutsch, PDF)',
       cvEn: 'CV (Englisch, PDF)'
     },
-    footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum', privacy: 'Datenschutz' },
+    footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum', privacy: 'Datenschutz', patterns: 'Pattern-Library' },
+    patterns: patternsContent.de,
     imprint: {
       metaTitle: 'Impressum – Dustin Clever',
       title: 'Impressum',
@@ -499,7 +503,8 @@ export const content: Record<Lang, Content> = {
       cvDe: 'CV (German, PDF)',
       cvEn: 'CV (English, PDF)'
     },
-    footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice', privacy: 'Privacy policy' },
+    footer: { built: 'Built with Nuxt and Vue.', imprint: 'Legal notice', privacy: 'Privacy policy', patterns: 'Pattern library' },
+    patterns: patternsContent.en,
     imprint: {
       metaTitle: 'Legal notice – Dustin Clever',
       title: 'Legal notice',

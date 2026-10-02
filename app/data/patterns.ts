@@ -1,0 +1,465 @@
+/** Inhalte der Pattern-Library-Seite (DE und EN). Farben, Schriften und Quelltexte kommen beim Build direkt aus den Dateien der Website. */
+
+export interface PatternApiRow { name: string; description: string }
+
+export interface PatternComponent {
+  id: 'button' | 'text-link' | 'scroll-button' | 'lang-switch' | 'drag-chip'
+  title: string
+  description: string
+  api: PatternApiRow[]
+  a11y: string[]
+  usageLabel: string
+  usage: string
+}
+
+export interface PatternsContent {
+  metaTitle: string
+  title: string
+  intro: string
+  tocLabel: string
+  nav: { id: string; label: string }[]
+  ui: {
+    token: string
+    value: string
+    usage: string
+    pair: string
+    ratio: string
+    level: string
+    showCode: string
+    codeLabel: string
+    preview: string
+    api: string
+    a11y: string
+    levels: { AAA: string; AA: string; UI: string; fail: string }
+  }
+  colors: {
+    title: string
+    intro: string
+    notes: Record<string, string>
+    pairsTitle: string
+    pairsIntro: string
+    pairs: { fg: string; bg: string; use: string }[]
+    codeTitle: string
+  }
+  typography: {
+    title: string
+    intro: string
+    fonts: { token: string; name: string; role: string; sample: string }[]
+    scaleTitle: string
+    scale: { label: string; sample: string }[]
+    notes: string[]
+  }
+  layout: {
+    title: string
+    intro: string
+    rules: { title: string; text: string }[]
+    tokensTitle: string
+  }
+  components: { title: string; intro: string; items: PatternComponent[] }
+  back: string
+}
+
+const de: PatternsContent = {
+  metaTitle: 'Pattern-Library – Dustin Clever',
+  title: 'Pattern-Library',
+  intro:
+    'Hier zeige ich die Bausteine dieser Website: Farben, Schrift, Layout und die wiederverwendbaren Komponenten. Der Quelltext wird beim Erstellen der Seite direkt aus den Dateien der Website gelesen, ist also immer der aktuelle Stand und nicht nachgebaut.',
+  tocLabel: 'Auf dieser Seite',
+  nav: [
+    { id: 'colors', label: 'Farben' },
+    { id: 'typography', label: 'Typografie' },
+    { id: 'layout', label: 'Layout' },
+    { id: 'components', label: 'Komponenten' }
+  ],
+  ui: {
+    token: 'Variable',
+    value: 'Wert',
+    usage: 'Verwendung',
+    pair: 'Kombination',
+    ratio: 'Kontrast',
+    level: 'Stufe',
+    showCode: 'Quelltext anzeigen',
+    codeLabel: 'Quelltext',
+    preview: 'Vorschau',
+    api: 'Schnittstelle',
+    a11y: 'Barrierefreiheit',
+    levels: { AAA: 'AAA', AA: 'AA', UI: 'ab 3:1 (Bedienelemente, große Schrift)', fail: 'unter 3:1' }
+  },
+  colors: {
+    title: 'Farben',
+    intro:
+      'Ein dunkles Theme mit genau einem Akzentton. Alle Farben sind CSS-Variablen in main.scss, die Tabelle wird aus dieser Datei gelesen.',
+    notes: {
+      bg: 'Hintergrund der Seite und der geraden Abschnitte.',
+      'bg-alt': 'Hintergrund der abwechselnden Abschnitte (Über mich, Skills, Kontakt).',
+      text: 'Fließtext und Überschriften.',
+      muted: 'Zweitfarbe für Einleitungen, Hinweise und Menüpunkte im Ruhezustand.',
+      line: 'Feine Trennlinien und Rahmen (Weiß mit 14 % Deckkraft).',
+      blue: 'Akzent: Button, Logo-Symbol und der Schrägstrich vor Abschnittsüberschriften.',
+      'blue-dark': 'Hover-Zustand des Buttons.',
+      'blue-light': 'Unterstrich und Rahmen im Hover (Text-Link, Drag-Chip) sowie die Punkte im Hero-Raster.',
+      focus: 'Fokusrahmen für die Tastaturbedienung.'
+    },
+    pairsTitle: 'Kontraste',
+    pairsIntro:
+      'Berechnet aus den Variablen nach WCAG 2.x. Text braucht mindestens 4,5:1 (AA), Bedienelemente und große Schrift 3:1.',
+    pairs: [
+      { fg: 'text', bg: 'bg', use: 'Fließtext auf dem Seitenhintergrund' },
+      { fg: 'muted', bg: 'bg', use: 'Zweittext auf dem Seitenhintergrund' },
+      { fg: 'muted', bg: 'bg-alt', use: 'Zweittext auf abwechselnden Abschnitten' },
+      { fg: 'text', bg: 'blue', use: 'Beschriftung des Buttons' },
+      { fg: 'text', bg: 'blue-dark', use: 'Beschriftung des Buttons im Hover' },
+      { fg: 'blue-light', bg: 'bg', use: 'Unterstrich und Rahmen im Hover' },
+      { fg: 'focus', bg: 'bg', use: 'Fokusrahmen' },
+      { fg: 'blue', bg: 'bg', use: 'Akzent (Logo, Schrägstrich), rein dekorativ' }
+    ],
+    codeTitle: 'Alle Variablen im Quelltext'
+  },
+  typography: {
+    title: 'Typografie',
+    intro:
+      'Zwei Schriften, beide selbst ausgeliefert: Beim Aufruf der Seite findet keine Verbindung zu Google statt.',
+    fonts: [
+      { token: 'font-display', name: 'Roboto Slab', role: 'Logo und Überschriften (h1 bis h3)', sample: 'Frontend-Entwicklung mit Sorgfalt' },
+      { token: 'font', name: 'Space Grotesk', role: 'Fließtext, Menü, Buttons und Titel von Einträgen (h4)', sample: 'Komponenten, die man gern benutzt' }
+    ],
+    scaleTitle: 'Größen',
+    scale: [
+      { label: 'Abschnittstitel · Roboto Slab 700 · 2 bis 3,5 rem (fließend)', sample: 'Erfahrung' },
+      { label: 'Überschrift 3 · Roboto Slab 700 · 1,5 rem', sample: 'Berufliche Erfahrung' },
+      { label: 'Überschrift 4 · Space Grotesk 500 · 1,15 rem', sample: 'Frontend Developer' },
+      { label: 'Fließtext · Space Grotesk 400 · 1,0625 rem, Zeilenhöhe 1,65', sample: 'Ich komme aus dem Design und baue Oberflächen mit Vue, Nuxt und TypeScript.' }
+    ],
+    notes: [
+      'Die Serifenschrift gibt den Überschriften Charakter, die serifenlose Grotesk hält Text und Oberfläche ruhig.',
+      'Textspalten sind auf 65 Zeichen begrenzt, damit Zeilen gut lesbar bleiben.',
+      'Die Textschrift lädt vorab und mit font-display: optional. Kommt sie nicht rechtzeitig an, bleibt die Ersatzschrift stehen, statt dass sich der Text später verschiebt (Layout Shift).'
+    ]
+  },
+  layout: {
+    title: 'Layout',
+    intro: 'Wenige feste Regeln, die überall gelten.',
+    rules: [
+      {
+        title: 'Abschnitte',
+        text: 'Jeder Abschnitt ist mindestens 90 % so hoch wie das Fenster unter dem Header. So lugt der nächste Abschnitt unten hervor und zeigt, dass es weitergeht. Abwechselnde Hintergründe (bg und bg-alt) trennen die Abschnitte ohne Linien.'
+      },
+      {
+        title: 'Seitenrand',
+        text: 'Ein fließender Rand (gutter) von 1,25 bis 4 rem hält Inhalte auf jeder Breite am gleichen Rand.'
+      },
+      {
+        title: 'Header',
+        text: 'Ab 1000 px ist der Header einzeilig und bleibt oben stehen. Darunter besteht er aus zwei Zeilen: oben Logo und Sprachschalter, darunter die Menüpunkte, die bei Bedarf umbrechen.'
+      },
+      {
+        title: 'Hero',
+        text: 'Ab 1100 px liegt das Porträt als Hintergrundebene zwischen dem Text links und den Infoblöcken rechts. Darunter steht es unter dem Text.'
+      },
+      {
+        title: 'Formen',
+        text: 'Eckig, ohne Rundungen, ohne Glas- oder Leuchteffekte. Die Spielereien (Punktraster im Hero, verschiebbare Tags) sind rein dekorativ.'
+      },
+      {
+        title: 'Bedienbarkeit',
+        text: 'Klickflächen sind mindestens 44 px hoch. Der Fokusrahmen ist 3 px stark und überall sichtbar. Bei „reduzierte Bewegung“ werden Übergänge und Animationen abgeschaltet oder verkürzt.'
+      }
+    ],
+    tokensTitle: 'Variablen für Schrift und Layout'
+  },
+  components: {
+    title: 'Komponenten',
+    intro:
+      'Die Komponenten sind bewusst klein. Jede zeigt eine Vorschau zum Ausprobieren (Maus und Tastatur), die Schnittstelle, Hinweise zur Barrierefreiheit und den echten Quelltext.',
+    items: [
+      {
+        id: 'button',
+        title: 'Button',
+        description:
+          'Die Hauptaktion eines Bereichs, zum Beispiel „Kontakt aufnehmen“ im Hero. Technisch ein Link, der wie ein Button aussieht, weil er zu einem Abschnitt springt und keine Aktion auslöst.',
+        api: [{ name: '.button', description: 'Eckige Fläche in blue mit weißer Schrift, mindestens 3 rem hoch. Hover: blue-dark.' }],
+        a11y: [
+          'Ein echter Link: Enter öffnet das Ziel, der Fokusrahmen ist sichtbar.',
+          'Der Hover ändert nur die Farbe, nichts ist ausschließlich per Maus erreichbar.',
+          'Der Kontrast der Beschriftung steht in der Tabelle unter „Farben“.'
+        ],
+        usageLabel: 'Verwendung im Hero',
+        usage: '<a class="button" href="#contact">Kontakt aufnehmen</a>'
+      },
+      {
+        id: 'text-link',
+        title: 'Text-Link',
+        description:
+          'Für alle weiteren Links. Der Unterstrich liegt am Text und läuft beim Hover von links nach rechts von Weiß zu Blau durch. Das Label sitzt in einem eigenen Element, nur dort liegt der Unterstrich.',
+        api: [
+          { name: '.text-link', description: 'Block: Link mit mindestens 2,75 rem Höhe, optional mit Symbol (Abstand 0,5 rem).' },
+          { name: '.text-link__label', description: 'Element: der Text mit dem animierten Unterstrich.' }
+        ],
+        a11y: [
+          'Der Unterstrich ist auch im Ruhezustand sichtbar, Links erkennt man also nicht nur an der Farbe.',
+          'Hover und Tastaturfokus lösen dieselbe Animation aus.',
+          'Bei „reduzierte Bewegung“ springt der Unterstrich ohne Übergang.'
+        ],
+        usageLabel: 'Verwendung im Kontaktbereich',
+        usage:
+          '<a class="text-link" href="/cv/Lebenslauf-Dustin-Clever.pdf" download>\n  <span class="text-link__label">Lebenslauf (DE)</span>\n</a>'
+      },
+      {
+        id: 'scroll-button',
+        title: 'Scroll-Button',
+        description:
+          'Der runde Pfeil unter den Hero-Aktionen, der zum nächsten Abschnitt führt. Technisch ein Anker-Link; nach dem Klick landet der Fokus auf der Überschrift des Ziels.',
+        api: [
+          { name: 'href', description: 'Ziel-Anker, zum Beispiel #about.' },
+          { name: 'label', description: 'Zugänglicher Name, da der Button nur ein Symbol zeigt.' }
+        ],
+        a11y: [
+          'Ein echter Link mit aria-label, der Pfeil selbst ist für Screenreader ausgeblendet.',
+          'Die Klickfläche ist 4 rem groß, der Fokusrahmen ist sichtbar.',
+          'Der Hover ändert nur die Farbe; bei „reduzierte Bewegung“ entfällt der Übergang.'
+        ],
+        usageLabel: 'Verwendung im Hero',
+        usage: '<ScrollButton href="#about" label="Nach unten scrollen" />'
+      },
+      {
+        id: 'lang-switch',
+        title: 'Sprachschalter',
+        description:
+          'Wechselt zwischen Deutsch und Englisch, gestaltet wie ein Lichtschalter: der Knopf springt zur aktiven Sprache, die Spur leuchtet bei EN blau. Die Komponente kennt keine Routen, alles kommt über Props. Die Vorschau zeigt beide Zustände; die Links bleiben hier auf der Seite.',
+        api: [
+          { name: 'lang', description: 'Aktive Sprache: de oder en. Steuert Knopf und Farbe.' },
+          { name: 'paths', description: 'Zielpfad je Sprache, zum Beispiel { de: "/", en: "/en" }.' },
+          { name: 'label', description: 'Beschriftung der Navigation für Screenreader.' }
+        ],
+        a11y: [
+          'Zwei normale Links mit lang, hreflang und ausgeschriebenem Namen („Deutsch (DE)“), die aktive Sprache trägt aria-current="page".',
+          'Der Zustand wird nicht nur durch die Position des Knopfes gezeigt, sondern auch durch die invertierte Schriftfarbe.',
+          'Bei „reduzierte Bewegung“ springt der Knopf ohne Übergang.'
+        ],
+        usageLabel: 'Verwendung im Header',
+        usage: '<LangSwitch lang="de" :paths="{ de: \'/\', en: \'/en\' }" label="Sprache" />'
+      },
+      {
+        id: 'drag-chip',
+        title: 'Drag-Chip',
+        description:
+          'Der kleine Tag bei den Technologien in der Erfahrung. Er lässt sich mit Maus oder Finger greifen, verschieben und springt beim Loslassen federnd zurück. Rein dekorativ: Inhalt bleibt ein normales Listenelement.',
+        api: [
+          { name: 'Slot (default)', description: 'Die Beschriftung des Tags, zum Beispiel „Vue“.' },
+          { name: 'Props, Events', description: 'Keine. Das Ziehen und Zurückfedern steckt in der Komponente.' }
+        ],
+        a11y: [
+          'Für Screenreader ein gewöhnliches Listenelement, es braucht keinen Fokus und keine Bedienung.',
+          'Bei „reduzierte Bewegung“ springt der Tag ohne Federn zurück.',
+          'touch-action: none verhindert, dass beim Ziehen am Tag die Seite scrollt.'
+        ],
+        usageLabel: 'Verwendung in der Erfahrung',
+        usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
+      }
+    ]
+  },
+  back: 'Zurück zur Startseite'
+}
+
+const en: PatternsContent = {
+  metaTitle: 'Pattern library – Dustin Clever',
+  title: 'Pattern library',
+  intro:
+    'This page shows the building blocks of this website: colors, type, layout and the reusable components. The source code is read straight from the website’s own files when the site is built, so it is always up to date and never a copy.',
+  tocLabel: 'On this page',
+  nav: [
+    { id: 'colors', label: 'Colors' },
+    { id: 'typography', label: 'Typography' },
+    { id: 'layout', label: 'Layout' },
+    { id: 'components', label: 'Components' }
+  ],
+  ui: {
+    token: 'Variable',
+    value: 'Value',
+    usage: 'Usage',
+    pair: 'Pairing',
+    ratio: 'Contrast',
+    level: 'Level',
+    showCode: 'Show source code',
+    codeLabel: 'Source code',
+    preview: 'Preview',
+    api: 'Interface',
+    a11y: 'Accessibility',
+    levels: { AAA: 'AAA', AA: 'AA', UI: '3:1 and up (controls, large text)', fail: 'below 3:1' }
+  },
+  colors: {
+    title: 'Colors',
+    intro:
+      'A dark theme with exactly one accent color. All colors are CSS variables in main.scss, and the table is read from that file.',
+    notes: {
+      bg: 'Page background and the even sections.',
+      'bg-alt': 'Background of the alternating sections (About, Skills, Contact).',
+      text: 'Body text and headings.',
+      muted: 'Secondary color for intros, hints and menu items at rest.',
+      line: 'Fine divider lines and borders (white at 14% opacity).',
+      blue: 'Accent: button, logo symbol and the slash in front of section headings.',
+      'blue-dark': 'Hover state of the button.',
+      'blue-light': 'Underline and border on hover (text link, drag chip) and the dots in the hero grid.',
+      focus: 'Focus ring for keyboard use.'
+    },
+    pairsTitle: 'Contrast',
+    pairsIntro:
+      'Calculated from the variables according to WCAG 2.x. Text needs at least 4.5:1 (AA), controls and large text 3:1.',
+    pairs: [
+      { fg: 'text', bg: 'bg', use: 'Body text on the page background' },
+      { fg: 'muted', bg: 'bg', use: 'Secondary text on the page background' },
+      { fg: 'muted', bg: 'bg-alt', use: 'Secondary text on alternating sections' },
+      { fg: 'text', bg: 'blue', use: 'Button label' },
+      { fg: 'text', bg: 'blue-dark', use: 'Button label on hover' },
+      { fg: 'blue-light', bg: 'bg', use: 'Underline and border on hover' },
+      { fg: 'focus', bg: 'bg', use: 'Focus ring' },
+      { fg: 'blue', bg: 'bg', use: 'Accent (logo, slash), purely decorative' }
+    ],
+    codeTitle: 'All variables in the source'
+  },
+  typography: {
+    title: 'Typography',
+    intro: 'Two typefaces, both served from this site: loading the page makes no connection to Google.',
+    fonts: [
+      { token: 'font-display', name: 'Roboto Slab', role: 'Logo and headings (h1 to h3)', sample: 'Frontend development with care' },
+      { token: 'font', name: 'Space Grotesk', role: 'Body text, menu, buttons and entry titles (h4)', sample: 'Components people enjoy using' }
+    ],
+    scaleTitle: 'Sizes',
+    scale: [
+      { label: 'Section title · Roboto Slab 700 · 2 to 3.5 rem (fluid)', sample: 'Experience' },
+      { label: 'Heading 3 · Roboto Slab 700 · 1.5 rem', sample: 'Professional experience' },
+      { label: 'Heading 4 · Space Grotesk 500 · 1.15 rem', sample: 'Frontend Developer' },
+      { label: 'Body text · Space Grotesk 400 · 1.0625 rem, line height 1.65', sample: 'I come from design and build interfaces with Vue, Nuxt and TypeScript.' }
+    ],
+    notes: [
+      'The serif gives the headings character, the sans-serif grotesk keeps text and interface calm.',
+      'Text columns are limited to 65 characters so lines stay easy to read.',
+      'The body font is preloaded and uses font-display: optional. If it does not arrive in time, the fallback font stays instead of the text shifting later (layout shift).'
+    ]
+  },
+  layout: {
+    title: 'Layout',
+    intro: 'A few fixed rules that apply everywhere.',
+    rules: [
+      {
+        title: 'Sections',
+        text: 'Every section is at least 90% as tall as the window below the header. The next section peeks out at the bottom and shows that there is more. Alternating backgrounds (bg and bg-alt) separate sections without lines.'
+      },
+      {
+        title: 'Page margin',
+        text: 'A fluid margin (gutter) from 1.25 to 4 rem keeps content on the same edge at every width.'
+      },
+      {
+        title: 'Header',
+        text: 'From 1000 px the header is a single row and stays at the top. Below that it has two rows: logo and language switch on top, the menu items below, wrapping when needed.'
+      },
+      {
+        title: 'Hero',
+        text: 'From 1100 px the portrait sits as a background layer between the text on the left and the info blocks on the right. Below that it sits under the text.'
+      },
+      {
+        title: 'Shapes',
+        text: 'Angular, with no rounded corners and no glass or glow effects. The playful parts (dot grid in the hero, draggable tags) are purely decorative.'
+      },
+      {
+        title: 'Usability',
+        text: 'Click targets are at least 44 px tall. The focus ring is 3 px thick and visible everywhere. With “reduced motion”, transitions and animations are switched off or shortened.'
+      }
+    ],
+    tokensTitle: 'Type and layout variables'
+  },
+  components: {
+    title: 'Components',
+    intro:
+      'The components are deliberately small. Each one comes with a preview to try out (mouse and keyboard), its interface, notes on accessibility and the real source code.',
+    items: [
+      {
+        id: 'button',
+        title: 'Button',
+        description:
+          'The main action of a section, for example “Get in touch” in the hero. Technically a link that looks like a button, because it jumps to a section and does not trigger an action.',
+        api: [{ name: '.button', description: 'Angular surface in blue with white text, at least 3 rem tall. Hover: blue-dark.' }],
+        a11y: [
+          'A real link: Enter opens the target and the focus ring is visible.',
+          'Hover only changes the color, nothing is reachable by mouse alone.',
+          'The contrast of the label is listed in the table under “Colors”.'
+        ],
+        usageLabel: 'Usage in the hero',
+        usage: '<a class="button" href="#contact">Get in touch</a>'
+      },
+      {
+        id: 'text-link',
+        title: 'Text link',
+        description:
+          'For all other links. The underline sits on the text and runs from left to right from white to blue on hover. The label lives in its own element, and only that carries the underline.',
+        api: [
+          { name: '.text-link', description: 'Block: link at least 2.75 rem tall, optionally with an icon (0.5 rem gap).' },
+          { name: '.text-link__label', description: 'Element: the text with the animated underline.' }
+        ],
+        a11y: [
+          'The underline is visible at rest, so links are not recognizable by color alone.',
+          'Hover and keyboard focus trigger the same animation.',
+          'With “reduced motion” the underline changes without a transition.'
+        ],
+        usageLabel: 'Usage in the contact section',
+        usage:
+          '<a class="text-link" href="/cv/CV-Dustin-Clever.pdf" download>\n  <span class="text-link__label">Resume (EN)</span>\n</a>'
+      },
+      {
+        id: 'scroll-button',
+        title: 'Scroll button',
+        description:
+          'The round arrow below the hero actions that leads to the next section. Technically an anchor link; after the click, focus lands on the heading of the target.',
+        api: [
+          { name: 'href', description: 'Target anchor, for example #about.' },
+          { name: 'label', description: 'Accessible name, since the button only shows an icon.' }
+        ],
+        a11y: [
+          'A real link with an aria-label; the arrow itself is hidden from screen readers.',
+          'The click target is 4 rem across and the focus ring is visible.',
+          'Hover only changes the color; with “reduced motion” the transition is removed.'
+        ],
+        usageLabel: 'Usage in the hero',
+        usage: '<ScrollButton href="#about" label="Scroll down" />'
+      },
+      {
+        id: 'lang-switch',
+        title: 'Language switch',
+        description:
+          'Switches between German and English, styled like a light switch: the knob jumps to the active language and the track turns blue for EN. The component knows nothing about routes, everything comes in through props. The preview shows both states; the links stay on this page.',
+        api: [
+          { name: 'lang', description: 'Active language: de or en. Drives the knob and the color.' },
+          { name: 'paths', description: 'Target path per language, for example { de: "/", en: "/en" }.' },
+          { name: 'label', description: 'Label of the navigation for screen readers.' }
+        ],
+        a11y: [
+          'Two ordinary links with lang, hreflang and a spelled-out name (“English (EN)”); the active language carries aria-current="page".',
+          'The state is not shown by the knob position alone, but also by the inverted text color.',
+          'With “reduced motion” the knob moves without a transition.'
+        ],
+        usageLabel: 'Usage in the header',
+        usage: '<LangSwitch lang="en" :paths="{ de: \'/\', en: \'/en\' }" label="Language" />'
+      },
+      {
+        id: 'drag-chip',
+        title: 'Drag chip',
+        description:
+          'The small tag for the technologies in the experience section. You can grab it with mouse or finger, move it, and it springs back when released. Purely decorative: the content stays a normal list item.',
+        api: [
+          { name: 'Slot (default)', description: 'The label of the tag, for example “Vue”.' },
+          { name: 'Props, events', description: 'None. Dragging and springing back live inside the component.' }
+        ],
+        a11y: [
+          'For screen readers an ordinary list item, it needs no focus and no interaction.',
+          'With “reduced motion” the tag jumps back without springing.',
+          'touch-action: none stops the page from scrolling while you drag the tag.'
+        ],
+        usageLabel: 'Usage in the experience section',
+        usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
+      }
+    ]
+  },
+  back: 'Back to the home page'
+}
+
+export const patternsContent = { de, en }

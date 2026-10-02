@@ -6,13 +6,13 @@ describe('SiteHeader', () => {
   it('zeigt auf "/" die deutsche Navigation und markiert DE als aktiv', async () => {
     const wrapper = await mountSuspended(SiteHeader, { route: '/' })
     expect(wrapper.text()).toContain('Über mich')
-    expect(wrapper.find('.lang-switch__link[aria-current="page"]').text()).toBe('DE')
+    expect(wrapper.find('.lang-switch__link[aria-current="page"]').text()).toBe('de')
   })
 
   it('zeigt auf "/en" die englische Navigation und markiert EN als aktiv', async () => {
     const wrapper = await mountSuspended(SiteHeader, { route: '/en' })
     expect(wrapper.text()).toContain('Experience')
-    expect(wrapper.find('.lang-switch__link[aria-current="page"]').text()).toBe('EN')
+    expect(wrapper.find('.lang-switch__link[aria-current="page"]').text()).toBe('en')
   })
 
   it('verlinkt die Sprachversionen mit lang und hreflang', async () => {
@@ -52,5 +52,17 @@ describe('SiteHeader: Fokus nach Klick', () => {
     await wrapper.get('.site-header__link').trigger('click')
     expect(document.activeElement?.id).toBe('about')
     document.body.innerHTML = ''
+  })
+})
+
+describe('SiteHeader auf der Pattern-Library', () => {
+  it.each([
+    ['/pattern-library', '/#top', '/#about'],
+    ['/en/pattern-library', '/en#top', '/en#about']
+  ])('führt Logo und Menü auf %s zur Startseite und schaltet die Sprache auf die Schwesterseite', async (route, brand, firstLink) => {
+    const wrapper = await mountSuspended(SiteHeader, { route })
+    expect(wrapper.get('.site-header__brand').attributes('href')).toBe(brand)
+    expect(wrapper.get('.site-header__link').attributes('href')).toBe(firstLink)
+    expect(wrapper.findAll('.lang-switch__link').map((l) => l.attributes('href'))).toEqual(['/pattern-library', '/en/pattern-library'])
   })
 })

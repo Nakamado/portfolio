@@ -1,5 +1,5 @@
-/** Seiten, die in der Sitemap stehen: nur die Startseiten. Impressum und Datenschutz sind bewusst auf noindex gesetzt. */
-export const SITEMAP_PATHS = ['/', '/en'] as const
+/** Seiten, die in der Sitemap stehen: Startseiten und Pattern-Library. Impressum und Datenschutz sind bewusst auf noindex gesetzt. */
+export const SITEMAP_PATHS = ['/', '/en', '/pattern-library', '/en/pattern-library'] as const
 
 const trimSlash = (url: string) => url.replace(/\/$/, '')
 

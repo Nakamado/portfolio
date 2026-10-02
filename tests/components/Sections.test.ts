@@ -51,10 +51,10 @@ describe.each([
     expect(wrapper.findAll('.projects__item')).toHaveLength(t.work.projects.length)
   })
 
-  it('SiteFooter verlinkt Impressum und Datenschutz in der aktuellen Sprache', async () => {
+  it('SiteFooter verlinkt Impressum, Datenschutz und Pattern-Library in der aktuellen Sprache', async () => {
     const wrapper = await mountSuspended(SiteFooter, { route })
     const hrefs = wrapper.findAll('.site-footer__link').map((a) => a.attributes('href'))
-    expect(hrefs).toEqual(lang === 'de' ? ['/impressum', '/datenschutz'] : ['/en/legal-notice', '/en/privacy'])
+    expect(hrefs).toEqual(lang === 'de' ? ['/impressum', '/datenschutz', '/pattern-library'] : ['/en/legal-notice', '/en/privacy', '/en/pattern-library'])
     expect(wrapper.text()).toContain(String(new Date().getFullYear()))
   })
 })

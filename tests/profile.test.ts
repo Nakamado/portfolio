@@ -22,4 +22,20 @@ describe('profile content', () => {
     expect(JSON.stringify(content.de.work)).not.toMatch(/platzhalter|placeholder/i)
     expect(JSON.stringify(content.en.work)).not.toMatch(/platzhalter|placeholder/i)
   })
+
+  it('hat die Pattern-Library in DE und EN gleich aufgebaut', () => {
+    const de = content.de.patterns
+    const en = content.en.patterns
+    expect(en.nav.map((n) => n.id)).toEqual(de.nav.map((n) => n.id))
+    expect(en.components.items.map((i) => i.id)).toEqual(de.components.items.map((i) => i.id))
+    expect(en.colors.pairs).toHaveLength(de.colors.pairs.length)
+    expect(en.colors.pairs.map((p) => [p.fg, p.bg])).toEqual(de.colors.pairs.map((p) => [p.fg, p.bg]))
+    expect(Object.keys(en.colors.notes)).toEqual(Object.keys(de.colors.notes))
+    expect(en.typography.scale).toHaveLength(de.typography.scale.length)
+    expect(en.layout.rules).toHaveLength(de.layout.rules.length)
+    de.components.items.forEach((item, i) => {
+      expect(en.components.items[i]!.api).toHaveLength(item.api.length)
+      expect(en.components.items[i]!.a11y).toHaveLength(item.a11y.length)
+    })
+  })
 })

@@ -18,11 +18,9 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
           <span class="text-link__label">{{ t.hero.ctaCv }}</span>
         </a>
       </div>
-      <a class="hero__scroll" href="#about" :aria-label="t.ui.scrollDown" @click="focusSection">
-        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false">
-          <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
+      <div class="hero__scroll">
+        <ScrollButton href="#about" :label="t.ui.scrollDown" />
+      </div>
     </div>
 
     <!-- Porträt: freigestellt, am Desktop als Hintergrundebene hinter dem Text -->
@@ -159,19 +157,7 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
   }
 
   &__scroll {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem;
-    height: 4rem;
     margin-top: 2rem;
-    border-radius: 50%;
-    background: var(--blue);
-    color: #fff;
-
-    &:hover {
-      background: var(--blue-dark);
-    }
 
     @media (max-width: 1099px), (max-height: 720px) {
       display: none; // spart Platz; Menü und Button "Kontakt" genügen

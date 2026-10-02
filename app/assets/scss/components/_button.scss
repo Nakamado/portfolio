@@ -1,0 +1,15 @@
+// Block: button – Hauptaktion (z. B. „Kontakt aufnehmen“). Eckig, ein Akzentton, Hover etwas dunkler.
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--blue-dark);
+  }
+}

@@ -6,6 +6,8 @@ import Imprint from '~/pages/impressum.vue'
 import LegalNotice from '~/pages/en/legal-notice.vue'
 import Privacy from '~/pages/datenschutz.vue'
 import PrivacyEn from '~/pages/en/privacy.vue'
+import Patterns from '~/pages/pattern-library.vue'
+import PatternsEn from '~/pages/en/pattern-library.vue'
 
 describe('Seiten', () => {
   it.each([
@@ -14,7 +16,9 @@ describe('Seiten', () => {
     ['Impressum', Imprint, '/impressum', '.imprint'],
     ['Legal notice', LegalNotice, '/en/legal-notice', '.imprint'],
     ['Datenschutz', Privacy, '/datenschutz', '.privacy'],
-    ['Privacy', PrivacyEn, '/en/privacy', '.privacy']
+    ['Privacy', PrivacyEn, '/en/privacy', '.privacy'],
+    ['Pattern-Library', Patterns, '/pattern-library', '.patterns'],
+    ['Pattern library', PatternsEn, '/en/pattern-library', '.patterns']
   ])('%s rendert ihren Inhalt', async (_name, page, route, selector) => {
     const wrapper = await mountSuspended(page, { route })
     expect(wrapper.find(selector).exists()).toBe(true)

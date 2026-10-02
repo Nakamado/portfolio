@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { lang, t, paths, legal, isLegal } = useLang()
-const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : t.value.meta.title))
+const { lang, t, paths, legal, isLegal, isPatterns } = useLang()
+const pageTitle = computed(() => (legal.value ? t.value[legal.value].metaTitle : isPatterns.value ? t.value.patterns.metaTitle : t.value.meta.title))
 const { siteUrl, linkedinUrl, contactEmail } = useRuntimeConfig().public
 const base = normalizeBase(siteUrl)
 const social = socialImage(base)

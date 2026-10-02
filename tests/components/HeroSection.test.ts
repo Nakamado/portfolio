@@ -39,7 +39,7 @@ describe('HeroSection', () => {
     const wrapper = await mountSuspended(HeroSection, { route: '/' })
     for (const [selector, id] of [
       ['a.button', 'contact'],
-      ['a.hero__scroll', 'about'],
+      ['a.scroll-button', 'about'],
       ['.hero__more[href="#about"]', 'about'],
       ['.hero__more[href="#projects"]', 'projects']
     ] as const) {

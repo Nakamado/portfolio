@@ -12,6 +12,7 @@ npm run typecheck
 
 ## Aufbau
 - `app/data/profile.ts` – alle Inhalte, Deutsch und Englisch an einer Stelle
+- `app/data/patterns.ts` – Texte der Pattern-Library (`/pattern-library`, `/en/pattern-library`); Farben, Schriften und Quelltexte liest die Seite beim Build direkt aus `main.scss`, `components/_button.scss`, `components/_text-link.scss` und `DragChip.vue`
 - `app/pages/index.vue` (`/`, Deutsch) und `app/pages/en/index.vue` (`/en`, Englisch)
 - `app/components/` – ein Block pro Komponente, Klassen nach BEM (`block__element--modifier`)
 - `app/assets/scss/main.scss` – Design Tokens, Reset und globale Blöcke (`section`, `button`, `text-link`)

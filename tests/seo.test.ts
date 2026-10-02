@@ -17,6 +17,12 @@ describe('sitemap.xml', () => {
     for (const path of SITEMAP_PATHS) expect(xml).toContain(`<loc>https://example.com${path}</loc>`)
   })
 
+  it('enthält die Pattern-Library in beiden Sprachen', () => {
+    const xml = buildSitemap('https://example.com')
+    expect(xml).toContain('<loc>https://example.com/pattern-library</loc>')
+    expect(xml).toContain('<loc>https://example.com/en/pattern-library</loc>')
+  })
+
   it('enthält die Rechtstexte nicht (sie sind auf noindex gesetzt)', () => {
     const xml = buildSitemap('https://example.com')
     expect(xml).not.toContain('/impressum')

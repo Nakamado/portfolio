@@ -1,4 +1,7 @@
-// Design Tokens, Reset und globale Blöcke (BEM): .section, .button, .text-link, .skip-link, .visually-hidden
+// Design Tokens, Reset und globale Blöcke (BEM): .section, .skip-link, .visually-hidden.
+// Button und Text-Link liegen in components/ und werden hier eingebunden; die Pattern-Library zeigt sie als Quelltext.
+@use './components/button';
+@use './components/text-link';
 
 :root {
   --bg: #1a1d26;
@@ -162,62 +165,5 @@ main[tabindex='-1']:focus {
     margin-bottom: 2rem;
     color: var(--muted);
     font-size: 1.15rem;
-  }
-}
-
-// ---- Block: button
-.button {
-  display: inline-flex;
-  align-items: center;
-  min-height: 3rem;
-  padding: 0.75rem 1.5rem;
-  background: var(--blue);
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-
-  &:hover {
-    background: var(--blue-dark);
-  }
-}
-
-// ---- Block: text-link
-// Der Unterstrich liegt am Label und läuft beim Hover von links nach rechts von Weiß zu Blau durch.
-// Modifier --hover-only: kein Unterstrich im Ruhezustand (Navigation).
-.text-link {
-  --underline: 2px;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  font-weight: 500;
-  text-decoration: none;
-
-  &__label {
-    padding-bottom: 0.15em;
-    background-image: linear-gradient(var(--blue-light), var(--blue-light)), linear-gradient(currentcolor, currentcolor);
-    background-repeat: no-repeat;
-    background-position: 0 100%, 0 100%;
-    background-size: 0 var(--underline), 100% var(--underline);
-    transition: background-size 0.4s ease;
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-
-  &:hover &__label,
-  &:focus-visible &__label {
-    background-size: 100% var(--underline), 100% var(--underline);
-  }
-
-  &--hover-only &__label {
-    background-size: 0 var(--underline), 0 var(--underline);
-  }
-
-  &--hover-only:hover &__label,
-  &--hover-only:focus-visible &__label {
-    background-size: 100% var(--underline), 0 var(--underline);
   }
 }

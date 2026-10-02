@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t, imprintPath, privacyPath } = useLang()
+const { t, imprintPath, privacyPath, patternsPath } = useLang()
 </script>
 
 <template>
@@ -11,6 +11,9 @@ const { t, imprintPath, privacyPath } = useLang()
       </NuxtLink>
       <NuxtLink class="site-footer__link text-link" :to="privacyPath">
         <span class="text-link__label">{{ t.footer.privacy }}</span>
+      </NuxtLink>
+      <NuxtLink class="site-footer__link text-link" :to="patternsPath">
+        <span class="text-link__label">{{ t.footer.patterns }}</span>
       </NuxtLink>
     </div>
     <p class="site-footer__text">{{ t.footer.built }}</p>
