@@ -147,6 +147,19 @@ describe('HeroBackdrop', () => {
       expect(blue(lastFrame())).toBe(letters)
     })
 
+    it('lässt die Schrift beim Aufleuchten kurz größer werden und dann bei der ruhigen Größe bleiben', async () => {
+      big()
+      const wrapper = await mountSuspended(HeroBackdrop, { props: { sign: '404', lit: false } })
+      const radii = () => ctx.arc.mock.calls.map((call) => call[2] as number)
+      expect(Math.max(...radii())).toBeCloseTo(1.3)
+
+      await wrapper.setProps({ lit: true })
+      for (let i = 0; i < 200 && frames.pending(); i++) frames.flush()
+      expect(Math.max(...radii())).toBeGreaterThan(3) // zwischendurch deutlich größer
+      expect(Math.max(...radii().slice(-260))).toBeLessThan(2.6) // am Ende so groß wie ein aufgeleuchteter Punkt
+      expect(Math.max(...radii().slice(-260))).toBeGreaterThan(2.4)
+    })
+
     it('blendet die Schrift wieder aus', async () => {
       big()
       const wrapper = await mountSuspended(HeroBackdrop, { props: { sign: '404', lit: false } })
@@ -166,6 +179,7 @@ describe('HeroBackdrop', () => {
       await wrapper.setProps({ lit: false })
       expect(blue(lastFrame())).toBe(0)
       expect(frames.pending()).toBe(0)
+      expect(Math.max(...ctx.arc.mock.calls.map((call) => call[2] as number))).toBeLessThan(2.6) // kein Aufblitzen
     })
 
     describe('auf der Höhe eines Platzhalters (signAt)', () => {

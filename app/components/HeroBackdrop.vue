@@ -10,6 +10,8 @@ const props = defineProps<{ sign?: string; signAt?: string; lit?: boolean }>()
 const GAP = 30
 const RADIUS = 130
 const STRENGTH = 22
+const SIGN_PULSE = 1.6 // so viel größer (px) werden die Punkte der Schrift beim Aufleuchten
+const PULSE_FRAMES = 70 // so lange dauert das Aufleuchten
 const SIGN_LEVEL = 0.7 // so stark leuchten die Punkte der Schrift (1 wäre so kräftig wie nahe am Zeiger)
 
 const canvas = ref<HTMLCanvasElement | null>(null)
@@ -22,6 +24,8 @@ interface Dot extends GridPoint {
 let dots: Dot[] = []
 let signDots = new Set<number>() // Nummern der Punkte, die zur Schrift gehören
 let reveal = 0 // 0 bis 1: wie weit die Schrift aufgeleuchtet ist
+let glow = 1 // 0 bis 1: Fortschritt des kurzen Aufblitzens, 1 heißt: vorbei
+let cols = 0
 let ctx: CanvasRenderingContext2D | null = null
 let width = 0
 let height = 0
@@ -37,7 +41,8 @@ function draw(): boolean {
   c.clearRect(0, 0, width, height)
   const target = Number(props.lit)
   reveal = reduced ? target : reveal + (target - reveal) * 0.08
-  let moving = Math.abs(target - reveal) > 0.01
+  glow = Math.min(1, glow + 1 / PULSE_FRAMES)
+  let moving = Math.abs(target - reveal) > 0.01 || glow < 1
   dots.forEach((dot, index) => {
     let intensity = 0
     let targetX = 0
@@ -53,9 +58,12 @@ function draw(): boolean {
     if (Math.abs(targetX - dot.ox) > 0.05 || Math.abs(targetY - dot.oy) > 0.05) moving = true
 
     // Nähe zum Zeiger: größer und blau, sonst ein ruhiger heller Punkt
-    const near = Math.max(Math.min(1, Math.hypot(dot.ox, dot.oy) / (STRENGTH * 0.6)), signDots.has(index) ? reveal * SIGN_LEVEL : 0)
+    // Die Schrift blitzt von links nach rechts kurz größer auf, dann bleibt sie so, wie sie ist
+    const bump = signDots.has(index) ? Math.sin(Math.PI * Math.min(1, Math.max(0, glow * 1.5 - ((index % cols) / cols) * 0.5))) : 0
+    const signLevel = signDots.has(index) ? reveal * SIGN_LEVEL + bump * (1 - SIGN_LEVEL) : 0
+    const near = Math.max(Math.min(1, Math.hypot(dot.ox, dot.oy) / (STRENGTH * 0.6)), signLevel)
     c.beginPath()
-    c.arc(dot.x + dot.ox, dot.y + dot.oy, 1.3 + near * 1.8, 0, Math.PI * 2)
+    c.arc(dot.x + dot.ox, dot.y + dot.oy, 1.3 + near * 1.8 + bump * SIGN_PULSE, 0, Math.PI * 2)
     c.fillStyle = near > 0.02 || intensity > 0.02 ? `rgb(79 140 255 / ${0.25 + near * 0.75})` : 'rgb(255 255 255 / 0.13)'
     c.fill()
   })
@@ -91,9 +99,10 @@ function resize() {
   ctx = el.getContext('2d')
   ctx?.setTransform(ratio, 0, 0, ratio, 0, 0)
   dots = createGrid(width, height, GAP).map((p) => ({ ...p, ox: 0, oy: 0 }))
+  cols = Math.floor(width / GAP)
   const rows = Math.floor(height / GAP)
   const mask = props.sign ? buildMask(props.sign) : []
-  signDots = props.sign ? signCells(mask, Math.floor(width / GAP), rows, anchorRow(rows, mask.length, rect.top)) : new Set()
+  signDots = props.sign ? signCells(mask, cols, rows, anchorRow(rows, mask.length, rect.top)) : new Set()
   draw()
 }
 
@@ -110,9 +119,13 @@ function onLeave() {
 
 watch(
   () => props.lit,
-  () => {
-    if (reduced) draw()
-    else start()
+  (lit) => {
+    if (reduced) {
+      draw()
+    } else {
+      if (lit) glow = 0 // Aufblitzen von vorn
+      start()
+    }
   }
 )
 

@@ -28,6 +28,8 @@ let frame = 0
 let last = 0
 let clock = 0
 let timer: ReturnType<typeof setTimeout> | undefined
+let observer: ResizeObserver | null = null
+let started = false // hat das Fallen begonnen?
 let grab = { px: 0, py: 0, bx: 0, by: 0, t: 0 }
 
 const speed = (value: number) => Math.max(-MAX_SPEED, Math.min(MAX_SPEED, value))
@@ -61,6 +63,7 @@ function start() {
 }
 
 function startFalling() {
+  started = true
   emit('fall')
   start()
 }
@@ -88,12 +91,17 @@ function onRelease(event: PointerEvent) {
   start()
 }
 
+// Ändert sich die Größe der Bühne (Fenster, nachgeladene Schrift, Umbruch), werden die Maße neu gelesen, sonst liegen die Tags
+// nicht auf dem Boden. Vor dem Fallen bleiben sie einfach an ihrem neuen Platz.
 function onResize() {
   readLayout()
-  const place = still.value ? settleBody : clampBody
-  bodies = bodies.map((b, i) => place({ ...b, ...sizes[i]! }, world))
+  bodies = bodies.map((b, i) => {
+    const sized = { ...b, ...sizes[i]! }
+    if (still.value) return settleBody(sized, world)
+    return started ? clampBody(sized, world) : { ...sized, ...homes[i]! }
+  })
   sync()
-  start()
+  if (started) start()
 }
 
 onMounted(() => {
@@ -102,6 +110,10 @@ onMounted(() => {
   bodies = homes.map((home, i) => ({ x: home.x, y: home.y, vx: 0, vy: 0, ...sizes[i]! }))
   fallAt = bodies.map((_, i) => i * STAGGER)
   window.addEventListener('resize', onResize)
+  if (typeof ResizeObserver !== 'undefined') {
+    observer = new ResizeObserver(onResize)
+    observer.observe(root.value!)
+  }
   if (reduced) {
     still.value = true
     bodies = bodies.map((b) => settleBody(b, world))
@@ -115,6 +127,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTimeout(timer)
   if (frame) cancelAnimationFrame(frame)
+  observer?.disconnect()
   window.removeEventListener('resize', onResize)
 })
 </script>

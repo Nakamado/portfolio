@@ -266,6 +266,62 @@ describe('FallingStage', () => {
     expect(frames.pending()).toBe(1)
   })
 
+  describe('Größenbeobachtung', () => {
+    function stubObserver() {
+      let callback: () => void = () => {}
+      const disconnect = vi.fn()
+      vi.stubGlobal(
+        'ResizeObserver',
+        class {
+          constructor(cb: () => void) {
+            callback = cb
+          }
+          observe() {}
+          disconnect = disconnect
+        }
+      )
+      return { fire: () => callback(), disconnect }
+    }
+
+    it('liest die Maße neu, wenn sich die Bühne ändert, zum Beispiel weil eine Schrift nachlädt', async () => {
+      const observer = stubObserver()
+      const wrapper = await mount()
+      fall()
+      await settle()
+      layout.height = 300
+      observer.fire()
+      await settle()
+      expect(offset(wrapper, 0, 'y')).toBe(180)
+    })
+
+    it('lässt die Tags vor dem Fallen an ihrem Platz und fängt dadurch nicht früher an', async () => {
+      const observer = stubObserver()
+      const wrapper = await mount()
+      layout.height = 300
+      observer.fire()
+      await nextTick()
+      expect(frames.pending()).toBe(0)
+      expect(offset(wrapper, 0, 'y')).toBe(0)
+      fall()
+      await settle()
+      expect(offset(wrapper, 0, 'y')).toBe(180)
+    })
+
+    it('hört beim Entfernen auf zu beobachten', async () => {
+      const observer = stubObserver()
+      const wrapper = await mount()
+      mounted = []
+      wrapper.unmount()
+      expect(observer.disconnect).toHaveBeenCalled()
+    })
+
+    it('funktioniert ohne ResizeObserver', async () => {
+      vi.stubGlobal('ResizeObserver', undefined)
+      const wrapper = await mount()
+      expect(wrapper.findAll('.drag-chip')).toHaveLength(4)
+    })
+  })
+
   it('passt die Tags an, wenn sich die Fenstergröße ändert', async () => {
     const wrapper = await mount()
     fall()
