@@ -28,8 +28,8 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
       <img
         class="hero__image"
         src="/images/portrait.webp"
-        width="555"
-        height="450"
+        width="1000"
+        height="810"
         :alt="t.hero.imageAlt"
         fetchpriority="high"
         decoding="async"
