@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { robotsContent, pageUrl, absoluteUrl, headLinks, normalizeBase, personSchema, socialImage } from '../app/utils/seo'
+import { robotsContent, pageUrl, absoluteUrl, headLinks, normalizeBase, socialImagePath, socialImage, structuredData } from '../app/utils/seo'
 
 const paths = { de: '/impressum', en: '/en/legal-notice' }
 
@@ -20,19 +20,34 @@ describe('SEO-Helfer', () => {
     expect(links[3]!.href).toBe('https://example.com/impressum')
   })
 
-  it('baut die Strukturdaten mit und ohne Domain, LinkedIn und GitHub', () => {
-    const full = personSchema({ base: 'https://example.com', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', linkedinUrl: 'https://li' })
-    expect(full.url).toBe('https://example.com/impressum')
-    expect(full.image).toBe('https://example.com/images/og-image.jpg')
-    expect(full.sameAs).toEqual(['https://li'])
-    const both = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', linkedinUrl: 'https://li', githubUrl: 'https://gh' })
-    expect(both.sameAs).toEqual(['https://li', 'https://gh'])
-    const onlyGithub = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de', githubUrl: 'https://gh' })
-    expect(onlyGithub.sameAs).toEqual(['https://gh'])
-    const minimal = personSchema({ base: '', lang: 'de', paths, role: 'Frontend Developer', email: 'a@b.de' })
-    expect(minimal).not.toHaveProperty('url')
-    expect(minimal).not.toHaveProperty('sameAs')
-    expect(minimal.jobTitle).toBe('Frontend Developer')
+  it('baut Person und Website als Graph mit Domain, LinkedIn und GitHub', () => {
+    const full = structuredData({ base: 'https://example.com', lang: 'de', homePath: '/', role: 'Frontend-Entwickler', email: 'a@b.de', linkedinUrl: 'https://li', githubUrl: 'https://gh' })
+    expect(full['@context']).toBe('https://schema.org')
+    const [person, website] = full['@graph'] as Record<string, unknown>[]
+    expect(person).toEqual({
+      '@type': 'Person',
+      '@id': 'https://example.com/#person',
+      name: 'Dustin Clever',
+      jobTitle: 'Frontend-Entwickler',
+      email: 'a@b.de',
+      url: 'https://example.com/',
+      image: 'https://example.com/images/og-image.jpg',
+      sameAs: ['https://li', 'https://gh']
+    })
+    expect(website).toEqual({ '@type': 'WebSite', name: 'Dustin Clever', url: 'https://example.com/', inLanguage: 'de', publisher: { '@id': 'https://example.com/#person' } })
+  })
+
+  it('nutzt auf der englischen Startseite das englische Bild und die englische Adresse', () => {
+    const [person, website] = structuredData({ base: 'https://example.com', lang: 'en', homePath: '/en', role: 'Frontend Developer', email: 'a@b.de' })['@graph'] as Record<string, unknown>[]
+    expect(person!.image).toBe('https://example.com/images/og-image-en.jpg')
+    expect(person!.url).toBe('https://example.com/en')
+    expect(website!.inLanguage).toBe('en')
+  })
+
+  it('lässt ohne Domain URL, Bild, Website und leere Profile weg und behält nur sichtbare Angaben', () => {
+    const graph = structuredData({ base: '', lang: 'de', homePath: '/', role: 'Frontend-Entwickler', email: 'a@b.de', githubUrl: 'https://gh' })['@graph'] as Record<string, unknown>[]
+    expect(graph).toHaveLength(1)
+    expect(graph[0]).toEqual({ '@type': 'Person', name: 'Dustin Clever', jobTitle: 'Frontend-Entwickler', email: 'a@b.de', sameAs: ['https://gh'] })
   })
 
   it('setzt Rechtstexte auf noindex und alle anderen Seiten auf index', () => {
@@ -40,8 +55,10 @@ describe('SEO-Helfer', () => {
     expect(robotsContent(false)).toBe('index, follow')
   })
 
-  it('wählt das Vorschaubild passend zur Domain', () => {
+  it('wählt das Vorschaubild passend zu Domain und Sprache', () => {
     expect(socialImage('https://example.com')).toEqual({ image: 'https://example.com/images/og-image.jpg', width: 1200, height: 630, card: 'summary_large_image' })
+    expect(socialImage('https://example.com', 'en').image).toBe('https://example.com/images/og-image-en.jpg')
     expect(socialImage('')).toEqual({ image: undefined, width: undefined, height: undefined, card: 'summary' })
+    expect(socialImagePath('de')).toBe('/images/og-image.jpg')
   })
 })

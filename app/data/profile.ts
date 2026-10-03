@@ -40,7 +40,7 @@ export interface Content {
   experience: { title: string; workTitle: string; educationTitle: string; jobs: Job[]; education: Edu[] }
   skills: { title: string; groups: SkillGroup[] }
   work: { title: string; intro: string; projects: Project[] }
-  contact: { title: string; text: string; mail: string; linkedin: string; github: string; cvDe: string; cvEn: string }
+  contact: { title: string; text: string; availability: string; mail: string; linkedin: string; github: string; cvDe: string; cvEn: string }
   footer: { built: string; imprint: string; privacy: string; patterns: string }
   patterns: PatternsContent
   notFound: {
@@ -300,6 +300,7 @@ export const content: Record<Lang, Content> = {
     contact: {
       title: 'Kontakt',
       text: 'Du suchst Verstärkung im Frontend? Schreib mir gerne kurz, worum es geht.',
+      availability: 'Köln & Umgebung · Hybrid / On-site · Remote deutschlandweit',
       mail: 'E-Mail schreiben',
       linkedin: 'LinkedIn',
       github: 'GitHub',
@@ -609,6 +610,7 @@ export const content: Record<Lang, Content> = {
     contact: {
       title: 'Contact',
       text: 'Looking for frontend support? Feel free to send me a short note about what you need.',
+      availability: 'Cologne area · Hybrid / on-site · Remote across Germany',
       mail: 'Send an email',
       linkedin: 'LinkedIn',
       github: 'GitHub',

@@ -24,24 +24,30 @@ export function headLinks(base: string, lang: Lang, paths: PathMap) {
 /** Rechtstexte sollen erreichbar, aber nicht in den Suchergebnissen sein. */
 export const robotsContent = (isLegal: boolean) => (isLegal ? 'noindex, follow' : 'index, follow')
 
-/** Strukturierte Daten (schema.org/Person); URL, Bild und Profile (LinkedIn, GitHub) nur, wenn bekannt. */
-export function personSchema(options: { base: string; lang: Lang; paths: PathMap; role: string; email: string; linkedinUrl?: string; githubUrl?: string }) {
-  const { base, lang, paths, role, email, linkedinUrl, githubUrl } = options
+/** Vorschaubild je Sprache (Deutsch: og-image.jpg, Englisch: og-image-en.jpg), erzeugt mit `npm run og-image`. */
+export const socialImagePath = (lang: Lang) => (lang === 'en' ? '/images/og-image-en.jpg' : '/images/og-image.jpg')
+
+/** Person und Website als ein Graph (schema.org). Nur Angaben, die auch sichtbar auf der Seite stehen; URL, Bild und Profile nur, wenn bekannt. */
+export function structuredData(options: { base: string; lang: Lang; homePath: string; role: string; email: string; linkedinUrl?: string; githubUrl?: string }) {
+  const { base, lang, homePath, role, email, linkedinUrl, githubUrl } = options
   const profiles = [linkedinUrl, githubUrl].filter(Boolean)
-  return {
-    '@context': 'https://schema.org',
+  const url = base ? absoluteUrl(base, homePath) : undefined
+  const person = {
     '@type': 'Person',
+    ...(url ? { '@id': `${url}#person` } : {}),
     name: 'Dustin Clever',
     jobTitle: role,
     email,
-    ...(base ? { url: absoluteUrl(base, paths[lang]), image: absoluteUrl(base, '/images/og-image.jpg') } : {}),
+    ...(url ? { url, image: absoluteUrl(base, socialImagePath(lang)) } : {}),
     ...(profiles.length ? { sameAs: profiles } : {})
   }
+  const website = url ? [{ '@type': 'WebSite', name: 'Dustin Clever', url, inLanguage: lang, publisher: { '@id': `${url}#person` } }] : []
+  return { '@context': 'https://schema.org', '@graph': [person, ...website] }
 }
 
 /** Vorschaubild für soziale Netzwerke; ohne Domain gibt es keine absolute Bild-URL. */
-export function socialImage(base: string) {
-  const image = base ? absoluteUrl(base, '/images/og-image.jpg') : undefined
+export function socialImage(base: string, lang: Lang = 'de') {
+  const image = base ? absoluteUrl(base, socialImagePath(lang)) : undefined
   return {
     image,
     width: image ? 1200 : undefined,

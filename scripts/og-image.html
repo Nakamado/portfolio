@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Social Preview</title>
+  <!-- Vorlage für public/images/og-image.jpg (Deutsch) und og-image-en.jpg (?lang=en). Erzeugen: npm run og-image -->
+  <style>
+    @font-face { font-family: 'Roboto Slab'; src: url('../public/fonts/roboto-slab-latin.woff2') format('woff2'); font-weight: 500 700; }
+    @font-face { font-family: 'Space Grotesk'; src: url('../public/fonts/space-grotesk-latin.woff2') format('woff2'); font-weight: 400 700; }
+    :root { --bg: #1a1d26; --text: #fff; --muted: #aab1c0; --blue: #1d63f0; --blue-light: #4f8cff; }
+    * { box-sizing: border-box; margin: 0; }
+    body { width: 1200px; height: 630px; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
+    .card { position: relative; width: 100%; height: 100%; }
+    /* Punktraster wie im Hero: ruhige Punkte weiß, dort wo der Mauszeiger wäre blau */
+    .dots, .dots--active { position: absolute; inset: 0; background-size: 30px 30px; background-position: 15px 15px; }
+    .dots { background-image: radial-gradient(circle, rgb(255 255 255 / 0.13) 2px, transparent 2.5px); }
+    .dots--active {
+      background-image: radial-gradient(circle, var(--blue-light) 3px, transparent 3.5px);
+      -webkit-mask-image: radial-gradient(circle 230px at 800px 250px, #000 0%, transparent 100%);
+      mask-image: radial-gradient(circle 230px at 800px 250px, #000 0%, transparent 100%);
+    }
+    .portrait { position: absolute; right: -24px; bottom: 0; height: 548px; width: auto; }
+    .text { position: absolute; left: 76px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; }
+    h1 { font-family: 'Roboto Slab', serif; font-weight: 700; font-size: 108px; line-height: 1.04; letter-spacing: -0.01em; }
+    .bar { width: 84px; height: 7px; margin: 36px 0 30px; background: var(--blue); }
+    .role { font-size: 46px; font-weight: 700; }
+    .stack { margin-top: 22px; color: var(--muted); font-size: 26px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="dots"></div>
+    <div class="dots--active"></div>
+    <img class="portrait" src="../public/images/portrait.webp" alt="" />
+    <div class="text">
+      <h1>Dustin<br />Clever</h1>
+      <div class="bar"></div>
+      <p class="role" id="role">Frontend-Entwickler</p>
+      <p class="stack">Vue · Nuxt · TypeScript</p>
+    </div>
+  </div>
+  <script>
+    if (new URLSearchParams(location.search).get('lang') === 'en') {
+      document.documentElement.lang = 'en'
+      document.getElementById('role').textContent = 'Frontend Developer'
+    }
+  </script>
+</body>
+</html>

@@ -16,7 +16,7 @@ npm run typecheck
 - `app/pages/index.vue` (`/`, Deutsch) und `app/pages/en/index.vue` (`/en`, Englisch)
 - `app/components/` – ein Block pro Komponente, Klassen nach BEM (`block__element--modifier`)
 - `app/assets/scss/main.scss` – Design Tokens, Reset und globale Blöcke (`section`, `button`, `text-link`)
-- `public/images/portrait.webp` – freigestelltes Porträt (WebP mit Transparenz). Beim Austauschen `width`/`height` in `HeroSection.vue` an das neue Seitenverhältnis anpassen. `og-image.jpg` ist das Social-Preview-Bild (1200×630).
+- `public/images/portrait.webp` – freigestelltes Porträt (WebP mit Transparenz). Beim Austauschen `width`/`height` in `HeroSection.vue` an das neue Seitenverhältnis anpassen. `og-image.jpg` (Deutsch) und `og-image-en.jpg` (Englisch) sind die Social-Preview-Bilder (1200×630). Sie entstehen aus der Vorlage `scripts/og-image.html`; nach Änderungen an Vorlage oder Porträt mit `npm run og-image` neu erzeugen.
 - `app/router.options.ts` – Scrollen zu Ankern (fixierter Header, reduzierte Bewegung); `app/utils/focusSection.ts` setzt den Fokus in den Zielabschnitt
 
 ## 404-Seite

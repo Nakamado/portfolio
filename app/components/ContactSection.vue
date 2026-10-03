@@ -6,6 +6,7 @@ const { contactEmail, linkedinUrl, githubUrl } = useRuntimeConfig().public
 <template>
   <BaseSection id="contact" :title="t.contact.title" alt>
     <p class="section__intro">{{ t.contact.text }}</p>
+    <p class="contact__availability">{{ t.contact.availability }}</p>
     <div>
       <a class="contact__mail text-link" :href="`mailto:${contactEmail}`">
         <span class="text-link__label">{{ contactEmail }}</span>
@@ -40,6 +41,12 @@ const { contactEmail, linkedinUrl, githubUrl } = useRuntimeConfig().public
 $contact-mail-font-size: clamp(1.4rem, 4.5vw, 3.25rem);
 $contact-links-gap: 1.75rem;
 .contact {
+  &__availability {
+    margin: (-$space-5) 0 $space-6;
+    color: var(--muted);
+    font-size: $font-sm;
+  }
+
   &__mail {
     --underline: 0.25rem;
 

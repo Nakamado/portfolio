@@ -10,6 +10,13 @@ describe('ContactSection', () => {
     expect(mail.attributes('href')).toBe('mailto:dustin.clever@googlemail.com')
   })
 
+  it('nennt Region und Arbeitsmodelle in beiden Sprachen', async () => {
+    const de = await mountSuspended(ContactSection, { route: '/' })
+    expect(de.get('.contact__availability').text()).toBe('Köln & Umgebung · Hybrid / On-site · Remote deutschlandweit')
+    const en = await mountSuspended(ContactSection, { route: '/en' })
+    expect(en.get('.contact__availability').text()).toBe('Cologne area · Hybrid / on-site · Remote across Germany')
+  })
+
   it('verlinkt beide Lebenslauf-PDFs', async () => {
     const wrapper = await mountSuspended(ContactSection)
     const hrefs = wrapper.findAll('a').map((a) => a.attributes('href'))
