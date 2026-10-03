@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Zeigt echten Quelltext. Zugeklappt per <details>, damit die Seite übersichtlich bleibt; der Block ist per Tab erreichbar und scrollbar.
 // Gefärbt wird erst beim ersten Aufklappen: zugeklappt bleibt der Block reiner Text und die Seite klein.
-import { highlight, type Token } from '~/utils/highlight'
+import { highlight, type CodeToken } from '~/utils/highlight'
 
 const props = defineProps<{ code: string; file: string; summary: string; open?: boolean }>()
 const colored = ref(props.open === true)
-const tokens = computed<Token[]>(() => (colored.value ? highlight(props.code) : [{ type: null, text: props.code }]))
+const tokens = computed<CodeToken[]>(() => (colored.value ? highlight(props.code) : [{ type: null, text: props.code }]))
 
 function onToggle(event: Event) {
   if ((event.currentTarget as HTMLDetailsElement).hasAttribute('open')) colored.value = true

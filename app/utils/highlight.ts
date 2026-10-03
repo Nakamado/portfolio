@@ -2,9 +2,9 @@
 // Keine Abhängigkeit: eine Reihe von Mustern, das früheste Vorkommen gewinnt, bei gleicher Stelle entscheidet die Reihenfolge.
 // Die Tokens ergeben aneinandergehängt immer wieder den Originaltext.
 
-export type TokenType = 'comment' | 'string' | 'tag' | 'name' | 'variable' | 'keyword' | 'number'
-export interface Token {
-  type: TokenType | null // null = einfacher Text
+export type CodeTokenType = 'comment' | 'string' | 'tag' | 'name' | 'variable' | 'keyword' | 'number'
+export interface CodeToken {
+  type: CodeTokenType | null // null = einfacher Text
   text: string
 }
 
@@ -12,7 +12,7 @@ const SCSS_AT_RULES = 'use|forward|include|mixin|function|return|media|if|else|e
 const KEYWORDS = 'const|let|import|from|export|default|return|if|else|function|interface|true|false|null|undefined|defineProps|defineEmits|computed|ref|onMounted|onBeforeUnmount|watch'
 const UNITS = 'rem|em|px|%|vh|vw|svh|ms|s|deg|fr|ch'
 
-const RULES: [TokenType, string][] = [
+const RULES: [CodeTokenType, string][] = [
   ['comment', String.raw`\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|(?<![:\w])\/\/[^\n]*`],
   ['string', String.raw`'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"|` + '`(?:\\\\.|[^`\\\\])*`'],
   // Öffnende Tags, schließende Tags (auch direkt hinter Text) und die letzte Klammer; öffnende Tags und Klammer zählen nur außerhalb von Generics wie ref<number>
@@ -25,8 +25,8 @@ const RULES: [TokenType, string][] = [
 
 const PATTERN = new RegExp(RULES.map(([, source]) => `(${source})`).join('|'), 'gm')
 
-export function highlight(code: string): Token[] {
-  const tokens: Token[] = []
+export function highlight(code: string): CodeToken[] {
+  const tokens: CodeToken[] = []
   let last = 0
   for (const match of code.matchAll(PATTERN)) {
     const type = RULES[match.findIndex((group, i) => i > 0 && group !== undefined) - 1]![0]
