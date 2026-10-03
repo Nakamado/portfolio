@@ -35,7 +35,7 @@ describe('HeroSection', () => {
 
   it('zeigt die Kerntechnologien unter dem Einleitungssatz', async () => {
     const wrapper = await mountSuspended(HeroSection, { route: '/' })
-    expect(wrapper.get('.hero__stack').text()).toBe('Vue · Nuxt · TypeScript')
+    expect(wrapper.get('ul.hero__stack').findAll('li').map((li) => li.text())).toEqual(['Vue', 'Nuxt', 'TypeScript'])
   })
 
   it('verlinkt den englischen Lebenslauf', async () => {

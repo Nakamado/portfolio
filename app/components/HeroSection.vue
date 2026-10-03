@@ -11,7 +11,9 @@ const cvHref = computed(() => (lang.value === 'de' ? '/cv/Lebenslauf-Dustin-Clev
     <div class="hero__main">
       <h1 id="hero-title" class="hero__title" tabindex="-1">{{ t.hero.title }}</h1>
       <p class="hero__lead">{{ t.hero.statement }}</p>
-      <p class="hero__stack">{{ t.hero.stack.join(' · ') }}</p>
+      <ul class="hero__stack">
+        <li v-for="tech in t.hero.stack" :key="tech" class="hero__stack-item">{{ tech }}</li>
+      </ul>
       <p class="hero__status">{{ t.hero.status }}</p>
       <div class="hero__actions">
         <a class="button" href="#contact" @click="focusSection">{{ t.hero.ctaContact }}</a>
@@ -170,12 +172,21 @@ $text-halo: 0 0 1.125rem $text-halo-color; // Hof in der Hintergrundfarbe um den
   }
 
   &__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 $space-2;
     margin-top: $space-3;
     margin-bottom: $space-3;
     font-size: $font-sm;
     font-weight: $weight-bold;
     letter-spacing: $tracking-caps;
     text-transform: uppercase;
+  }
+
+  // Der Punkt zwischen den Einträgen ist Gestaltung und wird nicht vorgelesen
+  &__stack-item + &__stack-item::before {
+    content: '·' / '';
+    margin-right: $space-2;
   }
 
   &__status {
