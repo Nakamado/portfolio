@@ -178,7 +178,7 @@ describe('Bausteine der Pattern-Library', () => {
 
   it('CodeBlock färbt einen aufgeklappten Block sofort', async () => {
     const wrapper = await mountSuspended(CodeBlock, { props: { code: '<a href="x">y</a>', file: 'f', summary: 's', open: true } })
-    expect(wrapper.findAll('.code__token--tag').map((el) => el.text())).toEqual(['<a', '</a'])
+    expect(wrapper.findAll('.code__token--tag').map((el) => el.text())).toEqual(['<a', '>', '</a', '>'])
     expect(wrapper.findAll('.code__token--string').map((el) => el.text())).toEqual(['"x"'])
   })
 
