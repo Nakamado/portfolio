@@ -10,7 +10,8 @@ export interface Job {
   stack?: string[]
 }
 export interface Edu { period: string; title: string; org: string; note?: string }
-export interface Project { title: string; type: string; text: string[]; stack?: string[] }
+export interface ProjectLink { label: string; href: string }
+export interface Project { title: string; type: string; text: string[]; stack?: string[]; links?: ProjectLink[] }
 export interface SkillGroup { title: string; items: string[] }
 
 export interface Content {
@@ -242,7 +243,8 @@ export const content: Record<Lang, Content> = {
             'Konzeption und Entwicklung meines persönlichen Portfolios mit Nuxt, Vue und TypeScript. Die Website wurde mit Vitest automatisiert getestet und erreicht eine Testabdeckung von 100 %.',
             'Lighthouse (Stand Oktober 2026): 100 Punkte in Performance, Barrierefreiheit, Best Practices und SEO – am Desktop und auf Mobilgeräten.'
           ],
-          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest'],
+          links: [{ label: 'Quellcode auf GitHub', href: 'https://github.com/Nakamado/portfolio' }, { label: 'Pattern-Library ansehen', href: '/pattern-library' }]
         },
         {
           title: 'Kaufland e-commerce: PDP & Product Reviews',
@@ -550,7 +552,8 @@ export const content: Record<Lang, Content> = {
             'Design and development of my personal portfolio with Nuxt, Vue and TypeScript. The website is tested automatically with Vitest and reaches 100% test coverage.',
             'Lighthouse (as of October 2026): 100 points for performance, accessibility, best practices and SEO – on desktop and on mobile.'
           ],
-          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest'],
+          links: [{ label: 'Source code on GitHub', href: 'https://github.com/Nakamado/portfolio' }, { label: 'View the pattern library', href: '/en/pattern-library' }]
         },
         {
           title: 'Kaufland e-commerce: PDP & product reviews',

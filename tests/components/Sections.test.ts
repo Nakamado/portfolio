@@ -50,6 +50,11 @@ describe.each([
     expect(wrapper.get('.section__intro').text()).toBe(t.work.intro)
     expect(wrapper.findAll('.projects__item')).toHaveLength(t.work.projects.length)
     expect(wrapper.findAll('.projects__text')).toHaveLength(t.work.projects.reduce((n, p) => n + p.text.length, 0))
+    const links = wrapper.get('.projects__links').findAll('a')
+    expect(links.map((a) => a.attributes('href'))).toEqual(['https://github.com/Nakamado/portfolio', lang === 'de' ? '/pattern-library' : '/en/pattern-library'])
+    expect(links[0]!.attributes('target')).toBe('_blank')
+    expect(links[1]!.attributes('target')).toBeUndefined()
+    expect(wrapper.findAll('.projects__links')).toHaveLength(1)
     expect(wrapper.findAll('.projects__item')[0]!.findAll('.chips .drag-chip').map((c) => c.text())).toEqual(t.work.projects[0]!.stack)
   })
 

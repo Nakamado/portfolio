@@ -13,6 +13,16 @@ const { t } = useLang()
         <ul v-if="project.stack?.length" class="chips">
           <DragChip v-for="tech in project.stack" :key="tech">{{ tech }}</DragChip>
         </ul>
+        <ul v-if="project.links?.length" class="projects__links">
+          <li v-for="link in project.links" :key="link.href">
+            <a v-if="link.href.startsWith('http')" class="text-link" :href="link.href" rel="noopener" target="_blank">
+              <span class="text-link__label">{{ link.label }}</span>
+            </a>
+            <NuxtLink v-else class="text-link" :to="link.href">
+              <span class="text-link__label">{{ link.label }}</span>
+            </NuxtLink>
+          </li>
+        </ul>
       </li>
     </ul>
   </BaseSection>
@@ -43,6 +53,13 @@ $projects-title-font-size: 1.3rem;
   &__title {
     margin-bottom: $projects-title-margin-bottom;
     font-size: $projects-title-font-size;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-1 $space-5;
+    margin-top: $space-4;
   }
 
   &__text + &__text {
