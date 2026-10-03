@@ -49,6 +49,8 @@ describe.each([
     const wrapper = await mountSuspended(WorkSection, { route })
     expect(wrapper.get('.section__intro').text()).toBe(t.work.intro)
     expect(wrapper.findAll('.projects__item')).toHaveLength(t.work.projects.length)
+    expect(wrapper.findAll('.projects__text')).toHaveLength(t.work.projects.reduce((n, p) => n + p.text.length, 0))
+    expect(wrapper.findAll('.projects__stack')[0]!.text()).toBe(t.work.projects[0]!.stack!.join(' · '))
   })
 
   it('SiteFooter verlinkt Impressum, Datenschutz und Pattern-Library in der aktuellen Sprache', async () => {

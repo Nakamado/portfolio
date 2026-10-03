@@ -10,7 +10,7 @@ export interface Job {
   stack?: string[]
 }
 export interface Edu { period: string; title: string; org: string; note?: string }
-export interface Project { title: string; type: string; text: string }
+export interface Project { title: string; type: string; text: string[]; stack?: string[] }
 export interface SkillGroup { title: string; items: string[] }
 
 export interface Content {
@@ -21,6 +21,7 @@ export interface Content {
     title: string
     role: string
     statement: string
+    stack: string[]
     status: string
     ctaContact: string
     ctaCv: string
@@ -102,17 +103,18 @@ export const content: Record<Lang, Content> = {
     hero: {
       title: 'Ich bin Dustin Clever, Frontend-Entwickler',
       role: 'Frontend-Entwickler',
-      statement: 'Ich komme aus dem Design und baue Oberflächen mit Vue, Nuxt und TypeScript.',
-      status: 'Offen für eine neue Stelle als Frontend-Entwickler.',
+      statement: 'Ich verbinde langjährige Frontend-Erfahrung mit meinem Hintergrund in Design und Mediengestaltung.',
+      stack: ['Vue', 'Nuxt', 'TypeScript'],
+      status: 'Aktuell auf der Suche nach einer neuen Position als Frontend-Entwickler.',
       ctaContact: 'Kontakt aufnehmen',
       ctaCv: 'Lebenslauf als PDF',
       imageAlt: 'Porträt von Dustin Clever',
       aside: {
         aboutLabel: 'Über mich',
-        aboutText: 'Sieben Jahre Frontend im Team bei real.digital / Kaufland e-commerce.',
+        aboutText: 'Frontend-Entwickler mit langjähriger Erfahrung im E-Commerce und einem Hintergrund im Design.',
         aboutLink: 'Mehr erfahren',
         workLabel: 'Meine Arbeit',
-        workText: 'Header, Produktseite, Mehrsprachigkeit und A/B-Tests.',
+        workText: 'Von Pattern-Libraries und Produktdetailseiten bis zu Internationalisierung und A/B-Tests.',
         workLink: 'Projekte ansehen',
         connectLabel: 'Vernetzen',
         mail: 'E-Mail'
@@ -121,21 +123,22 @@ export const content: Record<Lang, Content> = {
     about: {
       title: 'Über mich',
       paragraphs: [
-        'Ich habe als Mediengestalter für Digital und Print angefangen: Logos, Flyer, Webseiten, später Elemente für einen E-Commerce-Shop. Aus der Gestaltung heraus bin ich in die Frontend-Entwicklung gewechselt.',
-        'Von 2018 bis 2024 habe ich bei real.digital / Kaufland e-commerce in größeren Entwicklungsteams an einer großen E-Commerce-Plattform mitgearbeitet, unter anderem an der B2C-Pattern-Library, am Header, an Produktdetailseite und Bewertungen, an A/B-Tests und Tracking sowie an der Mehrsprachigkeit unseres Micro-Frontends.',
-        'Seit Anfang 2025 baue ich in einer Auszeit eigene Content-Projekte auf (Gaming und Trading Cards auf Twitch, TikTok und YouTube). Jetzt suche ich wieder eine Stelle als Frontend-Entwickler.'
+        'Meine berufliche Laufbahn hat im Design begonnen. Als ausgebildeter Mediengestalter Digital & Print und Gestaltungstechnischer Assistent habe ich zunächst Logos, Printmedien und Webseiten gestaltet und umgesetzt. Mit der Zeit verlagerte sich mein Schwerpunkt immer stärker in Richtung Webentwicklung – und schließlich vollständig ins Frontend.',
+        'Von 2018 bis 2024 habe ich bei real.digital / Kaufland e-commerce in größeren Entwicklungsteams an einer internationalen E-Commerce-Plattform gearbeitet. Mein Fokus lag dabei auf komponentenbasierter Frontend-Entwicklung mit Vue, Nuxt und TypeScript sowie auf wartbaren und gut testbaren Lösungen.',
+        'Mein gestalterischer Hintergrund begleitet mich dabei bis heute: Ich lege Wert auf ein gutes Zusammenspiel von technischer Umsetzung, UX und Design und arbeite gerne eng mit Design- und UX-Kolleg:innen zusammen. Wichtig sind mir außerdem Themen wie Clean Code, Testbarkeit, Barrierefreiheit und Performance.',
+        'Seit Anfang 2025 nutze ich eine berufliche Auszeit für eigene Content-Projekte rund um Gaming und Trading Cards auf Twitch, TikTok und YouTube. Jetzt möchte ich wieder in die Frontend-Entwicklung einsteigen und meine Erfahrung in ein neues Team einbringen.'
       ],
       strengthsTitle: 'Was ich mitbringe',
       strengths: [
-        { title: 'Gestalterische Ausbildung', text: 'Mediengestalter Digital & Print, Erfahrung mit Adobe Creative Cloud und UX.' },
-        { title: 'Komponentenbasiert arbeiten', text: 'Mitarbeit an einer unternehmensweiten Pattern-Library mit Vuepress und Storybook.' },
-        { title: 'Arbeit im Team', text: 'Scrum mit Sprints, Dailys, Reviews, Retrospektiven und Refinements.' }
+        { title: 'Designverständnis', text: 'Durch meine Ausbildung in Mediengestaltung und meine Erfahrung mit UX verbinde ich technische Umsetzung mit einem Blick für Gestaltung und Nutzererlebnis.' },
+        { title: 'Komponenten & Codequalität', text: 'Mehrjährige Erfahrung mit komponentenbasierter Entwicklung, Pattern-Libraries, TypeScript und automatisierten Tests – mit Fokus auf wartbaren und gut strukturierten Frontend-Code.' },
+        { title: 'Produktentwicklung im Team', text: 'Langjährige Erfahrung in agilen Entwicklungsteams an einer großen internationalen E-Commerce-Plattform und in der Zusammenarbeit mit Entwicklung, Design und UX.' }
       ],
       factsTitle: 'Auf einen Blick',
       facts: [
-        { label: 'Frontend', value: '2018 bis 2024 bei real.digital / Kaufland e-commerce' },
-        { label: 'Technologien', value: 'Vue.js, Nuxt.js, TypeScript, CSS/SCSS' },
-        { label: 'Ausbildung', value: 'Mediengestalter Digital & Print' },
+        { label: 'Frontend', value: 'Seit 2018 mit Schwerpunkt auf professioneller Frontend-Entwicklung' },
+        { label: 'Technologien', value: 'Vue.js, Nuxt.js, TypeScript, JavaScript, CSS/SCSS' },
+        { label: 'Hintergrund', value: 'Mediengestalter Digital & Print & Gestaltungstechnischer Assistent' },
         { label: 'Sprachen', value: 'Deutsch (Muttersprache), Englisch (fließend)' }
       ]
     },
@@ -149,9 +152,9 @@ export const content: Record<Lang, Content> = {
           title: 'Sabbatical & Content Creation',
           org: 'Eigenes Projekt',
           points: [
-            'Konzeption, Aufbau und Umsetzung eigener Content-Projekte',
-            'Aufbau und Betreuung eigener Social-Media-Kanäle (Twitch, TikTok, YouTube)',
-            'Produktion und Veröffentlichung von digitalem Content (Gaming & Trading Cards)',
+            'Konzeption und Umsetzung eigener Content-Projekte',
+            'Aufbau und Betreuung eigener Social-Media-Kanäle auf Twitch, TikTok und YouTube',
+            'Produktion von digitalem Content rund um Gaming und Trading Cards',
             'Planung, Aufnahme, Schnitt und Optimierung von Kurzvideos und Livestreams',
             'Analyse von Reichweiten- und Performance-Kennzahlen zur Optimierung der Inhalte'
           ],
@@ -162,17 +165,19 @@ export const content: Record<Lang, Content> = {
           title: 'Frontend-Entwickler',
           org: 'real.digital / Kaufland e-commerce',
           points: [
-            'Mitarbeit an der internen B2C-Pattern-Library fürs ganze Unternehmen',
-            'Federführende Umsetzung der i18n unseres Micro-Frontends für mehrere Sprachen (CZ, SK, PL, AT) mit Lokalise und Nuxt.js',
+            'Entwicklung und Weiterentwicklung von Frontend-Komponenten mit Vue.js, Nuxt.js und TypeScript',
+            'Mitarbeit an der unternehmensweiten B2C-Pattern-Library und der Migration von VuePress zu Storybook',
+            'Federführende Umsetzung der Internationalisierung eines Micro-Frontends für CZ, SK, PL und AT mit Lokalise und Nuxt.js',
             'Umsetzung des Website-Headers für real.de',
             'Beteiligung am Rebranding von real.de zu kaufland.de',
-            'Umsetzung diverser A/B-Tests mit Optimizely',
-            'Trackings für Optimizely und Google Analytics',
-            'Bearbeiten von B2C-E-Mails im internen CMS mit Twig',
-            'Pflege der Product Detail Page (PDP) und der Product Reviews',
-            'Agiles Arbeiten im Scrum (Sprints, Dailys, Reviews, Retrospektiven, Refinements)'
+            'Konzeption und Umsetzung verschiedener A/B-Tests mit Optimizely',
+            'Implementierung von Tracking für Optimizely und Google Analytics',
+            'Weiterentwicklung und Pflege der Product Detail Page und Product Reviews',
+            'Bearbeitung von B2C-E-Mails im internen CMS mit Twig',
+            'Entwicklung und Pflege automatisierter Tests als fester Bestandteil der Frontend-Entwicklung',
+            'Agile Zusammenarbeit im Scrum-Team'
           ],
-          stack: ['Vue.js', 'CSS/SCSS', 'TypeScript', 'Nuxt.js', 'Vuepress/Storybook', 'Optimizely']
+          stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'CSS/SCSS', 'Storybook', 'VuePress', 'Optimizely']
         },
         {
           period: '08/2017 – 12/2017',
@@ -221,48 +226,59 @@ export const content: Record<Lang, Content> = {
     skills: {
       title: 'Skills',
       groups: [
-        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'BEM', 'Responsive Webentwicklung'] },
-        {
-          title: 'Arbeitsweise',
-          items: ['Pattern-Libraries (Vuepress, Storybook)', 'A/B-Testing (Optimizely)', 'Tracking (Google Analytics)', 'Internationalisierung (Lokalise)', 'Barrierefreiheit', 'Performance', 'Automatisierte Tests', 'Scrum']
-        },
-        { title: 'Design', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Print und Digital'] }
+        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'Responsive Webentwicklung'] },
+        { title: 'Frontend & Produktentwicklung', items: ['Komponentenbasierte Entwicklung', 'Pattern-Libraries / Design Systems', 'Storybook', 'Internationalisierung', 'Automatisierte Tests', 'Barrierefreiheit', 'Performance', 'A/B-Testing', 'Analytics & Tracking'] },
+        { title: 'Design & Zusammenarbeit', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Scrum', 'Zusammenarbeit mit Design & UX', 'Print & Digital'] }
       ]
     },
     work: {
       title: 'Projekte',
-      intro: 'Die Arbeit bei Kaufland entstand im Team und ist nicht öffentlich einsehbar. Eigene Projekte kommen hier nach und nach dazu.',
+      intro: 'Ein Großteil meiner bisherigen Frontend-Arbeit entstand gemeinsam mit anderen Entwickler:innen an der E-Commerce-Plattform von real.digital / Kaufland. Die folgenden Beispiele zeigen einige Bereiche, an denen ich konkret mitgearbeitet habe. Eigene Projekte ergänze ich hier nach und nach.',
       projects: [
         {
-          title: 'Kaufland e-commerce: Header, PDP und Bewertungen',
+          title: 'Kaufland e-commerce: Header, PDP & Product Reviews',
           type: 'Berufliche Arbeit im Team',
-          text: 'Umsetzung des Website-Headers für real.de sowie Pflege der Produktdetailseite und der Product Reviews, dazu A/B-Tests und Tracking.'
+          text: [
+            'Umsetzung des Website-Headers für real.de sowie Weiterentwicklung und Pflege der Produktdetailseite und Product Reviews. Dazu gehörten außerdem die Umsetzung verschiedener A/B-Tests und das zugehörige Tracking.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'CSS/SCSS', 'Optimizely']
         },
         {
-          title: 'Pattern-Library für alle Teams',
+          title: 'B2C Pattern-Library',
           type: 'Berufliche Arbeit im Team',
-          text: 'Komponenten selbst erstellt, bestehende in die B2C-Pattern-Library übertragen, Bugs behoben und Features ergänzt, in enger Zusammenarbeit mit den Design- und UX-Kolleg:innen. Dazu kam die Dokumentation mit Verwendung, Props und Parametern. Beim Wechsel von Vuepress auf Storybook war ich einer der Hauptverantwortlichen.'
+          text: [
+            'Entwicklung neuer Komponenten sowie Übertragung bestehender Komponenten in die unternehmensweite B2C-Pattern-Library. Dazu gehörten die Behebung von Bugs, die Weiterentwicklung bestehender Features und die Dokumentation von Verwendung, Props und Parametern.',
+            'Die Arbeit entstand in enger Zusammenarbeit mit Design und UX. Bei der Migration der Pattern-Library von VuePress zu Storybook gehörte ich zu den Hauptverantwortlichen.'
+          ],
+          stack: ['Vue.js', 'TypeScript', 'VuePress', 'Storybook', 'CSS/SCSS']
         },
         {
-          title: 'Mehrsprachigkeit des Micro-Frontends',
+          title: 'Internationalisierung eines Micro-Frontends',
           type: 'Berufliche Arbeit im Team',
-          text: 'Federführende Umsetzung der i18n für CZ, SK, PL und AT mit Lokalise und Nuxt.js.'
+          text: [
+            'Federführende Umsetzung der Internationalisierung eines Micro-Frontends für die Expansion nach Tschechien, in die Slowakei, nach Polen und Österreich. Dazu gehörten die technische Integration und Verwaltung der Übersetzungen mit Lokalise und Nuxt.js.'
+          ],
+          stack: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Lokalise', 'i18n']
         },
         {
           title: 'Diese Portfolio-Website',
           type: 'Privatprojekt',
-          text: 'Nuxt, Vue und TypeScript, getestet mit Vitest bei 100 % Testabdeckung. Lighthouse (Stand Oktober 2026): Performance 100 am Desktop und 99 mobil, dazu jeweils 100 bei Barrierefreiheit, Best Practices und SEO.'
+          text: [
+            'Konzeption und Entwicklung meines persönlichen Portfolios mit Nuxt, Vue und TypeScript. Die Website wurde mit Vitest automatisiert getestet und erreicht eine Testabdeckung von 100 %.',
+            'Lighthouse (Stand Oktober 2026): 100 Punkte für Performance am Desktop und 99 auf Mobilgeräten sowie jeweils 100 Punkte für Barrierefreiheit, Best Practices und SEO.'
+          ],
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
         }
       ]
     },
     contact: {
       title: 'Kontakt',
-      text: 'Du suchst Verstärkung im Frontend? Schreib mir kurz, worum es geht.',
+      text: 'Du suchst Verstärkung im Frontend? Schreib mir gerne kurz, worum es geht.',
       mail: 'E-Mail schreiben',
       linkedin: 'LinkedIn',
       github: 'GitHub',
-      cvDe: 'Lebenslauf (Deutsch, PDF)',
-      cvEn: 'CV (Englisch, PDF)'
+      cvDe: 'Lebenslauf Deutsch',
+      cvEn: 'CV English'
     },
     footer: { built: 'Gebaut mit Nuxt und Vue.', imprint: 'Impressum', privacy: 'Datenschutz', patterns: 'Pattern-Library' },
     patterns: patternsContent.de,
@@ -371,17 +387,18 @@ export const content: Record<Lang, Content> = {
     hero: {
       title: 'I’m Dustin Clever, a Frontend Developer',
       role: 'Frontend Developer',
-      statement: 'I come from design and build interfaces with Vue, Nuxt and TypeScript.',
-      status: 'Open to a new role as a Frontend Developer.',
+      statement: 'I combine years of frontend experience with my background in design and media design.',
+      stack: ['Vue', 'Nuxt', 'TypeScript'],
+      status: 'Currently looking for a new position as a Frontend Developer.',
       ctaContact: 'Get in touch',
       ctaCv: 'Download CV (PDF)',
       imageAlt: 'Portrait of Dustin Clever',
       aside: {
         aboutLabel: 'About me',
-        aboutText: 'Seven years of frontend work in a team at real.digital / Kaufland e-commerce.',
+        aboutText: 'Frontend developer with years of e-commerce experience and a background in design.',
         aboutLink: 'Learn more',
         workLabel: 'My work',
-        workText: 'Header, product page, internationalization and A/B tests.',
+        workText: 'From pattern libraries and product detail pages to internationalization and A/B tests.',
         workLink: 'Browse projects',
         connectLabel: 'Connect',
         mail: 'Email'
@@ -390,21 +407,22 @@ export const content: Record<Lang, Content> = {
     about: {
       title: 'About',
       paragraphs: [
-        'I started out as a media designer for digital and print: logos, flyers, websites, later elements for an e-commerce shop. From design I moved into frontend development.',
-        'From 2018 to 2024 I worked at real.digital / Kaufland e-commerce, as part of larger development teams on a large e-commerce platform. My work included the company-wide B2C pattern library, the header, the product detail page and reviews, A/B tests and tracking, and internationalization of our micro frontend.',
-        'Since early 2025 I have been on a sabbatical, building my own content projects (gaming and trading cards on Twitch, TikTok and YouTube). Now I am looking for a new position as a Frontend Developer.'
+        'My career began in design. Trained as a media designer for digital and print and as a design technical assistant, I first designed and built logos, print media and websites. Over time my focus shifted more and more towards web development – and eventually entirely to the frontend.',
+        'From 2018 to 2024 I worked at real.digital / Kaufland e-commerce, in larger development teams on an international e-commerce platform. My focus was component-based frontend development with Vue, Nuxt and TypeScript, and on maintainable, well-testable solutions.',
+        'My design background stays with me to this day: I value a good interplay of technical implementation, UX and design, and I enjoy working closely with design and UX colleagues. Topics like clean code, testability, accessibility and performance matter to me as well.',
+        'Since early 2025 I have been using a career break for my own content projects around gaming and trading cards on Twitch, TikTok and YouTube. Now I want to get back into frontend development and bring my experience to a new team.'
       ],
       strengthsTitle: 'What I bring',
       strengths: [
-        { title: 'Design training', text: 'Trained media designer (digital and print), experienced with Adobe Creative Cloud and UX.' },
-        { title: 'Component-based work', text: 'Contributed to a company-wide pattern library using Vuepress and Storybook.' },
-        { title: 'Teamwork', text: 'Scrum with sprints, dailies, reviews, retrospectives and refinements.' }
+        { title: 'Design sense', text: 'Thanks to my training in media design and my experience with UX, I combine technical implementation with an eye for design and user experience.' },
+        { title: 'Components & code quality', text: 'Several years of experience with component-based development, pattern libraries, TypeScript and automated testing – with a focus on maintainable, well-structured frontend code.' },
+        { title: 'Product development in a team', text: 'Long experience in agile development teams on a large international e-commerce platform and in working with development, design and UX.' }
       ],
       factsTitle: 'At a glance',
       facts: [
-        { label: 'Frontend', value: '2018 to 2024 at real.digital / Kaufland e-commerce' },
-        { label: 'Technologies', value: 'Vue.js, Nuxt.js, TypeScript, CSS/SCSS' },
-        { label: 'Training', value: 'Media designer (digital and print)' },
+        { label: 'Frontend', value: 'Since 2018, with a focus on professional frontend development' },
+        { label: 'Technologies', value: 'Vue.js, Nuxt.js, TypeScript, JavaScript, CSS/SCSS' },
+        { label: 'Background', value: 'Media designer (digital and print) & design technical assistant' },
         { label: 'Languages', value: 'German (native), English (fluent)' }
       ]
     },
@@ -418,11 +436,11 @@ export const content: Record<Lang, Content> = {
           title: 'Sabbatical & Content Creation',
           org: 'Personal project',
           points: [
-            'Conceptualized and developed personal content creation projects',
-            'Built and managed social media channels (Twitch, TikTok, YouTube)',
-            'Produced and published digital content on gaming and trading cards',
+            'Conceptualized and developed personal content projects',
+            'Built and managed my own social media channels on Twitch, TikTok and YouTube',
+            'Produced digital content around gaming and trading cards',
             'Planned, recorded, edited and optimized short-form videos and livestreams',
-            'Analyzed performance metrics to improve content quality and reach'
+            'Analyzed reach and performance metrics to improve content'
           ],
           stack: ['OBS Studio', 'Adobe Photoshop', 'Premiere Pro', 'CapCut', 'ElevenLabs']
         },
@@ -431,17 +449,19 @@ export const content: Record<Lang, Content> = {
           title: 'Frontend Developer',
           org: 'real.digital / Kaufland e-commerce',
           points: [
-            'Contributed to the internal company-wide B2C pattern library',
-            'Led implementation of i18n for our micro frontend supporting multiple languages (CZ, SK, PL, AT) using Lokalise and Nuxt.js',
+            'Developed and extended frontend components with Vue.js, Nuxt.js and TypeScript',
+            'Contributed to the company-wide B2C pattern library and the migration from VuePress to Storybook',
+            'Led the internationalization of a micro frontend for CZ, SK, PL and AT using Lokalise and Nuxt.js',
             'Developed the website header for real.de',
             'Contributed to the rebranding from real.de to kaufland.de',
-            'Built various A/B tests using Optimizely',
-            'Integrated tracking for Optimizely and Google Analytics',
-            'Edited B2C emails via internal CMS using Twig',
-            'Maintained the Product Detail Page (PDP) and product reviews',
-            'Worked in an agile Scrum environment (sprints, dailies, reviews, retrospectives, refinements)'
+            'Designed and built various A/B tests using Optimizely',
+            'Implemented tracking for Optimizely and Google Analytics',
+            'Extended and maintained the Product Detail Page and product reviews',
+            'Edited B2C emails in the internal CMS using Twig',
+            'Developed and maintained automated tests as a fixed part of frontend development',
+            'Agile collaboration in a Scrum team'
           ],
-          stack: ['Vue.js', 'CSS/SCSS', 'TypeScript', 'Nuxt.js', 'Vuepress/Storybook', 'Optimizely']
+          stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'CSS/SCSS', 'Storybook', 'VuePress', 'Optimizely']
         },
         {
           period: '08/2017 – 12/2017',
@@ -490,43 +510,54 @@ export const content: Record<Lang, Content> = {
     skills: {
       title: 'Skills',
       groups: [
-        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'BEM', 'Responsive web development'] },
-        {
-          title: 'Ways of working',
-          items: ['Pattern libraries (Vuepress, Storybook)', 'A/B testing (Optimizely)', 'Tracking (Google Analytics)', 'Internationalization (Lokalise)', 'Accessibility', 'Performance', 'Automated testing', 'Scrum']
-        },
-        { title: 'Design', items: ['UI/UX', 'Adobe Creative Cloud', 'Photoshop', 'Print and digital'] }
+        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'Responsive web development'] },
+        { title: 'Frontend & product development', items: ['Component-based development', 'Pattern libraries / design systems', 'Storybook', 'Internationalization', 'Automated testing', 'Accessibility', 'Performance', 'A/B testing', 'Analytics & tracking'] },
+        { title: 'Design & collaboration', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Scrum', 'Working with design & UX', 'Print & digital'] }
       ]
     },
     work: {
       title: 'Projects',
-      intro: 'My work at Kaufland was done in a team and is not publicly viewable. Personal projects will be added here over time.',
+      intro: 'Most of my frontend work so far was done together with other developers on the e-commerce platform of real.digital / Kaufland. The following examples show some areas I worked on in concrete terms. I will add personal projects here over time.',
       projects: [
         {
-          title: 'Kaufland e-commerce: header, PDP and reviews',
+          title: 'Kaufland e-commerce: header, PDP & product reviews',
           type: 'Professional work in a team',
-          text: 'Built the website header for real.de and maintained the product detail page and product reviews, plus A/B tests and tracking.'
+          text: [
+            'Implemented the website header for real.de and extended and maintained the product detail page and product reviews. This also included various A/B tests and the related tracking.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'CSS/SCSS', 'Optimizely']
         },
         {
-          title: 'Pattern library for all teams',
+          title: 'B2C pattern library',
           type: 'Professional work in a team',
-          text: 'Built components and moved existing ones into the B2C pattern library, fixed bugs and added features, working closely with the design and UX colleagues. I also wrote the documentation covering usage, props and parameters. I was one of the main people responsible for the switch from Vuepress to Storybook.'
+          text: [
+            'Developed new components and moved existing ones into the company-wide B2C pattern library. This included fixing bugs, extending existing features and documenting usage, props and parameters.',
+            'The work was done in close collaboration with design and UX. During the migration of the pattern library from VuePress to Storybook I was one of the main people responsible.'
+          ],
+          stack: ['Vue.js', 'TypeScript', 'VuePress', 'Storybook', 'CSS/SCSS']
         },
         {
-          title: 'Multilingual micro frontend',
+          title: 'Internationalization of a micro frontend',
           type: 'Professional work in a team',
-          text: 'Led the implementation of i18n for CZ, SK, PL and AT using Lokalise and Nuxt.js.'
+          text: [
+            'Led the internationalization of a micro frontend for the expansion to the Czech Republic, Slovakia, Poland and Austria. This included the technical integration and management of translations with Lokalise and Nuxt.js.'
+          ],
+          stack: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Lokalise', 'i18n']
         },
         {
           title: 'This portfolio website',
           type: 'Personal project',
-          text: 'Nuxt, Vue and TypeScript, tested with Vitest at 100% coverage. Lighthouse (as of October 2026): performance 100 on desktop and 99 on mobile, plus 100 each for accessibility, best practices and SEO.'
+          text: [
+            'Design and development of my personal portfolio with Nuxt, Vue and TypeScript. The website is tested automatically with Vitest and reaches 100% test coverage.',
+            'Lighthouse (as of October 2026): 100 points for performance on desktop and 99 on mobile, plus 100 points each for accessibility, best practices and SEO.'
+          ],
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
         }
       ]
     },
     contact: {
       title: 'Contact',
-      text: 'Looking for frontend support? Send me a short note about what you need.',
+      text: 'Looking for frontend support? Feel free to send me a short note about what you need.',
       mail: 'Send an email',
       linkedin: 'LinkedIn',
       github: 'GitHub',

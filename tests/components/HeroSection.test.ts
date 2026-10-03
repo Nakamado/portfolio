@@ -33,6 +33,11 @@ describe('HeroSection', () => {
     expect(without.find('a[href*="github"]').exists()).toBe(false)
   })
 
+  it('zeigt die Kerntechnologien unter dem Einleitungssatz', async () => {
+    const wrapper = await mountSuspended(HeroSection, { route: '/' })
+    expect(wrapper.get('.hero__stack').text()).toBe('Vue · Nuxt · TypeScript')
+  })
+
   it('verlinkt den englischen Lebenslauf', async () => {
     const wrapper = await mountSuspended(HeroSection, { route: '/en' })
     expect(wrapper.get('a[download]').attributes('href')).toBe('/cv/CV-Dustin-Clever.pdf')
