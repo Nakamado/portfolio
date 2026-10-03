@@ -226,8 +226,8 @@ export const content: Record<Lang, Content> = {
     skills: {
       title: 'Skills',
       groups: [
-        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'Responsive Webentwicklung'] },
-        { title: 'Frontend & Produktentwicklung', items: ['Komponentenbasierte Entwicklung', 'Pattern-Libraries / Design Systems', 'Storybook', 'Internationalisierung', 'Automatisierte Tests', 'Barrierefreiheit', 'Performance', 'A/B-Testing', 'Analytics & Tracking'] },
+        { title: 'Frontend-Technologien', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS'] },
+        { title: 'Frontend-Entwicklung', items: ['Komponentenbasierte Entwicklung', 'Pattern-Libraries / Design Systems', 'Storybook', 'Responsive Webentwicklung', 'Internationalisierung', 'Automatisierte Tests', 'Barrierefreiheit', 'Performance', 'A/B-Testing', 'Analytics & Tracking'] },
         { title: 'Design & Zusammenarbeit', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Scrum', 'Zusammenarbeit mit Design & UX', 'Print & Digital'] }
       ]
     },
@@ -236,10 +236,19 @@ export const content: Record<Lang, Content> = {
       intro: 'Ein Großteil meiner bisherigen Frontend-Arbeit entstand gemeinsam mit anderen Entwickler:innen an der E-Commerce-Plattform von real.digital / Kaufland. Die folgenden Beispiele zeigen einige Bereiche, an denen ich konkret mitgearbeitet habe. Eigene Projekte ergänze ich hier nach und nach.',
       projects: [
         {
-          title: 'Kaufland e-commerce: Header, PDP & Product Reviews',
+          title: 'Diese Portfolio-Website',
+          type: 'Privatprojekt',
+          text: [
+            'Konzeption und Entwicklung meines persönlichen Portfolios mit Nuxt, Vue und TypeScript. Die Website wurde mit Vitest automatisiert getestet und erreicht eine Testabdeckung von 100 %.',
+            'Lighthouse (Stand Oktober 2026): 100 Punkte in Performance, Barrierefreiheit, Best Practices und SEO – am Desktop und auf Mobilgeräten.'
+          ],
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+        },
+        {
+          title: 'Kaufland e-commerce: PDP & Product Reviews',
           type: 'Berufliche Arbeit im Team',
           text: [
-            'Umsetzung des Website-Headers für real.de sowie Weiterentwicklung und Pflege der Produktdetailseite und Product Reviews. Dazu gehörten außerdem die Umsetzung verschiedener A/B-Tests und das zugehörige Tracking.'
+            'Weiterentwicklung und Pflege der Produktdetailseite und der Product Reviews. Dazu gehörten außerdem die Umsetzung verschiedener A/B-Tests und das zugehörige Tracking.'
           ],
           stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'CSS/SCSS', 'Optimizely']
         },
@@ -261,13 +270,28 @@ export const content: Record<Lang, Content> = {
           stack: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Lokalise', 'i18n']
         },
         {
-          title: 'Diese Portfolio-Website',
-          type: 'Privatprojekt',
+          title: 'B2C-E-Mails & internes CMS',
+          type: 'Berufliche Arbeit im Team',
           text: [
-            'Konzeption und Entwicklung meines persönlichen Portfolios mit Nuxt, Vue und TypeScript. Die Website wurde mit Vitest automatisiert getestet und erreicht eine Testabdeckung von 100 %.',
-            'Lighthouse (Stand Oktober 2026): 100 Punkte für Performance am Desktop und 99 auf Mobilgeräten sowie jeweils 100 Punkte für Barrierefreiheit, Best Practices und SEO.'
+            'Erstellung und Weiterentwicklung von B2C-E-Mail-Templates im internen CMS mit Twig. Neben der Anpassung der Templates im Zuge des Rebrandings von real.de zu Kaufland e-commerce gehörte auch die Internationalisierung für die Expansion nach Tschechien, in die Slowakei, nach Polen und Österreich zu meinen Aufgaben.'
           ],
-          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+          stack: ['Twig', 'HTML', 'CSS', 'Internationalisierung']
+        },
+        {
+          title: 'Rebranding real.de → kaufland.de',
+          type: 'Berufliche Arbeit im Team',
+          text: [
+            'Beteiligung am Rebranding von real.de zu kaufland.de und der damit verbundenen Anpassung bestehender Frontend-Komponenten und Oberflächen an den neuen Markenauftritt.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'CSS/SCSS']
+        },
+        {
+          title: 'Website-Header für real.de',
+          type: 'Berufliche Arbeit im Team',
+          text: [
+            'Umsetzung des Website-Headers für real.de.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'CSS/SCSS']
         }
       ]
     },
@@ -510,8 +534,8 @@ export const content: Record<Lang, Content> = {
     skills: {
       title: 'Skills',
       groups: [
-        { title: 'Frontend', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS', 'Responsive web development'] },
-        { title: 'Frontend & product development', items: ['Component-based development', 'Pattern libraries / design systems', 'Storybook', 'Internationalization', 'Automated testing', 'Accessibility', 'Performance', 'A/B testing', 'Analytics & tracking'] },
+        { title: 'Frontend technologies', items: ['Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS / SCSS'] },
+        { title: 'Frontend development', items: ['Component-based development', 'Pattern libraries / design systems', 'Storybook', 'Responsive web development', 'Internationalization', 'Automated testing', 'Accessibility', 'Performance', 'A/B testing', 'Analytics & tracking'] },
         { title: 'Design & collaboration', items: ['UX', 'Adobe Creative Cloud', 'Photoshop', 'Scrum', 'Working with design & UX', 'Print & digital'] }
       ]
     },
@@ -520,10 +544,19 @@ export const content: Record<Lang, Content> = {
       intro: 'Most of my frontend work so far was done together with other developers on the e-commerce platform of real.digital / Kaufland. The following examples show some areas I worked on in concrete terms. I will add personal projects here over time.',
       projects: [
         {
-          title: 'Kaufland e-commerce: header, PDP & product reviews',
+          title: 'This portfolio website',
+          type: 'Personal project',
+          text: [
+            'Design and development of my personal portfolio with Nuxt, Vue and TypeScript. The website is tested automatically with Vitest and reaches 100% test coverage.',
+            'Lighthouse (as of October 2026): 100 points for performance, accessibility, best practices and SEO – on desktop and on mobile.'
+          ],
+          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+        },
+        {
+          title: 'Kaufland e-commerce: PDP & product reviews',
           type: 'Professional work in a team',
           text: [
-            'Implemented the website header for real.de and extended and maintained the product detail page and product reviews. This also included various A/B tests and the related tracking.'
+            'Extended and maintained the product detail page and product reviews. This also included various A/B tests and the related tracking.'
           ],
           stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'CSS/SCSS', 'Optimizely']
         },
@@ -545,13 +578,28 @@ export const content: Record<Lang, Content> = {
           stack: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Lokalise', 'i18n']
         },
         {
-          title: 'This portfolio website',
-          type: 'Personal project',
+          title: 'B2C emails & internal CMS',
+          type: 'Professional work in a team',
           text: [
-            'Design and development of my personal portfolio with Nuxt, Vue and TypeScript. The website is tested automatically with Vitest and reaches 100% test coverage.',
-            'Lighthouse (as of October 2026): 100 points for performance on desktop and 99 on mobile, plus 100 points each for accessibility, best practices and SEO.'
+            'Created and extended B2C email templates in the internal CMS using Twig. Besides adapting the templates for the rebranding from real.de to Kaufland e-commerce, my tasks also included internationalization for the expansion to the Czech Republic, Slovakia, Poland and Austria.'
           ],
-          stack: ['Nuxt', 'Vue', 'TypeScript', 'Vitest']
+          stack: ['Twig', 'HTML', 'CSS', 'Internationalization']
+        },
+        {
+          title: 'Rebranding real.de → kaufland.de',
+          type: 'Professional work in a team',
+          text: [
+            'Contributed to the rebranding from real.de to kaufland.de, including adapting existing frontend components and interfaces to the new brand identity.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'CSS/SCSS']
+        },
+        {
+          title: 'Website header for real.de',
+          type: 'Professional work in a team',
+          text: [
+            'Implemented the website header for real.de.'
+          ],
+          stack: ['Vue.js', 'Nuxt.js', 'CSS/SCSS']
         }
       ]
     },

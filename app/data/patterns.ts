@@ -267,7 +267,7 @@ const de: PatternsContent = {
         id: 'drag-chip',
         title: 'Drag-Chip',
         description:
-          'Der kleine Tag bei den Technologien in der Erfahrung. Er lässt sich mit Maus oder Finger greifen, verschieben und springt beim Loslassen federnd zurück. Rein dekorativ: Inhalt bleibt ein normales Listenelement. Auf der 404-Seite steuert eine Physik seine Position.',
+          'Der kleine Tag bei den Technologien in Erfahrung und Projekten. Er lässt sich mit Maus oder Finger greifen, verschieben und springt beim Loslassen federnd zurück. Rein dekorativ: Inhalt bleibt ein normales Listenelement. Auf der 404-Seite steuert eine Physik seine Position.',
         api: [
           { name: 'Slot (default)', description: 'Die Beschriftung des Tags, zum Beispiel „Vue“.' },
           { name: 'Props', description: 'Alle optional. offset: Position {x, y}, die der Aufrufer bestimmt (dann kein Zurückfedern). still: nicht greifbar.' },
@@ -278,7 +278,7 @@ const de: PatternsContent = {
           'Bei „reduzierte Bewegung“ springt der Tag ohne Federn zurück.',
           'touch-action: none verhindert, dass beim Ziehen am Tag die Seite scrollt.'
         ],
-        usageLabel: 'Verwendung in der Erfahrung',
+        usageLabel: 'Verwendung in Erfahrung und Projekten',
         usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
       },
       {
@@ -507,7 +507,7 @@ const en: PatternsContent = {
         id: 'drag-chip',
         title: 'Drag chip',
         description:
-          'The small tag for the technologies in the experience section. You can grab it with mouse or finger, move it, and it springs back when released. Purely decorative: the content stays a normal list item. On the 404 page a physics simulation controls its position.',
+          'The small tag for the technologies in the experience and projects sections. You can grab it with mouse or finger, move it, and it springs back when released. Purely decorative: the content stays a normal list item. On the 404 page a physics simulation controls its position.',
         api: [
           { name: 'Slot (default)', description: 'The label of the tag, for example “Vue”.' },
           { name: 'Props', description: 'All optional. offset: a position {x, y} set by the caller (no springing back then). still: cannot be grabbed.' },
@@ -518,7 +518,7 @@ const en: PatternsContent = {
           'With “reduced motion” the tag jumps back without springing.',
           'touch-action: none stops the page from scrolling while you drag the tag.'
         ],
-        usageLabel: 'Usage in the experience section',
+        usageLabel: 'Usage in the experience and projects sections',
         usage: '<ul class="chips">\n  <DragChip>Vue</DragChip>\n  <DragChip>Nuxt</DragChip>\n</ul>'
       },
       {

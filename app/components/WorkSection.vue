@@ -10,7 +10,9 @@ const { t } = useLang()
         <p class="projects__type">{{ project.type }}</p>
         <h3 class="projects__title">{{ project.title }}</h3>
         <p v-for="paragraph in project.text" :key="paragraph" class="projects__text">{{ paragraph }}</p>
-        <p v-if="project.stack?.length" class="projects__stack">{{ project.stack.join(' · ') }}</p>
+        <ul v-if="project.stack?.length" class="chips">
+          <DragChip v-for="tech in project.stack" :key="tech">{{ tech }}</DragChip>
+        </ul>
       </li>
     </ul>
   </BaseSection>
@@ -22,7 +24,6 @@ $card-accent-width: 0.1875rem;
 $projects-type-margin-bottom: 0.4rem;
 $projects-title-margin-bottom: 0.6rem;
 $projects-title-font-size: 1.3rem;
-$projects-stack-margin-top: 0.8rem;
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax($card-min-width, 1fr));
@@ -46,12 +47,6 @@ $projects-stack-margin-top: 0.8rem;
 
   &__text + &__text {
     margin-top: $space-3;
-  }
-
-  &__stack {
-    margin-top: $projects-stack-margin-top;
-    color: var(--muted);
-    font-size: $font-sm;
   }
 }
 </style>

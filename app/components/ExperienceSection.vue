@@ -44,7 +44,6 @@ $experience-subtitle-spaced-margin-top: 4.5rem;
 $timeline-item-padding: 1.75rem;
 $timeline-org-margin: 0.2rem;
 $timeline-point-padding-left: 1.1rem;
-$chips-gap: 0.4rem;
 .experience {
   &__subtitle {
     margin-bottom: $space-4;
@@ -105,10 +104,4 @@ $chips-gap: 0.4rem;
   }
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $chips-gap;
-  margin-top: $space-3;
-}
 </style>

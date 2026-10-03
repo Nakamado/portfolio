@@ -244,5 +244,14 @@ main[tabindex='-1']:focus {
   }
 }
 
+// ---- Block: chips (Liste mit Drag-Chips, z. B. die Technologien in Erfahrung und Projekten)
+$chips-gap: 0.4rem;
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $chips-gap;
+  margin-top: $space-3;
+}
+
 // Druckansicht (am Ende, damit sie die Farben von :root überschreibt)
 @include meta.load-css('print');
