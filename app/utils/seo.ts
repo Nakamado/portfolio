@@ -7,17 +7,20 @@ export const normalizeBase = (siteUrl: string) => siteUrl.replace(/\/$/, '')
 
 export const absoluteUrl = (base: string, path: string) => `${base}${path}`
 
+/** Adresse einer Seite mit Schrägstrich am Ende, so liefert GitHub Pages sie aus (ohne Schrägstrich gäbe es eine Weiterleitung). */
+export const pageAddress = (base: string, path: string) => absoluteUrl(base, path.endsWith('/') ? path : `${path}/`)
+
 /** Absolute Adresse einer Seite oder undefined, solange keine Domain bekannt ist. */
-export const pageUrl = (base: string, path: string) => (base ? absoluteUrl(base, path) : undefined)
+export const pageUrl = (base: string, path: string) => (base ? pageAddress(base, path) : undefined)
 
 /** Canonical und hreflang gibt es nur mit bekannter Domain, weil absolute URLs nötig sind. */
 export function headLinks(base: string, lang: Lang, paths: PathMap) {
   if (!base) return []
   return [
-    { rel: 'canonical', href: absoluteUrl(base, paths[lang]) },
-    { rel: 'alternate', hreflang: 'de', href: absoluteUrl(base, paths.de) },
-    { rel: 'alternate', hreflang: 'en', href: absoluteUrl(base, paths.en) },
-    { rel: 'alternate', hreflang: 'x-default', href: absoluteUrl(base, paths.de) }
+    { rel: 'canonical', href: pageAddress(base, paths[lang]) },
+    { rel: 'alternate', hreflang: 'de', href: pageAddress(base, paths.de) },
+    { rel: 'alternate', hreflang: 'en', href: pageAddress(base, paths.en) },
+    { rel: 'alternate', hreflang: 'x-default', href: pageAddress(base, paths.de) }
   ]
 }
 
@@ -31,7 +34,7 @@ export const socialImagePath = (lang: Lang) => (lang === 'en' ? '/images/og-imag
 export function structuredData(options: { base: string; lang: Lang; homePath: string; role: string; email: string; linkedinUrl?: string; githubUrl?: string }) {
   const { base, lang, homePath, role, email, linkedinUrl, githubUrl } = options
   const profiles = [linkedinUrl, githubUrl].filter(Boolean)
-  const url = base ? absoluteUrl(base, homePath) : undefined
+  const url = base ? pageAddress(base, homePath) : undefined
   const person = {
     '@type': 'Person',
     ...(url ? { '@id': `${url}#person` } : {}),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { robotsContent, pageUrl, absoluteUrl, headLinks, normalizeBase, socialImagePath, socialImage, structuredData } from '../app/utils/seo'
+import { robotsContent, pageUrl, absoluteUrl, headLinks, normalizeBase, pageAddress, socialImagePath, socialImage, structuredData } from '../app/utils/seo'
 
 const paths = { de: '/impressum', en: '/en/legal-notice' }
 
@@ -8,16 +8,18 @@ describe('SEO-Helfer', () => {
     expect(normalizeBase('https://example.com/')).toBe('https://example.com')
     expect(normalizeBase('')).toBe('')
     expect(absoluteUrl('https://example.com', '/en')).toBe('https://example.com/en')
-    expect(pageUrl('https://example.com', '/en')).toBe('https://example.com/en')
+    expect(pageUrl('https://example.com', '/en')).toBe('https://example.com/en/')
+    expect(pageUrl('https://example.com', '/')).toBe('https://example.com/')
+    expect(pageAddress('https://example.com', '/en/pattern-library/')).toBe('https://example.com/en/pattern-library/')
     expect(pageUrl('', '/en')).toBeUndefined()
   })
 
   it('liefert Canonical und hreflang nur mit Domain', () => {
     expect(headLinks('', 'de', paths)).toEqual([])
     const links = headLinks('https://example.com', 'en', paths)
-    expect(links[0]).toEqual({ rel: 'canonical', href: 'https://example.com/en/legal-notice' })
+    expect(links[0]).toEqual({ rel: 'canonical', href: 'https://example.com/en/legal-notice/' })
     expect(links.map((l) => l.hreflang)).toEqual([undefined, 'de', 'en', 'x-default'])
-    expect(links[3]!.href).toBe('https://example.com/impressum')
+    expect(links[3]!.href).toBe('https://example.com/impressum/')
   })
 
   it('baut Person und Website als Graph mit Domain, LinkedIn und GitHub', () => {
@@ -40,7 +42,7 @@ describe('SEO-Helfer', () => {
   it('nutzt auf der englischen Startseite das englische Bild und die englische Adresse', () => {
     const [person, website] = structuredData({ base: 'https://example.com', lang: 'en', homePath: '/en', role: 'Frontend Developer', email: 'a@b.de' })['@graph'] as Record<string, unknown>[]
     expect(person!.image).toBe('https://example.com/images/og-image-en.jpg')
-    expect(person!.url).toBe('https://example.com/en')
+    expect(person!.url).toBe('https://example.com/en/')
     expect(website!.inLanguage).toBe('en')
   })
 

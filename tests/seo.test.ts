@@ -19,8 +19,8 @@ describe('sitemap.xml', () => {
 
   it('enthält die Pattern-Library in beiden Sprachen', () => {
     const xml = buildSitemap('https://example.com')
-    expect(xml).toContain('<loc>https://example.com/pattern-library</loc>')
-    expect(xml).toContain('<loc>https://example.com/en/pattern-library</loc>')
+    expect(xml).toContain('<loc>https://example.com/pattern-library/</loc>')
+    expect(xml).toContain('<loc>https://example.com/en/pattern-library/</loc>')
   })
 
   it('enthält die Rechtstexte nicht (sie sind auf noindex gesetzt)', () => {
