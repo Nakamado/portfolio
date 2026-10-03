@@ -4,6 +4,42 @@
 @use './components/button';
 @use './components/text-link';
 
+// Schriften: selbst ausgeliefert (public/fonts, jeweils eine variable Datei mit dem Latin-Zeichensatz).
+// Die Ersatzschriften (Arial, in der Größe angepasst) verhindern, dass der Text beim Laden der Schrift springt.
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: optional; // kommt die Schrift nicht rechtzeitig, bleibt die Ersatzschrift für diesen Aufruf stehen
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('/fonts/roboto-slab-latin.woff2') format('woff2');
+  font-weight: 500 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk Fallback';
+  src: local('Arial');
+  size-adjust: 109.69%;
+  ascent-override: 89.7072%;
+  descent-override: 26.6204%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Roboto Slab Fallback';
+  src: local('Arial');
+  size-adjust: 106.462%;
+  ascent-override: 98.4247%;
+  descent-override: 25.4547%;
+  line-gap-override: 0%;
+}
+
 $focus-outline: 0.1875rem; // Breite und Abstand des Fokusrahmens
 $font-base: 1.0625rem; // 17 px
 $leading-body: 1.65;
@@ -25,8 +61,8 @@ $section-slash-margin-right: 0.35em;
   --blue-dark: #1650c8;
   --blue-light: #4f8cff;
   --focus: #8db4ff;
-  --font: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Roboto Slab', Georgia, 'Times New Roman', serif; // Logo und Überschriften
+  --font: 'Space Grotesk', 'Space Grotesk Fallback', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Roboto Slab', 'Roboto Slab Fallback', Georgia, 'Times New Roman', serif; // Logo und Überschriften
   --gutter: clamp(1.25rem, 5vw, 4rem);
   --header-height: 4.25rem;
   --section-height: calc((100svh - var(--header-height)) * 0.9); // 90 Prozent: der nächste Abschnitt lugt unten hervor
@@ -153,7 +189,10 @@ main[tabindex='-1']:focus {
   top: $skip-link-offset;
   left: var(--gutter);
   z-index: $z-skip-link;
-  padding: $space-3 $space-4;
+  display: inline-flex; // als Block mit Mindesthöhe, sonst zählt für die Zielgröße nur die Zeilenhöhe ohne Innenabstand
+  align-items: center;
+  min-height: $tap-target;
+  padding: 0 $space-4;
   background: var(--blue);
   color: var(--on-blue);
 

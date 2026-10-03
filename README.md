@@ -42,7 +42,7 @@ npm run typecheck
 - Easteregg: ASCII-Logo als Kommentar im `<head>` (`server/plugins/easter-egg.ts`) und in der Browser-Konsole (`app/plugins/easter-egg.client.ts`)
 - Heller und dunkler Modus: Beim ersten Besuch gilt die Systemeinstellung (`prefers-color-scheme`), der Sonne/Mond-Button im Header (`ThemeSwitch.vue`) wechselt und merkt sich die Wahl im `localStorage` (`utils/theme.ts`, `composables/useTheme.ts`). Ein kleines Inline-Skript im `<head>` setzt `data-theme` vor dem ersten Rendern, damit nichts aufblitzt. Das helle Theme überschreibt nur Farben (`:root[data-theme='light']` in `main.scss`); ohne JavaScript bleibt die Seite dunkel
 - Druckansicht (`app/assets/scss/_print.scss`, geladen am Ende der `main.scss`): die Startseite wird zu einem kompakten, hellen Lebenslauf. Header, Pfeile, Punktraster, Porträt und Buttons entfallen, externe Links zeigen ihre Adresse. Ansehen mit Strg+P oder in den DevTools unter Rendering → „Emulate CSS media type: print“
-- Schriften lädt `@nuxt/fonts` beim Build herunter und liefert sie selbst aus (keine Verbindung zu Google beim Seitenaufruf)
+- Schriften (Space Grotesk, Roboto Slab; beide OFL) liegen als variable woff2-Dateien mit Latin-Zeichensatz in `public/fonts/` und werden vorgeladen; `@font-face` und die in der Größe angepassten Ersatzschriften stehen am Anfang der `main.scss` (keine Verbindung zu Google beim Seitenaufruf, kein Layout-Sprung beim Laden)
 
 ## Vor der Veröffentlichung
 - `.env` aus `.env.example` anlegen: `NUXT_PUBLIC_CONTACT_EMAIL`, `NUXT_PUBLIC_LINKEDIN_URL`, `NUXT_PUBLIC_GITHUB_URL`, `NUXT_PUBLIC_SITE_URL` (z. B. `https://dein-name.de`)

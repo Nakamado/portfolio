@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
-  modules: ['@nuxt/fonts', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/test-utils/module'],
   css: ['~/assets/scss/main.scss'],
   typescript: { strict: true },
   vite: {
@@ -10,20 +10,16 @@ export default defineNuxtConfig({
       preprocessorOptions: { scss: { additionalData: '@use "~/assets/scss/variables" as *;\n' } }
     }
   },
-  fonts: {
-    // Explizit, damit alle genutzten Schriftschnitte geladen und selbst ausgeliefert werden.
-    // Die Fließtext-Schrift lädt vorab und mit font-display "optional": Kommt sie nicht rechtzeitig, bleibt die Ersatzschrift
-    // für diesen Aufruf stehen, statt den Text später umzubrechen (Layout Shift auf dem Handy). Beim nächsten Besuch ist sie im Cache.
-    families: [
-      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 700], styles: ['normal'], subsets: ['latin'], preload: true, display: 'optional' },
-      { name: 'Roboto Slab', provider: 'google', weights: [500, 700], styles: ['normal'], subsets: ['latin'], preload: true }
-    ]
-  },
   app: {
     head: {
       htmlAttrs: { lang: 'de' },
       meta: [{ name: 'theme-color', content: '#1a1d26' }],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        // Beide Schriften vorladen, sonst beginnt der Download erst, wenn das Stylesheet ausgewertet ist (Layout-Sprung, späterer LCP)
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/space-grotesk-latin.woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/roboto-slab-latin.woff2', crossorigin: 'anonymous' }
+      ]
     }
   },
   nitro: {

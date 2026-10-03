@@ -174,6 +174,7 @@ const sources: Record<PatternComponent['id'], { file: string; code: string }> = 
 
 <style lang="scss" scoped>
 $swatch-size: 3.5rem;
+$pair-preview-font-size: 1.25rem; // fett ab 18,7 px gilt als große Schrift: 3:1 genügt (die Vorschau zeigt auch Paare der Stufe UI)
 $font-sample-font-size: 1.6rem;
 $rule-title-font-size: 1.2rem;
 .patterns {
@@ -278,6 +279,7 @@ code {
     width: $swatch-size;
     height: $swatch-size;
     border: $border-line;
+    font-size: $pair-preview-font-size;
     font-weight: $weight-bold;
   }
 

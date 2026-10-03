@@ -312,7 +312,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'Schriftarten',
           paragraphs: [
-            'Die verwendeten Schriften (Space Grotesk und Roboto Slab) werden beim Erstellen der Seite heruntergeladen und von dieser Website selbst ausgeliefert. Dein Browser stellt dafür keine Verbindung zu Google her.'
+            'Die verwendeten Schriften (Space Grotesk und Roboto Slab) werden von dieser Website selbst ausgeliefert. Dein Browser stellt dafür keine Verbindung zu Google her.'
           ]
         },
         {
@@ -581,7 +581,7 @@ export const content: Record<Lang, Content> = {
         {
           title: 'Fonts',
           paragraphs: [
-            'The fonts used (Space Grotesk and Roboto Slab) are downloaded when the site is built and served from this website itself. Your browser does not connect to Google for this.'
+            'The fonts used (Space Grotesk and Roboto Slab) are served from this website itself. Your browser does not connect to Google for this.'
           ]
         },
         {

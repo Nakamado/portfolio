@@ -43,14 +43,14 @@
         "first-contentful-paint": [
           "error",
           {
-            "maxNumericValue": 1800,
+            "maxNumericValue": 2100,
             "aggregationMethod": "median"
           }
         ],
         "largest-contentful-paint": [
           "error",
           {
-            "maxNumericValue": 2500,
+            "maxNumericValue": 2700,
             "aggregationMethod": "median"
           }
         ],

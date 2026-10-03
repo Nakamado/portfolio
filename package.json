@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.0",
-    "@nuxt/fonts": "^0.11.0",
     "@nuxt/test-utils": "^4.3.2",
     "@playwright/test": "^1.55.0",
     "@vitest/coverage-v8": "^5.0.0",
