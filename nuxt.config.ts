@@ -4,6 +4,8 @@ export default defineNuxtConfig({
   modules: ['@nuxt/test-utils/module'],
   css: ['~/assets/scss/main.scss'],
   typescript: { strict: true },
+  // Das globale Stylesheet (Tokens, Reset, Schriften) wird als Datei eingebunden. Das automatische Einbetten ließ es im statischen Build weg.
+  features: { inlineStyles: false },
   vite: {
     css: {
       // SCSS-Variablen und Mixins (Breakpoints, Mindestgrößen, Übergänge) stehen in jeder SCSS-Datei und jedem <style lang="scss"> bereit
