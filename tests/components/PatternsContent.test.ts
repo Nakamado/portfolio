@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
+import { nextTick } from 'vue'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import mainScss from '../../app/assets/scss/main.scss?raw'
 import PatternsContent from '~/components/PatternsContent.vue'
@@ -155,6 +156,30 @@ describe('Bausteine der Pattern-Library', () => {
     expect(wrapper.get('pre').text()).toBe('.a { color: red; }')
     expect(wrapper.get('pre').attributes('tabindex')).toBe('0')
     expect(wrapper.get('details').element.hasAttribute('open')).toBe(false)
+  })
+
+  it('CodeBlock färbt den Quelltext erst nach dem Aufklappen und ändert den Text nicht', async () => {
+    const code = '.a {\n  color: #fff; // hell\n}'
+    const wrapper = await mountSuspended(CodeBlock, { props: { code, file: 'a.scss', summary: 's' } })
+    const details = wrapper.get('details').element
+    expect(wrapper.find('.code__token').exists()).toBe(false)
+
+    details.dispatchEvent(new Event('toggle')) // zugeklappt: nichts passiert
+    await nextTick()
+    expect(wrapper.find('.code__token').exists()).toBe(false)
+
+    details.setAttribute('open', '')
+    details.dispatchEvent(new Event('toggle'))
+    await nextTick()
+    expect(wrapper.findAll('.code__token--number').map((el) => el.text())).toEqual(['#fff'])
+    expect(wrapper.findAll('.code__token--comment').map((el) => el.text())).toEqual(['// hell'])
+    expect(wrapper.get('pre').text()).toBe(code)
+  })
+
+  it('CodeBlock färbt einen aufgeklappten Block sofort', async () => {
+    const wrapper = await mountSuspended(CodeBlock, { props: { code: '<a href="x">y</a>', file: 'f', summary: 's', open: true } })
+    expect(wrapper.findAll('.code__token--tag').map((el) => el.text())).toEqual(['<a', '</a'])
+    expect(wrapper.findAll('.code__token--string').map((el) => el.text())).toEqual(['"x"'])
   })
 
   it('CodeBlock lässt sich aufgeklappt zeigen', async () => {
